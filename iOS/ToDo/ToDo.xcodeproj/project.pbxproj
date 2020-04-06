@@ -83,15 +83,10 @@
 		A5D9285C243AF8DC008A75EF /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
-				A5D9285D243AF8DC008A75EF /* AppDelegate.swift */,
-				A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */,
-				A5D92861243AF8DC008A75EF /* ViewController.swift */,
-				A5D92863243AF8DC008A75EF /* Main.storyboard */,
+				A5D92886243B4027008A75EF /* View */,
+				A5D92885243B4019008A75EF /* Controller */,
 				A5D92866243AF8DE008A75EF /* Assets.xcassets */,
-				A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */,
 				A5D9286B243AF8DE008A75EF /* Info.plist */,
-				A5D9287F243B072E008A75EF /* TaskTableViewController.swift */,
-				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -103,6 +98,27 @@
 				A5D92876243AF8DE008A75EF /* Info.plist */,
 			);
 			path = ToDoTests;
+			sourceTree = "<group>";
+		};
+		A5D92885243B4019008A75EF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5D9285D243AF8DC008A75EF /* AppDelegate.swift */,
+				A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5D92886243B4027008A75EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5D92861243AF8DC008A75EF /* ViewController.swift */,
+				A5D9287F243B072E008A75EF /* TaskTableViewController.swift */,
+				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
+				A5D92863243AF8DC008A75EF /* Main.storyboard */,
+				A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
