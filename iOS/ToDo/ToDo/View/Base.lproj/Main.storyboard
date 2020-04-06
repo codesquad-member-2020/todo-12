@@ -49,19 +49,19 @@
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tfu-FE-N7m">
                                         <rect key="frame" x="0.0" y="0.0" width="450" height="954"/>
                                         <connections>
-                                            <segue destination="CMo-lw-SXg" kind="embed" identifier="todo" id="bqT-me-rmo"/>
+                                            <segue destination="GZi-qS-8EJ" kind="embed" identifier="todo" id="wPB-Qi-EQ7"/>
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="biP-KX-oz0">
                                         <rect key="frame" x="458" y="0.0" width="450" height="954"/>
                                         <connections>
-                                            <segue destination="CMo-lw-SXg" kind="embed" identifier="inProgress" id="NYA-cH-h8G"/>
+                                            <segue destination="GZi-qS-8EJ" kind="embed" identifier="inProgress" id="Xth-NZ-tkX"/>
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bx8-bZ-6JZ">
                                         <rect key="frame" x="916" y="0.0" width="450" height="954"/>
                                         <connections>
-                                            <segue destination="CMo-lw-SXg" kind="embed" identifier="done" id="Eq3-z8-Y8x"/>
+                                            <segue destination="GZi-qS-8EJ" kind="embed" identifier="done" id="X8L-na-1x5"/>
                                         </connections>
                                     </containerView>
                                 </subviews>
@@ -90,33 +90,43 @@
             </objects>
             <point key="canvasLocation" x="832.79648609077594" y="129.4921875"/>
         </scene>
-        <!--Task Table View Controller-->
-        <scene sceneID="vr6-Pj-NA3">
+        <!--Task View Controller-->
+        <scene sceneID="kGd-4w-AAa">
             <objects>
-                <tableViewController id="CMo-lw-SXg" customClass="TaskTableViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NZA-sN-BWm">
+                <viewController id="GZi-qS-8EJ" customClass="TaskViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gEN-gU-RKP">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4Q-RB-zee">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="95.5"/>
+                                <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="95.5" id="qiG-gK-Oiu"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R5r-Th-t3G">
+                                <rect key="frame" x="0.0" y="95.5" width="450" height="858.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="asd" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" id="f35-kL-8Sm">
-                                <rect key="frame" x="0.0" y="28" width="450" height="51.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f35-kL-8Sm" id="CJm-BV-pdv">
-                                    <rect key="frame" x="0.0" y="0.0" width="450" height="51.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="CMo-lw-SXg" id="kY8-4t-95g"/>
-                            <outlet property="delegate" destination="CMo-lw-SXg" id="iJ6-i4-IFb"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KQ7-w3-QRd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <constraints>
+                            <constraint firstItem="B4Q-RB-zee" firstAttribute="height" secondItem="gEN-gU-RKP" secondAttribute="height" multiplier="0.1" priority="750" id="0JM-a2-7qr"/>
+                            <constraint firstItem="B4Q-RB-zee" firstAttribute="leading" secondItem="Yrw-IS-UL7" secondAttribute="leading" id="DVh-tB-cVy"/>
+                            <constraint firstItem="Yrw-IS-UL7" firstAttribute="trailing" secondItem="R5r-Th-t3G" secondAttribute="trailing" id="WO6-X2-i9G"/>
+                            <constraint firstItem="R5r-Th-t3G" firstAttribute="leading" secondItem="Yrw-IS-UL7" secondAttribute="leading" id="YFU-uf-7Wu"/>
+                            <constraint firstItem="Yrw-IS-UL7" firstAttribute="bottom" secondItem="R5r-Th-t3G" secondAttribute="bottom" id="ddD-Ox-WIu"/>
+                            <constraint firstItem="B4Q-RB-zee" firstAttribute="top" secondItem="Yrw-IS-UL7" secondAttribute="top" id="qhc-Ng-nLd"/>
+                            <constraint firstItem="R5r-Th-t3G" firstAttribute="top" secondItem="B4Q-RB-zee" secondAttribute="bottom" id="sHV-hR-leq"/>
+                            <constraint firstItem="Yrw-IS-UL7" firstAttribute="trailing" secondItem="B4Q-RB-zee" secondAttribute="trailing" id="vvq-W1-4uS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Yrw-IS-UL7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AIE-VU-bVm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="841"/>
+            <point key="canvasLocation" x="833" y="815"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d9T-HP-BZ2">
@@ -138,6 +148,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Eq3-z8-Y8x"/>
+        <segue reference="X8L-na-1x5"/>
     </inferredMetricsTieBreakers>
 </document>
