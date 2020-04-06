@@ -14,6 +14,7 @@
 		A5D92867243AF8DE008A75EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D92866243AF8DE008A75EF /* Assets.xcassets */; };
 		A5D9286A243AF8DE008A75EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */; };
 		A5D92875243AF8DE008A75EF /* ToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92874243AF8DE008A75EF /* ToDoTests.swift */; };
+		A5D92880243B072E008A75EF /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9287F243B072E008A75EF /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		A5D92870243AF8DE008A75EF /* ToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D92874243AF8DE008A75EF /* ToDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTests.swift; sourceTree = "<group>"; };
 		A5D92876243AF8DE008A75EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5D9287F243B072E008A75EF /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				A5D92866243AF8DE008A75EF /* Assets.xcassets */,
 				A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */,
 				A5D9286B243AF8DE008A75EF /* Info.plist */,
+				A5D9287F243B072E008A75EF /* TableViewController.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				A5D92862243AF8DC008A75EF /* ViewController.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
+				A5D92880243B072E008A75EF /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +376,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hanseop.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -390,7 +394,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hanseop.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
