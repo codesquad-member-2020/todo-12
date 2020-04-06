@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS COLUMN ;
+
+CREATE TABLE category  (
+	id VARCHAR(32) auto_increment NOT NULL,
+	name VARCHAR(32) NOT NULL,
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE card  (
+  id VARCHAR(32) auto_increment NOT NULL,
+  content VARCHAR(32) NOT NULL,
+  PRIMARY KEY(ID)
+);
