@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="139" y="130"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Task Table View Controller-->
         <scene sceneID="vr6-Pj-NA3">
             <objects>
-                <tableViewController id="CMo-lw-SXg" customClass="TableViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="CMo-lw-SXg" customClass="TaskTableViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NZA-sN-BWm">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

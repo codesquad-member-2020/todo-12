@@ -10,9 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private var todoViewController: TableViewController?
-    private var inProgressViewController: TableViewController?
-    private var doneViewController: TableViewController?
+    private var todoViewController: TaskTableViewController?
+    private var inProgressViewController: TaskTableViewController?
+    private var doneViewController: TaskTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,17 +20,17 @@ class ViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "todo" {
-            todoViewController = segue.destination as? TableViewController
+            todoViewController = segue.destination as? TaskTableViewController
             todoViewController?.tableView.backgroundColor = .blue
         }
         
         if segue.identifier == "inProgress" {
-            inProgressViewController = segue.destination as? TableViewController
+            inProgressViewController = segue.destination as? TaskTableViewController
             inProgressViewController?.tableView.backgroundColor = .white
         }
         
         if segue.identifier == "done" {
-            doneViewController = segue.destination as? TableViewController
+            doneViewController = segue.destination as? TaskTableViewController
             doneViewController?.tableView.backgroundColor = .red
         }
     }
