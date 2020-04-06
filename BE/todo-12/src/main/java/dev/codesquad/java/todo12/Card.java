@@ -13,4 +13,12 @@ public class Card {
     public Card(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

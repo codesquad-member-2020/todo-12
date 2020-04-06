@@ -1,13 +1,12 @@
-DROP TABLE IF EXISTS COLUMN ;
+DROP TABLE IF EXISTS category;
 
 CREATE TABLE category  (
-	id VARCHAR(32) auto_increment NOT NULL,
-	name VARCHAR(32) NOT NULL,
-  PRIMARY KEY(ID)
+  id int primary key auto_increment,
+  name varchar(32) not null
 );
 
 CREATE TABLE card  (
-  id VARCHAR(32) auto_increment NOT NULL,
-  content VARCHAR(32) NOT NULL,
-  PRIMARY KEY(ID)
+  id int primary key auto_increment,
+  content varchar(32),
+  category int references category(id)
 );
