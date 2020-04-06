@@ -1,6 +1,6 @@
 # todo-12
 
-## 미세먼지 프로젝트 - 12팀
+## TODO 프로젝트 - 12팀
 
 - BE: XP, Henry
 - FE: Ellin, Lia
@@ -10,8 +10,8 @@
 
 - 매일 11시 스크럼 - 진행상황 및 계획 등 공유, 늦을 것 같으면 미리 공지해주기
 - (수), 목, 금 오프라인 의무 모임
-- [Issue 작성 규칙](https://github.com/1Consumption/todo-12/wiki/Issue-작성-규칙)
-- [Commit 작성 규칙](https://github.com/1Consumption/todo-12/wiki/Commit-작성-규칙)
+- [Issue 작성 규칙](https://github.com/codesquad-member-2020/todo-12/wiki/Issue-작성-규칙)
+- [Commit 작성 규칙](https://github.com/codesquad-member-2020/todo-12/wiki/Commit-작성-규칙)
 
 ## Branch Rule
 
@@ -26,5 +26,5 @@
 
 ## Project References
 
-- [Mockup API document]
-- [기능서]
+- [Mockup API document](https://documenter.getpostman.com/view/10828534/SzYbzdNz?version=latest)
+- [요구사항 기능서](https://docs.google.com/spreadsheets/d/1eD8tuBxiQHYOtk7LWXB2ekjnvItjdt4UWi5ZC3x2kgk/edit?usp=sharing)
