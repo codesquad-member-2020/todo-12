@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskViewController: UIViewController {
+class TaskViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet weak var totalTaskLabel: UILabel!
     @IBOutlet weak var taskTabelView: UITableView!
@@ -19,6 +19,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         setLabelRadius()
         taskTabelView.dataSource = dataSource
+        totalTaskLabel.text = String(taskTabelView.numberOfRows(inSection: 0))
     }
     
     private func setLabelRadius() {

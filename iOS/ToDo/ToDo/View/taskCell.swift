@@ -14,3 +14,4 @@ class taskCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
 }
+
