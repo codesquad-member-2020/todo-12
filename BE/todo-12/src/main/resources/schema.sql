@@ -26,3 +26,9 @@ CREATE TABLE history  (
   from_category varchar (32),
   to_category varchar (32)
 );
+
+CREATE TABLE user  (
+  id int primary key auto_increment,
+  user_id varchar (32) not null,
+  password varchar (32) not null
+);
