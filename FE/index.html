@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo</title>
+  </head>
+  <body>
+    <header>
+      <h1>TODO 서비스</h1>
+      <button>menu</button>
+    </header>
+    <main class="todo">
+      <section id="todo__todo" class="todo__column">
+        <h2 class="blind">해야할일</h2>
+        <div>
+          <span class="todo__count">0</span>
+          <span class="todo__title">해야할일</span>
+        </div>
+        <div>
+          <button>+</button>
+          <span>...</span>
+        </div>
+        <ul>
+          <li class="todo__card">
+            <div class="card__column">
+              <span class="card__content" aria-label="할일내용">할일내용</span>
+              <span class="card__writer" aria-label="작성자">작성자</span>
+            </div>
+            <div class="card__column">
+              <button>x</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="todo__inprogress" class="todo__column">
+        <h2 class="blind">하는중</h2>
+        <div>
+          <span class="todo__count">0</span>
+          <span class="todo__title">하는중</span>
+        </div>
+        <div>
+          <button>+</button>
+          <span>...</span>
+        </div>
+        <ul>
+          <li class="todo__card">
+            <div class="card__column">
+              <span class="card__content" aria-label="할일내용">할일내용</span>
+              <span class="card__writer" aria-label="작성자">작성자</span>
+            </div>
+            <div class="card__column">
+              <button>x</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="todo__done" class="todo__column">
+        <h2 class="blind">다했어</h2>
+        <div>
+          <span class="todo__count" aria-label="할일 개수">0</span>
+          <span class="todo__title">다했어</span>
+        </div>
+        <div>
+          <button>+</button>
+          <span>...</span>
+        </div>
+        <ul>
+          <li class="todo__card">
+            <div class="card__column">
+              <span class="card__content" aria-label="할일내용">할일내용</span>
+              <span class="card__writer" aria-label="작성자">작성자</span>
+            </div>
+            <div class="card__column">
+              <button>x</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
