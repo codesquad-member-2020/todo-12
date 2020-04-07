@@ -10,7 +10,15 @@ import UIKit
 
 class TaskViewController: UIViewController {
 
+    @IBOutlet weak var totalTaskLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLabelRadius()
+    }
+    
+    private func setLabelRadius() {
+        totalTaskLabel.clipsToBounds = true
+        totalTaskLabel.layer.cornerRadius = totalTaskLabel.layer.frame.height * 0.5
     }
 }
