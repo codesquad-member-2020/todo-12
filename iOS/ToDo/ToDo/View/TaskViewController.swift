@@ -18,7 +18,8 @@ class TaskViewController: UIViewController {
     }
     
     private func setLabelRadius() {
+        let superViewHeight = totalTaskLabel.superview?.layer.frame.height ?? 0
         totalTaskLabel.clipsToBounds = true
-        totalTaskLabel.layer.cornerRadius = totalTaskLabel.layer.frame.height * 0.5
+        totalTaskLabel.layer.cornerRadius = superViewHeight * 0.24
     }
 }
