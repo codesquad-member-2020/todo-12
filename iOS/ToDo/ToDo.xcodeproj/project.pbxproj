@@ -16,6 +16,8 @@
 		A5D92875243AF8DE008A75EF /* ToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92874243AF8DE008A75EF /* ToDoTests.swift */; };
 		A5D92884243B3FC6008A75EF /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */; };
 		A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288B243B64A2008A75EF /* TaskViewController.swift */; };
+		A5D92890243C4AD7008A75EF /* todoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288F243C4AD7008A75EF /* todoDataSource.swift */; };
+		A5D92892243C4B56008A75EF /* taskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92891243C4B56008A75EF /* taskCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		A5D92876243AF8DE008A75EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		A5D9288B243B64A2008A75EF /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		A5D9288F243C4AD7008A75EF /* todoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoDataSource.swift; sourceTree = "<group>"; };
+		A5D92891243C4B56008A75EF /* taskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +118,11 @@
 			children = (
 				A5D92861243AF8DC008A75EF /* ViewController.swift */,
 				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
+				A5D9288B243B64A2008A75EF /* TaskViewController.swift */,
+				A5D9288F243C4AD7008A75EF /* todoDataSource.swift */,
+				A5D92891243C4B56008A75EF /* taskCell.swift */,
 				A5D92863243AF8DC008A75EF /* Main.storyboard */,
 				A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */,
-				A5D9288B243B64A2008A75EF /* TaskViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,8 +230,10 @@
 			files = (
 				A5D92862243AF8DC008A75EF /* ViewController.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
+				A5D92892243C4B56008A75EF /* taskCell.swift in Sources */,
 				A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
+				A5D92890243C4AD7008A75EF /* todoDataSource.swift in Sources */,
 				A5D92884243B3FC6008A75EF /* HistoryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

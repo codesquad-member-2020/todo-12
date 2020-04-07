@@ -11,10 +11,14 @@ import UIKit
 class TaskViewController: UIViewController {
 
     @IBOutlet weak var totalTaskLabel: UILabel!
+    @IBOutlet weak var taskTabelView: UITableView!
+    
+    private let dataSource = todoDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelRadius()
+        taskTabelView.dataSource = dataSource
     }
     
     private func setLabelRadius() {
