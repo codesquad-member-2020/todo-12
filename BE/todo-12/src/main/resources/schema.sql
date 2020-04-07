@@ -4,7 +4,7 @@ CREATE TABLE category  (
   id int primary key auto_increment,
   name varchar(32) not null,
   cards_count int,
-  status boolean
+  valid boolean
 );
 
 CREATE TABLE card  (
@@ -16,4 +16,13 @@ CREATE TABLE card  (
   modified_time datetime,
   category int references category(id),
   category_key int
+);
+
+CREATE TABLE history  (
+  id int primary key auto_increment,
+  user_id varchar (32),
+  action varchar (32) not null,
+  title varchar (32),
+  from_category varchar (32),
+  to_category varchar (32)
 );

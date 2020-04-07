@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CardController {
-    Logger logger = LoggerFactory.getLogger(CardController.class);
+public class MockUpController {
+    Logger logger = LoggerFactory.getLogger(MockUpController.class);
 
     @Autowired
     private CardRepository cardRepository;
@@ -16,7 +16,7 @@ public class CardController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @GetMapping("/mockup")
+    @GetMapping("/mock")
     public Kanban create() {
         Category category = categoryRepository.findById(1L).get();
         category.addCard(new Card("제목1", "상세페이지 API 정리", "web"));
