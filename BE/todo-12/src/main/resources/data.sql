@@ -1,6 +1,5 @@
-insert into category(name) values ('TODO');
-insert into category(name) values ('ING');
-insert into category(name) values ('DONE');
+insert into category(name, cards_count) values ('TODO', 3);
+insert into category(name, cards_count) values ('DONE', 0);
 
-insert into card(content) values ('내용');
+insert into card(title, content) values ('제목', '내용');
 

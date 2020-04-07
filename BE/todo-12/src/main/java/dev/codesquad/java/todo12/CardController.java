@@ -17,13 +17,16 @@ public class CardController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("/")
-    public Card create() {
+    public Category create() {
         Category category = categoryRepository.findById(1L).get();
-        category.addCard(new Card("밥먹기"));
+
+        category.addCard(new Card("제목1", "밥먹기"));
+        category.addCard(new Card("제목2","잠자기"));
+        category.addCard(new Card("제목3","택배받기"));
         categoryRepository.save(category);
 
         logger.info(">>> {}", category.toString());
 
-        return cardRepository.findById(2L).orElseThrow(null);
+        return category;
     }
 }
