@@ -96,7 +96,7 @@
             <objects>
                 <viewController id="GZi-qS-8EJ" customClass="TaskViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gEN-gU-RKP">
-                        <rect key="frame" x="0.0" y="0.0" width="428.5" height="954"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4Q-RB-zee">
@@ -217,7 +217,7 @@
                     </view>
                     <connections>
                         <outlet property="taskTabelView" destination="qbA-2K-KBF" id="FWO-Os-k91"/>
-                        <outlet property="totalTaskLabel" destination="0GI-jL-tVR" id="w9a-vz-vrN"/>
+                        <outlet property="totalTaskLabel" destination="0GI-jL-tVR" id="o57-VK-pam"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AIE-VU-bVm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
