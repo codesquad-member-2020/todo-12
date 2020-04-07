@@ -15,14 +15,14 @@ public class Card {
     private Long id;
     private String title;
     private String content;
-    private String writer;
+    private String author;
     String createTime;
     String modifiedTime;
 
-    public Card(String title, String content) {
+    public Card(String title, String content, String author) {
         this.title = title;
         this.content = content;
-        this.writer = "Henry";
+        this.author = author;
         this.createTime = seoulTime();
         this.modifiedTime = seoulTime();
     }
@@ -37,7 +37,7 @@ public class Card {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", writer='" + writer + '\'' +
+                ", author='" + author + '\'' +
                 ", createTime=" + createTime +
                 ", modifiedTime=" + modifiedTime +
                 '}';

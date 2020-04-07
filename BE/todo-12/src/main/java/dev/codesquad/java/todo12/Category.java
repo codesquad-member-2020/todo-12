@@ -14,10 +14,12 @@ public class Category {
     private String name;
     private List<Card> cards = new ArrayList<>();
     private int cardsCount;
+    private boolean status;
 
-    public Category(String name) {
+    public Category(String name, boolean status) {
         this.name = name;
-        this.cardsCount = 3;
+        this.cardsCount = 0;
+        this.status = status;
     }
 
     public void addCard(Card card) {
@@ -31,6 +33,7 @@ public class Category {
                 ", name='" + name + '\'' +
                 ", cards=" + cards +
                 ", cardsCount=" + cardsCount +
+                ", status=" + status +
                 '}';
     }
 }
