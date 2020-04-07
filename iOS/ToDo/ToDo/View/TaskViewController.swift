@@ -9,7 +9,7 @@
 import UIKit
 
 class TaskViewController: UIViewController, UITableViewDelegate {
-
+    
     @IBOutlet weak var totalTaskLabel: UILabel!
     @IBOutlet weak var taskTabelView: UITableView!
     
@@ -19,6 +19,7 @@ class TaskViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         setLabelRadius()
         taskTabelView.dataSource = dataSource
+        taskTabelView.delegate = self
         totalTaskLabel.text = String(taskTabelView.numberOfRows(inSection: 0))
     }
     
@@ -26,5 +27,15 @@ class TaskViewController: UIViewController, UITableViewDelegate {
         let superViewHeight = totalTaskLabel.superview?.layer.frame.height ?? 0
         totalTaskLabel.clipsToBounds = true
         totalTaskLabel.layer.cornerRadius = superViewHeight * 0.24
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
+            self.dataSource.model.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completionHandler(true)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
