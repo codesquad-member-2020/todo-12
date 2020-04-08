@@ -13,6 +13,11 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var totalTaskLabel: UILabel!
     @IBOutlet weak var taskTabelView: UITableView!
     
+    @IBAction func addTaskButtonPushed(_ sender: UIButton) {
+        dataSource.model.append(dataSource.model[dataSource.model.count - 1] + 1)
+        taskTabelView.reloadData()
+    }
+    
     private let dataSource = todoDataSource()
     
     override func viewDidLoad() {
