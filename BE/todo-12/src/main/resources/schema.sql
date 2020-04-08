@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS card;
+DROP TABLE IF EXISTS history;
+DROP TABLE IF EXISTS user;
 
 CREATE TABLE category  (
   id int primary key auto_increment,
@@ -17,6 +20,8 @@ CREATE TABLE card  (
   category int references category(id),
   category_key int
 );
+
+--on delete cascade on update cascade
 
 CREATE TABLE history  (
   id int primary key auto_increment,

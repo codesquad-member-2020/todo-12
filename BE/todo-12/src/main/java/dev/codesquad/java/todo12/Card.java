@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,8 +15,8 @@ public class Card {
     private String title;
     private String content;
     private String author;
-    String createTime;
-    String modifiedTime;
+    private String createTime;
+    private String modifiedTime;
 
     public Card(String title, String content, String author) {
         this.title = title;
