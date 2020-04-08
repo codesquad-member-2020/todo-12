@@ -127,7 +127,7 @@
                                         <state key="normal" image="plus" catalog="system"/>
                                         <connections>
                                             <action selector="addTaskButtonPushed:" destination="GZi-qS-8EJ" eventType="touchUpInside" id="eDs-WH-VO2"/>
-                                            <segue destination="GNu-Jw-Jo3" kind="presentation" id="Lsq-Uh-8Ks"/>
+                                            <segue destination="GNu-Jw-Jo3" kind="presentation" id="HNo-6t-cpm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -150,7 +150,7 @@
                                 <rect key="frame" x="0.0" y="60" width="429" height="894"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="taskCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" rowHeight="146" id="PYR-dq-yjZ" customClass="taskCell" customModule="ToDo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="taskCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" rowHeight="146" id="PYR-dq-yjZ" customClass="TaskCell" customModule="ToDo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="429" height="146"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PYR-dq-yjZ" id="cBI-UH-9Tv">
@@ -306,6 +306,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xnp-Up-bV8"/>
                     </view>
+                    <connections>
+                        <outlet property="contentsTextView" destination="g4Q-YV-BvA" id="XMQ-Fe-XCu"/>
+                        <outlet property="titleTextField" destination="2uY-DE-HsU" id="v1j-SR-ThU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qM-OO-sSF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

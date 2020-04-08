@@ -18,7 +18,7 @@ class TaskViewController: UIViewController, UITableViewDelegate {
         taskTabelView.reloadData()
     }
     
-    private let dataSource = todoDataSource()
+    private let dataSource = TodoDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()

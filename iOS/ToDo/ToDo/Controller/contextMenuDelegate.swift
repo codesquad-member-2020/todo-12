@@ -8,7 +8,7 @@
 
 import UIKit
 
-class contextMenuDelegate: NSObject, UIContextMenuInteractionDelegate {
+class ContextMenuDelegate: NSObject, UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
             return self.contextMenu()
