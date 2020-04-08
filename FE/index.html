@@ -17,14 +17,14 @@
         <h1>TODO 서비스</h1>
         <button type="button" class="header__menu-btn">menu</button>
       </header>
-      <div id="project-menu flex">
-        <h2 class="blind">액션 메뉴</h2>
-        <div class="project-menu__header">
-          <div class="project-menu__column">
+      <div id="activity-menu">
+        <h2 class="blind">활동 메뉴</h2>
+        <div class="activity-menu__header">
+          <div class="activity-menu__column">
             <i class="fas fa-bars"></i>
             <span>Menu</span>
           </div>
-          <div class="project-menu__column">
+          <div class="activity-menuu__column">
             <button type="button">
               <i class="fas fa-times"></i>
             </button>
@@ -44,22 +44,23 @@
           </li>
         </ul>
       </div>
-      <main class="todo">
-        <section id="todo__todo" class="flex">
+      <main id="todo" class="flex">
+        <section id="todo__todo" class="todo__column">
           <h2 class="blind">To do</h2>
-          <div>
-            <span class="todo__count">0</span>
-            <span class="todo__title">To do</span>
-          </div>
-          <div>
-            <button type="button" class="plus-btn">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button type="button" class='close-btn'>
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-
+          <div class="column__header flex">
+            <div>
+              <span class="column__card-count">1</span>
+              <span class="column__title">To do</span>
+            </div>
+            <div>
+              <button type="button" class="plus-btn">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button type="button" class='close-btn'>
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+        </div>
           <!-- add 입력창 -->
           <div id="add__todo">
             <div class="add__input">
@@ -72,13 +73,34 @@
          </div>
           <!-- //add 입력창 -->
 
-          <ul class="todo__list">
-            <li class="todo__card">
-              <div class="card__column">
-                <span class="card__content">할일내용</span>
-                <span class="card__author">Added by<strong>작성자</strong></span>
+          <ul class="column__cards">
+            <li class="column__card flex">
+              <div class="card__contents">
+                <div class="card__row">
+                  <i class="far fa-calendar-check card__icon"></i>
+                  <span class="card__content">할일내용</span>
+                </div>
+                <div class="card__row">
+                  <span class="card__author">Added by<strong>작성자</strong></span>
+                </div>
               </div>
-              <div class="card__column">
+              <div class="card__btn">
+                <button type="button" class="close-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </li>
+            <li class="column__card flex">
+              <div class="card__contents">
+                <div class="card__row">
+                  <i class="far fa-calendar-check card__icon"></i>
+                  <span class="card__content">할일내용</span>
+                </div>
+                <div class="card__row">
+                  <span class="card__author">Added by<strong>작성자</strong></span>
+                </div>
+              </div>
+              <div class="card__btn">
                 <button type="button" class="close-btn">
                   <i class="fas fa-times"></i>
                 </button>
@@ -86,20 +108,23 @@
             </li>
           </ul>
         </section>
-        <section id="todo__inprogress" class="flex">
+
+        <section id="todo__inprogress" class="todo__column">
           <h2 class="blind">In progress</h2>
-          <div>
-            <span class="todo__count">0</span>
-            <span class="todo__title">In progress</span>
+          <div class="column__header flex">
+           <div>
+              <span class="column__card-count">0</span>
+              <span class="column__title">In progress</span>
+            </div>
+            <div>
+              <button type="button" class="plus-btn">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button type="button" class='close-btn'>
+                <i class="fas fa-times"></i>
+              </button>
           </div>
-          <div>
-            <button type="button" class="plus-btn">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button type="button" class='close-btn'>
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+        </div>
           
           <!-- add 입력창 -->
           <div id="add__todo">
@@ -113,13 +138,18 @@
          </div>
           <!-- //add 입력창 -->
 
-          <ul class="todo__list">
-            <li class="todo__card">
-              <div class="card__column">
+          <ul class="column__cards">
+            <li class="column__card  flex">
+              <div class="card__contents">
+                <div class="card__row">
+                <i class="far fa-calendar-check card__icon"></i>
                 <span class="card__content">할일내용</span>
+                </div>
+                <div class="card__row">
                 <span class="card__author">Added by<strong>작성자</strong></span>
               </div>
-              <div class="card__column">
+              </div>
+              <div class="card__btn">
                 <button type="button" class="close-btn">
                   <i class="fas fa-times"></i>
                 </button>
@@ -127,19 +157,21 @@
             </li>
           </ul>
         </section>
-        <section id="todo__done" class="flex">
+        <section id="todo__done" class="todo__column">
           <h2 class="blind">Done</h2>
-          <div>
-            <span class="todo__count">0</span>
-            <span class="todo__title">Done</span>
-          </div>
-          <div>
-            <button type="button" class="plus-btn">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button type="button" class='close-btn'>
-              <i class="fas fa-times"></i>
-            </button>
+          <div class="column__header flex">
+            <div>
+              <span class="column__card-count">0</span>
+              <span class="column__title">Done</span>
+            </div>
+            <div>
+              <button type="button" class="plus-btn">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button type="button" class='close-btn'>
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
           </div>
 
           <!-- add 입력창 -->
@@ -154,19 +186,32 @@
          </div>
           <!-- //add 입력창 -->
 
-          <ul class="todo__list">
-            <li class="todo__card">
-              <div class="card__column">
+          <ul class="column__cards">
+            <li class="column__card  flex">
+              <div class="card__contents">
+                <div class="card__row">
+                <i class="far fa-calendar-check card__icon"></i>
                 <span class="card__content">할일내용</span>
+                </div>
+                <div class="card__row">
                 <span class="card__author">Added by<strong>작성자</strong></span>
               </div>
-              <div class="card__column">
+              </div>
+              <div class="card__btn">
                 <button type="button" class="close-btn">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
             </li>
           </ul>
+        </section>
+        <section id="todo__add-column" class="todo__column flex">
+        <div class="add-column__btn">
+          <button type="button">
+            <i class="fas fa-plus"></i> 
+            <span>Add column</span>
+          </button>
+        </div>
         </section>
       </main>
       
