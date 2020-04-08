@@ -308,6 +308,7 @@
                     </view>
                     <connections>
                         <outlet property="contentsTextView" destination="g4Q-YV-BvA" id="XMQ-Fe-XCu"/>
+                        <outlet property="limitLabel" destination="dVg-yg-myC" id="2kS-co-N9M"/>
                         <outlet property="titleTextField" destination="2uY-DE-HsU" id="v1j-SR-ThU"/>
                     </connections>
                 </viewController>

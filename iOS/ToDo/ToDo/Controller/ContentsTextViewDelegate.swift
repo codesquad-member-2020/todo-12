@@ -10,6 +10,9 @@ import UIKit
 
 class ContentsTextViewDelegate: NSObject, UITextViewDelegate {
     
+    var handler: (Bool) -> () = {_ in}
+    private(set) var limit = 500
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.gray {
             textView.text = ""
@@ -22,5 +25,15 @@ class ContentsTextViewDelegate: NSObject, UITextViewDelegate {
             textView.text = "Contents"
             textView.textColor = .gray
         }
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let result = textView.text.count < limit
+        handler(result)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newLength = textView.text.count + text.count - range.length
+        return newLength <= limit
     }
 }
