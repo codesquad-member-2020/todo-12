@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <title>To do</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <header id="header flex">
+        <h1>TODO 서비스</h1>
+        <button type="button" class="header__menu-btn">menu</button>
+      </header>
+      <div id="project-menu flex">
+        <h2 class="blind">액션 메뉴</h2>
+        <div class="project-menu__header">
+          <div class="project-menu__column">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+          </div>
+          <div class="project-menu__column">
+            <button type="button">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <ul class="activity-menu__list">
+          <li class="activity-menu__activity">
+            <div class="activity__action">
+              <span class="action__author"><strong>ellin</strong></span> 
+              <span>meved</span>
+              <span class="action__todo"><strong>공부하기</strong></span>
+              <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
+            </div>
+            <div class="activity__time">
+              <span>1 minute ago</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <main class="todo">
+        <section id="todo__todo" class="flex">
+          <h2 class="blind">To do</h2>
+          <div>
+            <span class="todo__count">0</span>
+            <span class="todo__title">To do</span>
+          </div>
+          <div>
+            <button type="button" class="plus-btn">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" class='close-btn'>
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- add 입력창 -->
+          <div id="add__todo">
+            <div class="add__input">
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
+            </div>
+          <div class="add__btn">
+              <button class="btn__add">Add</button>
+              <button class="btn__cancel">Cancel</button>
+           </div>
+         </div>
+          <!-- //add 입력창 -->
+
+          <ul class="todo__list">
+            <li class="todo__card">
+              <div class="card__column">
+                <span class="card__content">할일내용</span>
+                <span class="card__author">Added by<strong>작성자</strong></span>
+              </div>
+              <div class="card__column">
+                <button type="button" class="close-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section id="todo__inprogress" class="flex">
+          <h2 class="blind">In progress</h2>
+          <div>
+            <span class="todo__count">0</span>
+            <span class="todo__title">In progress</span>
+          </div>
+          <div>
+            <button type="button" class="plus-btn">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" class='close-btn'>
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <!-- add 입력창 -->
+          <div id="add__todo">
+            <div class="add__input">
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
+            </div>
+          <div class="add__btn">
+              <button class="btn__add">Add</button>
+              <button class="btn__cancel">Cancel</button>
+           </div>
+         </div>
+          <!-- //add 입력창 -->
+
+          <ul class="todo__list">
+            <li class="todo__card">
+              <div class="card__column">
+                <span class="card__content">할일내용</span>
+                <span class="card__author">Added by<strong>작성자</strong></span>
+              </div>
+              <div class="card__column">
+                <button type="button" class="close-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section id="todo__done" class="flex">
+          <h2 class="blind">Done</h2>
+          <div>
+            <span class="todo__count">0</span>
+            <span class="todo__title">Done</span>
+          </div>
+          <div>
+            <button type="button" class="plus-btn">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" class='close-btn'>
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- add 입력창 -->
+          <div id="add__todo">
+            <div class="add__input">
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
+            </div>
+          <div class="add__btn">
+              <button class="btn__add">Add</button>
+              <button class="btn__cancel">Cancel</button>
+           </div>
+         </div>
+          <!-- //add 입력창 -->
+
+          <ul class="todo__list">
+            <li class="todo__card">
+              <div class="card__column">
+                <span class="card__content">할일내용</span>
+                <span class="card__author">Added by<strong>작성자</strong></span>
+              </div>
+              <div class="card__column">
+                <button type="button" class="close-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+      
+         <!--Edit note popup -->
+    <div class="popup__todo">
+      <div class="popup__shadow">그림자</div>
+      <div class="popup__container">
+        <div class="popup__header">
+          <h3 class="popup__title">Edit note</h3>
+          <div class="popup__close">
+            <button type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="popup__contents">
+          <h4 class="popup__note">Note</h4>
+          <div class="contents__input">
+            <textarea name="" id="" cols="40" rows="10" maxlength="100" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
+          </div>
+          <div class="save__button">
+            <button type="button">save note</button>
+          </div>
+        </div>
+      </div>
+    </div>
+       <!--//Edit note popup -->
+
+   <!--Edit title popup -->
+    <div class="popup__edit-title">
+      <div class="edit-title__shadow">그림자</div>
+      <div class="edit-title__container">
+        <div class="edit-title__header">
+          <h3 class="edit-title__title">Edit <span>done</span></h3>
+          <div class="edit-title__close">
+            <button type="button"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="edit-title__contents">
+          <h4 class="edit-title__name">Column name</h4>
+          <div class="contents__input">
+            <textarea name="" id="" cols="40" rows="2" maxlength="50" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
+          </div>
+          <div class="edit-title__update-btn">
+            <button type="button">Update column</button>
+          </div>
+        </div>
+      </div>
+    </div>
+       <!--//Edit title popup -->
+
+    </div>
+  </body>
+</html>
