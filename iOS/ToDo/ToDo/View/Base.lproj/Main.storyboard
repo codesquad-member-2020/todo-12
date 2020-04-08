@@ -127,6 +127,7 @@
                                         <state key="normal" image="plus" catalog="system"/>
                                         <connections>
                                             <action selector="addTaskButtonPushed:" destination="GZi-qS-8EJ" eventType="touchUpInside" id="eDs-WH-VO2"/>
+                                            <segue destination="GNu-Jw-Jo3" kind="presentation" id="Lsq-Uh-8Ks"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -227,6 +228,86 @@
             </objects>
             <point key="canvasLocation" x="832.57686676427522" y="814.453125"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="lh3-k3-Xpw">
+            <objects>
+                <viewController id="GNu-Jw-Jo3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4AN-Ps-4mo">
+                        <rect key="frame" x="0.0" y="0.0" width="429" height="934"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2sO-Mv-7N1">
+                                <rect key="frame" x="689" y="331" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FO0-ZF-J2b">
+                                <rect key="frame" x="50" y="50" width="53" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Cancel"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2uY-DE-HsU">
+                                <rect key="frame" x="50" y="133" width="279" height="50"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TI-7f-UH8">
+                                <rect key="frame" x="349" y="143" width="30" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" image="arrow.up.circle.fill" catalog="system"/>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="g4Q-YV-BvA">
+                                <rect key="frame" x="50" y="233" width="329" height="280"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVg-yg-myC">
+                                <rect key="frame" x="50" y="533" width="329" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author by Mobile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odv-Cd-VLp">
+                                <rect key="frame" x="50" y="574" width="329" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9TI-7f-UH8" firstAttribute="centerY" secondItem="2uY-DE-HsU" secondAttribute="centerY" id="703-4S-vm4"/>
+                            <constraint firstItem="9TI-7f-UH8" firstAttribute="leading" secondItem="2uY-DE-HsU" secondAttribute="trailing" constant="20" id="ICV-Ea-E57"/>
+                            <constraint firstItem="2uY-DE-HsU" firstAttribute="leading" secondItem="FO0-ZF-J2b" secondAttribute="leading" id="Sp2-ZK-7cE"/>
+                            <constraint firstItem="g4Q-YV-BvA" firstAttribute="leading" secondItem="2uY-DE-HsU" secondAttribute="leading" id="U6u-DL-6c6"/>
+                            <constraint firstItem="Xnp-Up-bV8" firstAttribute="trailing" secondItem="9TI-7f-UH8" secondAttribute="trailing" constant="50" id="VVw-LA-Rnk"/>
+                            <constraint firstItem="Odv-Cd-VLp" firstAttribute="trailing" secondItem="g4Q-YV-BvA" secondAttribute="trailing" id="X3v-YA-b6h"/>
+                            <constraint firstItem="Odv-Cd-VLp" firstAttribute="leading" secondItem="g4Q-YV-BvA" secondAttribute="leading" id="XRU-Jd-Zz4"/>
+                            <constraint firstItem="g4Q-YV-BvA" firstAttribute="top" secondItem="2uY-DE-HsU" secondAttribute="bottom" constant="50" id="XXH-Xx-ISb"/>
+                            <constraint firstItem="Xnp-Up-bV8" firstAttribute="trailing" secondItem="FO0-ZF-J2b" secondAttribute="trailing" constant="326" id="Z4S-OJ-V0H"/>
+                            <constraint firstItem="Odv-Cd-VLp" firstAttribute="top" secondItem="dVg-yg-myC" secondAttribute="bottom" constant="20" id="cjI-lR-I7R"/>
+                            <constraint firstItem="9TI-7f-UH8" firstAttribute="width" secondItem="9TI-7f-UH8" secondAttribute="height" multiplier="1:1" id="dwF-6D-a6d"/>
+                            <constraint firstItem="dVg-yg-myC" firstAttribute="top" secondItem="g4Q-YV-BvA" secondAttribute="bottom" constant="20" id="fGo-7h-gMc"/>
+                            <constraint firstItem="dVg-yg-myC" firstAttribute="trailing" secondItem="g4Q-YV-BvA" secondAttribute="trailing" id="fUS-rc-qMt"/>
+                            <constraint firstItem="9TI-7f-UH8" firstAttribute="trailing" secondItem="g4Q-YV-BvA" secondAttribute="trailing" id="nxs-q9-Z8v"/>
+                            <constraint firstItem="dVg-yg-myC" firstAttribute="leading" secondItem="g4Q-YV-BvA" secondAttribute="leading" id="p07-WO-dpE"/>
+                            <constraint firstItem="2uY-DE-HsU" firstAttribute="top" secondItem="FO0-ZF-J2b" secondAttribute="bottom" constant="50" id="rpc-eu-coA"/>
+                            <constraint firstItem="FO0-ZF-J2b" firstAttribute="top" secondItem="Xnp-Up-bV8" secondAttribute="top" constant="50" id="t61-l0-6p5"/>
+                            <constraint firstItem="g4Q-YV-BvA" firstAttribute="height" secondItem="4AN-Ps-4mo" secondAttribute="height" multiplier="0.3" id="vya-Tr-ZzI"/>
+                            <constraint firstItem="FO0-ZF-J2b" firstAttribute="leading" secondItem="Xnp-Up-bV8" secondAttribute="leading" constant="50" id="zsV-lm-PXI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Xnp-Up-bV8"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8qM-OO-sSF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1333.9677891654464" y="792.7734375"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="d9T-HP-BZ2">
             <objects>
@@ -250,6 +331,7 @@
         <segue reference="Xth-NZ-tkX"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.up.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="text.justify" catalog="system" width="128" height="100"/>
     </resources>
