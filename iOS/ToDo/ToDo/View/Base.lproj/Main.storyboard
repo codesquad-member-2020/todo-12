@@ -248,6 +248,9 @@
                                 <rect key="frame" x="50" y="50" width="53" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPushed:" destination="GNu-Jw-Jo3" eventType="touchUpInside" id="d6k-ak-28c"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2uY-DE-HsU">
                                 <rect key="frame" x="50" y="133" width="279" height="50"/>

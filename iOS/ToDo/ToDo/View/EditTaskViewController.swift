@@ -10,6 +10,10 @@ import UIKit
 
 class EditTaskViewController: UIViewController {
     
+    @IBAction func cancelButtonPushed(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
