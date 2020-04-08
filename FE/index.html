@@ -34,7 +34,7 @@
               <span class="action__author"><strong>ellin</strong></span> 
               <span>meved</span>
               <span class="action__todo"><strong>공부하기</strong></span>
-              <span>form <strong>To do</strong>to<strong>하는중<strong></span>
+              <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
             </div>
             <div class="activity__time">
               <span>1 minute ago</span>
@@ -61,7 +61,7 @@
           <!-- add 입력창 -->
           <div id="add__todo">
             <div class="add__input">
-             <textarea name="" id="" cols="30" rows="10" maxlength="500"></textarea>
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
             </div>
           <div class="add__btn">
               <button class="btn__add">Add</button>
@@ -100,9 +100,9 @@
           </div>
           
           <!-- add 입력창 -->
-          <div id="add__inprogress">
+          <div id="add__todo">
             <div class="add__input">
-             <textarea name="" id="" cols="30" rows="10" maxlength="500"></textarea>
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
             </div>
           <div class="add__btn">
               <button class="btn__add">Add</button>
@@ -140,17 +140,17 @@
             </button>
           </div>
 
-            <!-- add 입력창 -->
-            <div id="add__done">
-              <div class="add__input">
-               <textarea name="" id="" cols="30" rows="10" maxlength="500"></textarea>
-              </div>
-            <div class="add__btn">
-                <button class="btn__add">Add</button>
-                <button class="btn__cancel">Cancel</button>
-             </div>
+          <!-- add 입력창 -->
+          <div id="add__todo">
+            <div class="add__input">
+             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
+            </div>
+          <div class="add__btn">
+              <button class="btn__add">Add</button>
+              <button class="btn__cancel">Cancel</button>
            </div>
-            <!-- //add 입력창 -->
+         </div>
+          <!-- //add 입력창 -->
 
           <ul class="todo__list">
             <li class="todo__card">
@@ -181,7 +181,7 @@
         <div class="popup__contents">
           <h4 class="popup__note">Note</h4>
           <div class="contents__input">
-            <textarea name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea>
+            <textarea name="" id="" cols="40" rows="10" maxlength="100" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
           </div>
           <div class="save__button">
             <button type="button">save note</button>
@@ -204,7 +204,7 @@
         <div class="edit-title__contents">
           <h4 class="edit-title__name">Column name</h4>
           <div class="contents__input">
-            <textarea name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea>
+            <textarea name="" id="" cols="40" rows="2" maxlength="50" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
           </div>
           <div class="edit-title__update-btn">
             <button type="button">Update column</button>
