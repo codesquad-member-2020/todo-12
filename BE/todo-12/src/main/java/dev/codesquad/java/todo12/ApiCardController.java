@@ -21,14 +21,14 @@ public class ApiCardController {
 
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
-        Card card = cardRepository.findById(id).orElseThrow(null);
+        Card card = getCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
     //Post
     @GetMapping("/create/{categoryId}")
     public ResponseEntity create(@PathVariable Long categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(null);
+        Category category = getCategory(categoryId);
         Card card = new Card("input_title","input_content");
         category.addCard(card);
         categoryRepository.save(category);
@@ -38,7 +38,7 @@ public class ApiCardController {
     //Put
     @GetMapping("/update/{id}")
     public ResponseEntity update(@PathVariable Long id) {
-        Card card = cardRepository.findById(id).orElseThrow(null);
+        Card card = getCard(id);
         card.update("input_content");
         cardRepository.save(card);
         return new ResponseEntity(card, HttpStatus.OK);
@@ -46,9 +46,23 @@ public class ApiCardController {
 
     @GetMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-        Card card = cardRepository.findById(id).orElseThrow(null);
+        Card card = getCard(id);
         card.delete();
         cardRepository.save(card);
         return new ResponseEntity(card, HttpStatus.OK);
+    }
+
+    private Card getCard(Long id) {
+        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+    }
+
+    private Category getCategory(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private String catchDataNotFoundException(DataNotFoundException e) {
+        return e.getMessage();
     }
 }
