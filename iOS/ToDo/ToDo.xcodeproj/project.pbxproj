@@ -25,7 +25,6 @@
 		A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288B243B64A2008A75EF /* TaskViewController.swift */; };
 		A5D92890243C4AD7008A75EF /* TodoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288F243C4AD7008A75EF /* TodoDataSource.swift */; };
 		A5D92892243C4B56008A75EF /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92891243C4B56008A75EF /* TaskCell.swift */; };
-		A5E451FE243F36430067B917 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E451FD243F36430067B917 /* CardManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +60,6 @@
 		A5D9288B243B64A2008A75EF /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		A5D9288F243C4AD7008A75EF /* TodoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDataSource.swift; sourceTree = "<group>"; };
 		A5D92891243C4B56008A75EF /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
-		A5E451FD243F36430067B917 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +87,6 @@
 				A53B1D11243EFA1600A22F9C /* Model.swift */,
 				A53B1D13243EFA2900A22F9C /* Category.swift */,
 				A53B1D15243EFABE00A22F9C /* Card.swift */,
-				A5E451FD243F36430067B917 /* CardManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -300,7 +297,6 @@
 				A5D92892243C4B56008A75EF /* TaskCell.swift in Sources */,
 				A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
-				A5E451FE243F36430067B917 /* CardManager.swift in Sources */,
 				A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */,
 				A53B1D16243EFABE00A22F9C /* Card.swift in Sources */,
 				A53B1D14243EFA2900A22F9C /* Category.swift in Sources */,
