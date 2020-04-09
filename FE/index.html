@@ -12,11 +12,13 @@
   </head>
 
   <body>
-    <div class="wrap">
+    <div id="wrap">
       <header id="header" class="flex">
         <h1>TODO 서비스</h1>
         <button type="button" class="header__menu-btn">menu</button>
       </header>
+
+      <!-- menu -->
       <div id="activity-menu">
         <h2 class="blind">활동 메뉴</h2>
         <div class="activity-menu__header flex">
@@ -50,6 +52,8 @@
           </li>
         </ul>
       </div>
+      <!-- //menu -->
+
       <main id="todo" class="flex">
         <section id="todo__todo" class="todo__column">
           <h2 class="blind">To do</h2>
@@ -206,10 +210,16 @@
     </div>
     <script>
       const menuBtn = document.querySelector('.header__menu-btn');
+      const menu = document.querySelector('#activity-menu');
       menuBtn.addEventListener('click', ()=>{
-        const menu = document.querySelector('#activity-menu');
+        menu.classList.add('a');
         menu.style.display = 'block';
          menu.style.right = '0'; 
+      })
+
+      const close = document.querySelector('.activity-menuu__column button');
+      close.addEventListener('click', () => {
+        menu.style.display = 'none'
       })
     </script>
   </body>

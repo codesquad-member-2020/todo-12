@@ -1,6 +1,7 @@
 #activity-menu {
   position: absolute;
   top: 0;
+  /* right: -360px; */
   width: 360px;
   height: 100vh;
   display: none;
@@ -19,6 +20,15 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes slideout {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(400px);
   }
 }
 
