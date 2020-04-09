@@ -26,6 +26,10 @@ public class Category {
         cards.add(card);
     }
 
+    public void update(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Category{" +

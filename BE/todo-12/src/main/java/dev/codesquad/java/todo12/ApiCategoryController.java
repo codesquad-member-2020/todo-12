@@ -21,4 +21,12 @@ public class ApiCategoryController {
         Category category = categoryRepository.findById(id).orElseThrow(null);
         return category;
     }
+
+    @GetMapping("/update/{id}")
+    public Category update(@PathVariable Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(null);
+        category.update("input_category_name");
+        categoryRepository.save(category);
+        return category;
+    }
 }
