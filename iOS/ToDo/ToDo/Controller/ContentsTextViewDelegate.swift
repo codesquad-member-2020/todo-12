@@ -17,7 +17,7 @@ class ContentsTextViewDelegate: NSObject, UITextViewDelegate {
         if textView.textColor == UIColor.gray {
             textView.text = ""
         }
-        textView.textColor = .black
+        textView.textColor = .label
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

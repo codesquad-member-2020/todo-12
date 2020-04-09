@@ -13,6 +13,11 @@ class EditTaskViewController: UIViewController {
     @IBAction func cancelButtonPushed(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    
+    @IBAction func editButtonPushed(_ sender: UIButton) {
+        
+    }
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var limitLabel: UILabel!
@@ -38,7 +43,7 @@ class EditTaskViewController: UIViewController {
         let count = "\(contentsTextView.text.count)"
         let limit = "\(contentsTextView.text.count) / \(contentsTextViewDelegate.limit)"
         let attributedString = NSMutableAttributedString(string: limit)
-        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: factor ? UIColor.black : UIColor.red, range: (limit as NSString).range(of: count))
+        attributedString.addAttribute(.foregroundColor, value: factor ? UIColor.label : UIColor.red, range: (limit as NSString).range(of: count))
 
         limitLabel.attributedText = attributedString
     }
