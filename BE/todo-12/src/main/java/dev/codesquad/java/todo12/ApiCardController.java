@@ -3,6 +3,8 @@ package dev.codesquad.java.todo12;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,35 +20,35 @@ public class ApiCardController {
     CardRepository cardRepository;
 
     @GetMapping("/{id}")
-    public Card view(@PathVariable Long id) {
+    public ResponseEntity view(@PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
-        return card;
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 
     //Post
     @GetMapping("/create/{categoryId}")
-    public Card create(@PathVariable Long categoryId) {
+    public ResponseEntity create(@PathVariable Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(null);
         Card card = new Card("input_title","input_content");
         category.addCard(card);
         categoryRepository.save(category);
-        return card;
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 
     //Put
     @GetMapping("/update/{id}")
-    public Card update(@PathVariable Long id) {
+    public ResponseEntity update(@PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
         card.update("input_content");
         cardRepository.save(card);
-        return card;
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
-    public Card delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
         card.delete();
         cardRepository.save(card);
-        return card;
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 }
