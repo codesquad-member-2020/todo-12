@@ -19,6 +19,7 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     }
     
     private let dataSource = TodoDataSource()
+    public var model: Category?
     
     override func viewDidLoad() {
         super.viewDidLoad()
