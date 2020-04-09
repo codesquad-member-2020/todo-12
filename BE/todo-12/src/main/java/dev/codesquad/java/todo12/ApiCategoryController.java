@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
@@ -14,6 +16,11 @@ public class ApiCategoryController {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @GetMapping("")
+    public ResponseEntity viewAll() {
+        return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {

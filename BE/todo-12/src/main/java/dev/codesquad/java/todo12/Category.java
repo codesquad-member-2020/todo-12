@@ -13,14 +13,10 @@ public class Category {
     private Long id;
     private String name;
     private List<Card> cards = new ArrayList<>();
-    private int cardsCount;
-    private boolean valid;
     private boolean deleted;
 
     public Category(String name) {
         this.name = name;
-        this.cardsCount = 0;
-        this.valid = true;
         this.deleted = false;
     }
 
@@ -42,8 +38,7 @@ public class Category {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cards=" + cards +
-                ", cardsCount=" + cardsCount +
-                ", valid=" + valid +
+                ", deleted=" + deleted +
                 '}';
     }
 }

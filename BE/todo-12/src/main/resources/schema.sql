@@ -6,8 +6,6 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE category  (
   id int primary key auto_increment,
   name varchar(32) not null,
-  cards_count int,
-  valid boolean,
   deleted boolean
 );
 

@@ -1,6 +1,6 @@
-insert into category(name, cards_count, valid, deleted) values ('Todo', 2, true, false);
-insert into category(name, cards_count, valid, deleted) values ('InProgress', 0, false, false);
-insert into category(name, cards_count, valid, deleted) values ('Done', 1, true, false);
+insert into category(name, deleted) values ('Todo', false);
+insert into category(name, deleted) values ('InProgress', false);
+insert into category(name, deleted) values ('Done', false);
 
 insert into card(title, content, author, deleted, category, category_key) values ('1번제목', '1번내용', '1번저자', false, 2, 0);
 insert into card(title, content, author, deleted, category, category_key) values ('2번제목', '2번내용', '2번저자', false, 2, 1);
