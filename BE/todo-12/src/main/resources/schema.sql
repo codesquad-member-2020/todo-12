@@ -1,20 +1,14 @@
-DROP TABLE IF EXISTS kanban;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS card;
 DROP TABLE IF EXISTS history;
 DROP TABLE IF EXISTS user;
-
-CREATE TABLE kanban  (
-  id int primary key auto_increment
-);
 
 CREATE TABLE category  (
   id int primary key auto_increment,
   name varchar(32) not null,
   cards_count int,
   valid boolean,
-  kanban int references kanban(id),
-  kanban_key int
+  deleted boolean
 );
 
 CREATE TABLE card  (

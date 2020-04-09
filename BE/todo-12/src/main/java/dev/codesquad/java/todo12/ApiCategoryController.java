@@ -29,6 +29,23 @@ public class ApiCategoryController {
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
+    // Post
+    @GetMapping("/create")
+    public ResponseEntity create() {
+        Category category = new Category("input_category_name");
+        categoryRepository.save(category);
+        return new ResponseEntity(category, HttpStatus.OK);
+    }
+
+    // Delete
+    @GetMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        Category category = getCategory(id);
+        category.delete();
+        categoryRepository.save(category);
+        return new ResponseEntity(category, HttpStatus.OK);
+    }
+
     private Category getCategory(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }

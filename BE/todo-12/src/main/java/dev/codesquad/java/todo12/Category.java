@@ -15,15 +15,21 @@ public class Category {
     private List<Card> cards = new ArrayList<>();
     private int cardsCount;
     private boolean valid;
+    private boolean deleted;
 
-    public Category(String name, boolean valid) {
+    public Category(String name) {
         this.name = name;
         this.cardsCount = 0;
-        this.valid = valid;
+        this.valid = true;
+        this.deleted = false;
     }
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 
     public void update(String name) {
