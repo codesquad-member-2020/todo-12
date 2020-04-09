@@ -14,22 +14,25 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var taskTabelView: UITableView!
     
     @IBAction func addTaskButtonPushed(_ sender: UIButton) {
-        dataSource.model.append(dataSource.model[dataSource.model.count - 1] + 1)
         taskTabelView.reloadData()
     }
     
     private let dataSource = TodoDataSource()
-    public var model: Category?
+    private var cardManager: CardManager?
+    public var model: Category? {
+        didSet {
+            cardManager = CardManager(cards: model?.cards ?? [Card]())
+            totalTaskLabel.text = String(cardManager?.count ?? 0)
+            dataSource.model = cardManager
+            taskTabelView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelRadius()
         taskTabelView.dataSource = dataSource
         taskTabelView.delegate = self
-        totalTaskLabel.text = String(taskTabelView.numberOfRows(inSection: 0))
-        dataSource.handler = {
-            self.totalTaskLabel.text = String(self.dataSource.model.count)
-        }
     }
     
     private func setLabelRadius() {
@@ -40,7 +43,6 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
-            self.dataSource.model.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         })

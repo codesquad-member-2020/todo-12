@@ -11,22 +11,20 @@ import UIKit
 class TodoDataSource: NSObject, UITableViewDataSource {
     
     private let contextDelegate = ContextMenuDelegate()
-    var handler: () -> () = {}
-    var model = [1,2,3,4,5,6,7,8,9,10] {
-        didSet {
-            handler()
-        }
-    }
+    var model: CardManager?
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.count
+        return model?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as? TaskCell else {return UITableViewCell()}
         
-        cell.titleLabel.text = String(model[indexPath.row])
+        cell.titleLabel.text = model?.title(of: indexPath.row)
+        cell.contentLabel.text = model?.content(of: indexPath.row)
+        cell.authorLabel.text = model?.author(of: indexPath.row)
+        s
         let interaction = UIContextMenuInteraction(delegate: contextDelegate)
         cell.addInteraction(interaction)
         return cell

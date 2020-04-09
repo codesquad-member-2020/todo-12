@@ -14,8 +14,8 @@ class CardManager {
         return cards.count
     }
     
-    init() {
-        cards = [Card]()
+    init(cards: [Card]) {
+        self.cards = cards
     }
     
     func title(of index: Int) -> String {
