@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     private var todoViewController: TaskViewController?
     private var inProgressViewController: TaskViewController?
     private var doneViewController: TaskViewController?
@@ -35,18 +37,17 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadModel() {
+    private func loadModel() {
         NetworkConnection.request(resource: endPoint + "/mockup", errorHandler: {}) {
             let decoder = JSONDecoder()
             do {
                 let model = try decoder.decode(Model.self, from: $0)
                 DispatchQueue.main.async {
-                    self.todoViewController?.model = model.categories[0]
-                    self.todoViewController?.taskTabelView.reloadData()
-                    self.inProgressViewController?.model = model.categories[1]
-                    self.inProgressViewController?.taskTabelView.reloadData()
-                    self.doneViewController?.model = model.categories[2]
-                    self.doneViewController?.taskTabelView.reloadData()
+                    self.setModel(viewController: self.todoViewController, model: model, index: 0)
+                    self.setModel(viewController: self.inProgressViewController, model: model, index: 1)
+                    self.setModel(viewController: self.doneViewController, model: model, index: 2)
+                    self.activityIndicator.isHidden = true
+                    self.menuButton.isEnabled = true
                 }
             } catch {
                 let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "뭔가 문제가 발생한 것 같습니다ㅠㅠ", preferredStyle: .alert)
@@ -55,6 +56,13 @@ class ViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }
+    }
+    
+    private func setModel(viewController: TaskViewController?, model: Model, index: Int) {
+        viewController?.model = model.categories[index]
+        viewController?.taskTabelView.reloadData()
+        viewController?.titleLabel.text = model.categories[index].name
+        viewController?.addTaskButton.isEnabled = true
     }
 }
 

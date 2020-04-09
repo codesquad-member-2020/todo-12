@@ -12,7 +12,8 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var totalTaskLabel: UILabel!
     @IBOutlet weak var taskTabelView: UITableView!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var addTaskButton: UIButton!
     @IBAction func addTaskButtonPushed(_ sender: UIButton) {
         model?.append(card: Card(id: 0, title: "추가된 제목", content: "추가된 내용", author: "author by iOS"))
         let indexPath = IndexPath(row: taskTabelView.numberOfRows(inSection: 0), section: 0)
