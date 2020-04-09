@@ -23,7 +23,7 @@ class TodoDataSource: NSObject, UITableViewDataSource {
         
         cell.titleLabel.text = model?.title(of: indexPath.row)
         cell.contentLabel.text = model?.content(of: indexPath.row)
-        cell.authorLabel.text = model?.author(of: indexPath.row)
+        cell.authorLabel.text = "author by " + ((model?.author(of: indexPath.row)) ?? "")
         
         let interaction = UIContextMenuInteraction(delegate: contextDelegate)
         cell.addInteraction(interaction)
