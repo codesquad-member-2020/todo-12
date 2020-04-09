@@ -26,6 +26,9 @@ class TaskViewController: UIViewController, UITableViewDelegate {
         taskTabelView.dataSource = dataSource
         taskTabelView.delegate = self
         totalTaskLabel.text = String(taskTabelView.numberOfRows(inSection: 0))
+        dataSource.handler = {
+            self.totalTaskLabel.text = String(self.dataSource.model.count)
+        }
     }
     
     private func setLabelRadius() {

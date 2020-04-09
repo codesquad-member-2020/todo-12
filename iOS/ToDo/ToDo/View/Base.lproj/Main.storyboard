@@ -261,6 +261,9 @@
                                 <rect key="frame" x="349" y="143" width="30" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" image="arrow.up.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="editButtonPushed:" destination="GNu-Jw-Jo3" eventType="touchUpInside" id="NYW-9X-c05"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="g4Q-YV-BvA">
                                 <rect key="frame" x="50" y="233" width="329" height="280"/>
