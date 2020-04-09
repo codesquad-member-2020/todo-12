@@ -19,28 +19,29 @@ public class ApiCardController {
     @Autowired
     CardRepository cardRepository;
 
-    @GetMapping("/view/{id}")
-    public Category view(@PathVariable Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(null);
+    @GetMapping("/view/{categoryId}")
+    public Category view(@PathVariable Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(null);
         return category;
     }
 
-    @GetMapping("/create/{name}/card")
-    public Category create(@PathVariable String name) {
-        logger.info("result: {}", name);
-        Category category = cardRepository.findCategoryByName(name).orElseThrow(null);
-        Card card = new Card("test","test","test");
+    //Post
+    @GetMapping("/create/{categoryId}/card")
+    public Category create(@PathVariable Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(null);
+        Card card = new Card("input_title","input_content");
         category.addCard(card);
         categoryRepository.save(category);
         return category;
     }
 
-    @GetMapping("/update/{name}/card/{id}/{content}")
-    public Category update(@PathVariable String name, @PathVariable Long id, @PathVariable String content) {
+    //Put
+    @GetMapping("/update/{categoryId}/card/{id}")
+    public Category update(@PathVariable Long categoryId,@PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
-        card.update(content);
+        card.update("input_content");
         cardRepository.save(card);
-        Category category = cardRepository.findCategoryByName(name).orElseThrow(null);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(null);
         return category;
     }
 
@@ -48,7 +49,7 @@ public class ApiCardController {
     public Category delete(@PathVariable String name, @PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
         cardRepository.delete(card);
-        Category category = cardRepository.findCategoryByName(name).orElseThrow(null);
+        Category category = categoryRepository.findCategoryByName(name).orElseThrow(null);
         return category;
     }
 }

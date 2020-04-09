@@ -18,10 +18,10 @@ public class Card {
     private String createTime;
     private String modifiedTime;
 
-    public Card(String title, String content, String author) {
+    public Card(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.author = null;
         this.createTime = seoulTime();
         this.modifiedTime = seoulTime();
     }
