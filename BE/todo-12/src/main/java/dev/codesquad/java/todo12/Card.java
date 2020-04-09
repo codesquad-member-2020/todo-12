@@ -30,6 +30,10 @@ public class Card {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
+    public void update(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "Card{" +
