@@ -17,6 +17,7 @@ CREATE TABLE card  (
   author varchar (32),
   create_time datetime,
   modified_time datetime,
+  deleted boolean,
   category int references category(id),
   category_key int
 );

@@ -17,6 +17,7 @@ public class Card {
     private String author;
     private String createTime;
     private String modifiedTime;
+    private boolean deleted;
 
     public Card(String title, String content) {
         this.title = title;
@@ -24,6 +25,7 @@ public class Card {
         this.author = null;
         this.createTime = seoulTime();
         this.modifiedTime = seoulTime();
+        this.deleted = false;
     }
 
     private static String seoulTime() {
@@ -34,6 +36,10 @@ public class Card {
         this.content = content;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     @Override
     public String toString() {
         return "Card{" +
@@ -41,8 +47,9 @@ public class Card {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
-                ", createTime=" + createTime +
-                ", modifiedTime=" + modifiedTime +
+                ", createTime='" + createTime + '\'' +
+                ", modifiedTime='" + modifiedTime + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }

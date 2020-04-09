@@ -42,11 +42,11 @@ public class ApiCardController {
         return card;
     }
 
-    @GetMapping("/delete/{name}/card/{id}")
-    public Category delete(@PathVariable String name, @PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public Card delete(@PathVariable Long id) {
         Card card = cardRepository.findById(id).orElseThrow(null);
-        cardRepository.delete(card);
-        Category category = categoryRepository.findCategoryByName(name).orElseThrow(null);
-        return category;
+        card.delete();
+        cardRepository.save(card);
+        return card;
     }
 }
