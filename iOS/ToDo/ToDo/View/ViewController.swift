@@ -42,8 +42,11 @@ class ViewController: UIViewController {
                 let model = try decoder.decode(Model.self, from: $0)
                 DispatchQueue.main.async {
                     self.todoViewController?.model = model.categories[0]
+                    self.todoViewController?.taskTabelView.reloadData()
                     self.inProgressViewController?.model = model.categories[1]
+                    self.inProgressViewController?.taskTabelView.reloadData()
                     self.doneViewController?.model = model.categories[2]
+                    self.doneViewController?.taskTabelView.reloadData()
                 }
             } catch {
                 let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "뭔가 문제가 발생한 것 같습니다ㅠㅠ", preferredStyle: .alert)

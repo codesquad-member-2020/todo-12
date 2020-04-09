@@ -11,7 +11,7 @@ import UIKit
 class TodoDataSource: NSObject, UITableViewDataSource {
     
     private let contextDelegate = ContextMenuDelegate()
-    var model: CardManager?
+    var model: Category?
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,7 +24,7 @@ class TodoDataSource: NSObject, UITableViewDataSource {
         cell.titleLabel.text = model?.title(of: indexPath.row)
         cell.contentLabel.text = model?.content(of: indexPath.row)
         cell.authorLabel.text = model?.author(of: indexPath.row)
-        s
+        
         let interaction = UIContextMenuInteraction(delegate: contextDelegate)
         cell.addInteraction(interaction)
         return cell

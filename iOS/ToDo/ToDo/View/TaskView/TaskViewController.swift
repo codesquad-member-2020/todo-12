@@ -14,17 +14,17 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var taskTabelView: UITableView!
     
     @IBAction func addTaskButtonPushed(_ sender: UIButton) {
-        taskTabelView.reloadData()
+        model?.append(card: Card(id: 0, title: "추가된 제목", content: "추가된 내용", author: "author by iOS"))
+        let indexPath = IndexPath(row: taskTabelView.numberOfRows(inSection: 0), section: 0)
+        taskTabelView.insertRows(at: [indexPath], with: .automatic)
     }
     
     private let dataSource = TodoDataSource()
-    private var cardManager: CardManager?
+    
     public var model: Category? {
         didSet {
-            cardManager = CardManager(cards: model?.cards ?? [Card]())
-            totalTaskLabel.text = String(cardManager?.count ?? 0)
-            dataSource.model = cardManager
-            taskTabelView.reloadData()
+            totalTaskLabel.text = String(model?.count ?? 0)
+            dataSource.model = model
         }
     }
     
@@ -43,6 +43,8 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
+            
+            self.model?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         })
