@@ -19,6 +19,12 @@ public class ApiCardController {
     @Autowired
     CardRepository cardRepository;
 
+    @GetMapping("/view/{id}")
+    public Category view(@PathVariable Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(null);
+        return category;
+    }
+
     @GetMapping("/create/{name}/card")
     public Category create(@PathVariable String name) {
         logger.info("result: {}", name);
