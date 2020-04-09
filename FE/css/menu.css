@@ -1,3 +1,56 @@
+.header__menu-btn:hover {
+}
+#activity-menu {
+  position: absolute;
+  top: 0;
+  width: 360px;
+  min-height: 88vh;
+  display: none;
+  /* 스크롤 안생기고 100% 채우는 방법은? */
+
+  animation-name: slidein;
+  animation-duration: 0.2s;
+  background-color: #fff;
+  box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
+  border: 1px solid #dee3eb;
+  font-size: 14px;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translateX(400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 #activity-menu .activity-menu__header {
-  display: flex;
+  padding: 8px 16px;
+  height: 40px;
+  border: inherit;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #edf1f5;
+  font-weight: bold;
+}
+
+#activity-menu .activity-menu__activity {
+  padding: 20px;
+  line-height: 20px;
+  border-bottom: 1px solid #dee3eb;
+}
+
+#activity-menu .action__author > strong,
+#activity-menu .action__todo > strong {
+  color: #0366d6;
+}
+
+#activity-menu .activity__action strong {
+  font-weight: bold;
+}
+
+#activity-menu .activity__time {
+  font-size: 12px;
+  color: #6a737d;
 }
