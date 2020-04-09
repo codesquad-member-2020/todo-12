@@ -1,19 +1,16 @@
-.header__menu-btn:hover {
-}
 #activity-menu {
   position: absolute;
   top: 0;
   width: 360px;
-  min-height: 88vh;
+  height: 100vh;
   display: none;
-  /* 스크롤 안생기고 100% 채우는 방법은? */
-
   animation-name: slidein;
   animation-duration: 0.2s;
   background-color: #fff;
   box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
   border: 1px solid #dee3eb;
   font-size: 14px;
+  overflow: auto;
 }
 
 @keyframes slidein {

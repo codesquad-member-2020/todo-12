@@ -48,17 +48,6 @@
               <span class="activity__time">1 minute ago</span>
             </div>
           </li>
-          <li class="activity-menu__activity">
-            <div class="activity__action">
-              <span class="action__author"><strong>ellin</strong></span> 
-              <span>meved</span>
-              <span class="action__todo"><strong>공부하dfdfdfdfdf기</strong></span>
-              <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
-            </div>
-            <div>
-              <span class="activity__time">1 minute ago</span>
-            </div>
-          </li>
         </ul>
       </div>
       <main id="todo" class="flex">
@@ -80,33 +69,17 @@
         </div>
           <!-- add 입력창 -->
           <div id="add__todo">
-            <div class="add__input">
-             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
+            <div class="input-box">
+              <textarea name="" id="" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" class="add__input"></textarea>
             </div>
           <div class="add__btn">
-              <button class="btn__add">Add</button>
-              <button class="btn__cancel">Cancel</button>
+              <button type="button" class="btn__green">Add</button>
+              <button type="button" class="btn__cancel">Cancel</button>
            </div>
          </div>
           <!-- //add 입력창 -->
 
           <ul class="column__cards">
-            <li class="column__card flex">
-                <div class="card__left flex">
-                   <div class="card__contents">
-                      <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">할일내용</span>
-                   </div>
-                   <div class="card__btn">
-                    <button type="button" class="close-btn">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <span class="card__author">Added by<strong> 작성자</strong></span>
-                </div>
-            </li>
             <li class="column__card flex">
                 <div class="card__left flex">
                    <div class="card__contents">
@@ -143,17 +116,6 @@
           </div>
         </div>
           
-          <!-- add 입력창 -->
-          <div id="add__todo">
-            <div class="add__input">
-             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
-            </div>
-          <div class="add__btn">
-              <button class="btn__add">Add</button>
-              <button class="btn__cancel">Cancel</button>
-           </div>
-         </div>
-          <!-- //add 입력창 -->
           <ul class="column__cards">
             <li class="column__card flex">
                 <div class="card__left flex">
@@ -190,18 +152,6 @@
             </div>
           </div>
 
-          <!-- add 입력창 -->
-          <div id="add__todo">
-            <div class="add__input">
-             <textarea name="" id="" cols="40" rows="5" maxlength="500" aria-label="내용을 입력하세요" placeholder="내용을 입력하세요"></textarea>
-            </div>
-          <div class="add__btn">
-              <button class="btn__add">Add</button>
-              <button class="btn__cancel">Cancel</button>
-           </div>
-         </div>
-          <!-- //add 입력창 -->
-
           <ul class="column__cards">
             <li class="column__card flex">
                 <div class="card__left flex">
@@ -232,51 +182,27 @@
       </main>
       
          <!--Edit note popup -->
-    <div class="popup__todo">
+    <div id="popup__todo">
       <div class="popup__shadow">그림자</div>
       <div class="popup__container">
-        <div class="popup__header">
+        <div class="popup__header flex">
           <h3 class="popup__title">Edit note</h3>
           <div class="popup__close">
-            <button type="button"><i class="fas fa-times"></i></button>
+            <button type="button" class="close-btn"><i class="fas fa-times"></i></button>
           </div>
         </div>
         <div class="popup__contents">
           <h4 class="popup__note">Note</h4>
-          <div class="contents__input">
-            <textarea name="" id="" cols="40" rows="10" maxlength="100" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
+          <div class="input-box">
+            <textarea name="" id="" maxlength="100" class="popup__input" aria-label="내용을 입력하세요" placeholder="Enter a note"></textarea>
           </div>
-          <div class="save__button">
-            <button type="button">save note</button>
+          <div>
+            <button type="button"  class="btn__green">save note</button>
           </div>
         </div>
       </div>
     </div>
        <!--//Edit note popup -->
-
-   <!--Edit title popup -->
-    <div class="popup__edit-title">
-      <div class="edit-title__shadow">그림자</div>
-      <div class="edit-title__container">
-        <div class="edit-title__header">
-          <h3 class="edit-title__title">Edit <span>done</span></h3>
-          <div class="edit-title__close">
-            <button type="button"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="edit-title__contents">
-          <h4 class="edit-title__name">Column name</h4>
-          <div class="contents__input">
-            <textarea name="" id="" cols="40" rows="2" maxlength="50" aria-label="내용을 입력하세요" placeholder="내용을 입력해주세요."></textarea>
-          </div>
-          <div class="edit-title__update-btn">
-            <button type="button">Update column</button>
-          </div>
-        </div>
-      </div>
-    </div>
-       <!--//Edit title popup -->
-
     </div>
     <script>
       const menuBtn = document.querySelector('.header__menu-btn');

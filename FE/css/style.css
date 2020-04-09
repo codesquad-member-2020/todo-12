@@ -1,10 +1,7 @@
 @import "reset.css";
-@import "modal.css";
+@import "popup.css";
 @import "menu.css";
-/* 
- #activity-menu {
-  outline: red solid 1px;
-}  */
+@import "add.css";
 
 .flex {
   display: flex;
@@ -32,12 +29,12 @@ h1 {
 #todo {
   justify-content: space-evenly;
   padding: 1%;
-  height: 85vh;
 }
 
 #todo .todo__column {
   padding: 16px;
-  height: 100%;
+  height: 85vmin;
+  overflow: auto;
   width: 22%;
   border-radius: 6px;
   border: 1px solid #e1e4e8;
@@ -115,17 +112,11 @@ h1 {
   color: #586069;
 }
 
-#todo .plus-btn:hover,
-#todo .close-btn:hover {
+.plus-btn:hover {
   color: #426fd6;
+}
+
+.plus-btn:hover,
+.close-btn:hover {
   color: #2188ff;
 }
-
-/* 수정하기 */
-/* #project-menu, */
-#add__todo,
-.popup__edit-title {
-  display: none;
-}
-
-/* 클릭시 border에 두께와 색을 주면 크기가 변하는것 방지하는 방법 */
