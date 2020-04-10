@@ -31,6 +31,11 @@ class TaskViewController: UIViewController, UITableViewDelegate {
         dataSource.handler = {
             self.totalTaskLabel.text = String(self.dataSource.model?.count ?? 0)
         }
+        delegate.handler = {
+            guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditTaskViewController else {return}
+            editView.model = self.dataSource.model?.cards[$0]
+            self.present(editView, animated: true)
+        }
     }
     
     private func setLabelRadius() {

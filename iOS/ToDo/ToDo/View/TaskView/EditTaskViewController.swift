@@ -22,16 +22,25 @@ class EditTaskViewController: UIViewController {
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var limitLabel: UILabel!
     
+    var model: Card?
+    
     private let contentsTextViewDelegate = ContentsTextViewDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setPlaceHolder()
         contentsTextView.delegate = contentsTextViewDelegate
+        setupView()
         limitLabel.text = "0 / \(contentsTextViewDelegate.limit)"
         contentsTextViewDelegate.handler = {
             self.updateLimitLabel(factor: $0)
         }
+    }
+    
+    func setupView() {
+        guard let received = model else {return}
+        titleTextField.text = received.title ?? "제목 없음"
+        contentsTextView.text = received.content
     }
     
     func setPlaceHolder() {
