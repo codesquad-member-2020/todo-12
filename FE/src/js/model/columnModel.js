@@ -1,0 +1,3 @@
+class columnModel {
+  constructor() {}
+}

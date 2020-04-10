@@ -1,7 +1,7 @@
 @import "reset.css";
 @import "popup.css";
 @import "menu.css";
-@import "input.css";
+@import "addInput.css";
 
 #header {
   align-items: center;
