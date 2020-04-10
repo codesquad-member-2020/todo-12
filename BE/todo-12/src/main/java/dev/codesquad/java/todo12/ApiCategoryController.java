@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
@@ -31,9 +33,9 @@ public class ApiCategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody String name) {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> categoryInfo) {
         Category category = getCategory(id);
-        category.update(name);
+        category.update(categoryInfo.get("name"));
         categoryRepository.save(category);
         return new ResponseEntity(category, HttpStatus.OK);
     }
