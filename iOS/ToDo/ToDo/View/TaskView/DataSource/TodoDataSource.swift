@@ -10,9 +10,7 @@ import UIKit
 
 class TodoDataSource: NSObject, UITableViewDataSource {
     
-    private let contextDelegate = ContextMenuDelegate()
     var model: Category?
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model?.count ?? 0
@@ -25,8 +23,6 @@ class TodoDataSource: NSObject, UITableViewDataSource {
         cell.contentLabel.text = model?.content(of: indexPath.row)
         cell.authorLabel.text = "author by " + ((model?.author(of: indexPath.row)) ?? "")
         
-        let interaction = UIContextMenuInteraction(delegate: contextDelegate)
-        cell.addInteraction(interaction)
         return cell
     }
 }
