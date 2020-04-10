@@ -10,7 +10,7 @@ CREATE TABLE kanban  (
 
 CREATE TABLE category  (
   id int primary key auto_increment,
-  name varchar(32) not null,
+  name varchar(64) not null,
   deleted boolean,
   kanban int references kanban(id),
   kanban_key int
@@ -18,9 +18,9 @@ CREATE TABLE category  (
 
 CREATE TABLE card  (
   id int primary key auto_increment,
-  title varchar (32),
-  content varchar (32),
-  author varchar (32),
+  title varchar (64),
+  content varchar (128),
+  author varchar (64),
   create_time datetime,
   modified_time datetime,
   deleted boolean,
@@ -32,15 +32,15 @@ CREATE TABLE card  (
 
 CREATE TABLE history  (
   id int primary key auto_increment,
-  user_id varchar (32),
-  action varchar (32) not null,
-  title varchar (32),
-  from_category varchar (32),
-  to_category varchar (32)
+  user_id varchar (64),
+  action varchar (64) not null,
+  title varchar (64),
+  from_category varchar (64),
+  to_category varchar (64)
 );
 
 CREATE TABLE user  (
   id int primary key auto_increment,
-  user_id varchar (32) not null,
-  password varchar (32) not null
+  user_id varchar (64) not null,
+  password varchar (64) not null
 );
