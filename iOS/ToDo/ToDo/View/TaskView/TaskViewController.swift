@@ -12,23 +12,28 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var totalTaskLabel: UILabel!
     @IBOutlet weak var taskTabelView: UITableView!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var addTaskButton: UIButton!
     @IBAction func addTaskButtonPushed(_ sender: UIButton) {
-        dataSource.model.append(dataSource.model[dataSource.model.count - 1] + 1)
-        taskTabelView.reloadData()
+        model?.append(card: Card(id: 0, title: "추가된 제목", content: "추가된 내용", author: "author by iOS"))
+        let indexPath = IndexPath(row: taskTabelView.numberOfRows(inSection: 0), section: 0)
+        taskTabelView.insertRows(at: [indexPath], with: .automatic)
     }
     
     private let dataSource = TodoDataSource()
+    
+    public var model: Category? {
+        didSet {
+            totalTaskLabel.text = String(model?.count ?? 0)
+            dataSource.model = model
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelRadius()
         taskTabelView.dataSource = dataSource
         taskTabelView.delegate = self
-        totalTaskLabel.text = String(taskTabelView.numberOfRows(inSection: 0))
-        dataSource.handler = {
-            self.totalTaskLabel.text = String(self.dataSource.model.count)
-        }
     }
     
     private func setLabelRadius() {
@@ -39,7 +44,8 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
-            self.dataSource.model.remove(at: indexPath.row)
+            
+            self.model?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         })
