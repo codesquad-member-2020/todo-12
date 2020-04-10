@@ -28,10 +28,9 @@ class EditTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setPlaceHolder()
+        //        setPlaceHolder()
         contentsTextView.delegate = contentsTextViewDelegate
         setupView()
-        limitLabel.text = "0 / \(contentsTextViewDelegate.limit)"
         contentsTextViewDelegate.handler = {
             self.updateLimitLabel(factor: $0)
         }
@@ -41,11 +40,17 @@ class EditTaskViewController: UIViewController {
         guard let received = model else {return}
         titleTextField.text = received.title ?? "제목 없음"
         contentsTextView.text = received.content
+        limitLabel.text = "\(received.content.count) / \(contentsTextViewDelegate.limit)"
     }
     
     func setPlaceHolder() {
-        contentsTextView.text = "Contents"
-        contentsTextView.textColor = .gray
+        guard model != nil else {
+            contentsTextView.text = "Contents"
+            contentsTextView.textColor = .gray
+            return
+        }
+        
+        contentsTextView.textColor = .label
     }
     
     func updateLimitLabel(factor: Bool) {
@@ -53,7 +58,7 @@ class EditTaskViewController: UIViewController {
         let limit = "\(contentsTextView.text.count) / \(contentsTextViewDelegate.limit)"
         let attributedString = NSMutableAttributedString(string: limit)
         attributedString.addAttribute(.foregroundColor, value: factor ? UIColor.label : UIColor.red, range: (limit as NSString).range(of: count))
-
+        
         limitLabel.attributedText = attributedString
     }
 }
