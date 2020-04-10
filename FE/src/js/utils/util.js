@@ -50,7 +50,7 @@ export function __(target) {
   };
 }
 
-export const fetchData = async (url, requestOption) => {
+export const fetchData = async (url, requestOption = { method: "GET" }) => {
   const response = await fetch(url, requestOption);
   const json = await response.json();
   const data = await json;

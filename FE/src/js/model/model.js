@@ -13,7 +13,9 @@ class Observable {
     );
   }
 
-  notify(data) {
-    this._observers.forEach((observer) => observer(data));
+  notify(func, data) {
+    this._observers.forEach((observer) => {
+      if (observer === func) observer(data);
+    });
   }
 }

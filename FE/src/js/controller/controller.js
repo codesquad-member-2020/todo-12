@@ -1,4 +1,4 @@
-import { _$, __, _c, __$ } from "../util.js";
+import { fetchData } from "../utils/util.js";
 
 class Controller {
   constructor({ views, models }) {
@@ -7,22 +7,16 @@ class Controller {
   }
 
   init() {
-    this.fetchData("http://15.165.163.174:8080/mock");
+    const initialData = this.fetchData("http://15.165.163.174:8080/mock");
+    this._columnModel.handleInitialData(initialData);
     //history fetch
   }
 
-  fetchData(url, func) {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => _handleResponseData(data.categories));
-  }
 
-  _handleInitialData(initialData) {
-    this._columnModel.setColumnList(initialData);
-    this._columnModel.setCardList(initialData);
-  }
 
-  _handleResponseData(data) {}
+  _handleResponseData({name, id}) {
+    // if(name) this._columnModel.setColumnNameList(id, name);
+
 }
 
 //카드 갯수센다
