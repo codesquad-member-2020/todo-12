@@ -15,14 +15,22 @@ class EditTaskViewController: UIViewController {
     }
     
     @IBAction func editButtonPushed(_ sender: UIButton) {
-        
+        dismiss(animated: true) {
+            self.model?.content = self.contentsTextView.text
+            self.model?.title = self.titleTextField.text
+            guard let index = self.editedModelIndex, let card = self.model else {return}
+            self.handler(index, card)
+        }
     }
+    
+    var handler: (Int, Card) -> () = {_,_  in}
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var limitLabel: UILabel!
     
     var model: Card?
+    var editedModelIndex: Int?
     
     private let contentsTextViewDelegate = ContentsTextViewDelegate()
     
