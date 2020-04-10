@@ -16,21 +16,27 @@ class EditTaskViewController: UIViewController {
     
     @IBAction func editButtonPushed(_ sender: UIButton) {
         dismiss(animated: true) {
-            self.model?.content = self.contentsTextView.text
-            self.model?.title = self.titleTextField.text
-            guard let index = self.editedModelIndex, let card = self.model else {return}
-            self.handler(index, card)
+            let title = self.titleTextField.text ?? "제목 없음"
+            let content = self.contentsTextView.text ?? ""
+            self.model?.content = content
+            self.model?.title = title
+            guard let index = self.editedModelIndex, let card = self.model else {
+                let card = Card(id: 0, title: title, content: content, author: "iOS")
+                self.createHandler(card)
+                return
+            }
+            self.editHandler(index, card)
         }
     }
-    
-    var handler: (Int, Card) -> () = {_,_  in}
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var limitLabel: UILabel!
     
-    var model: Card?
-    var editedModelIndex: Int?
+    public var model: Card?
+    public var editedModelIndex: Int?
+    public var editHandler: (Int, Card) -> () = {_,_  in}
+    public var createHandler: (Card) -> () = {_ in}
     
     private let contentsTextViewDelegate = ContentsTextViewDelegate()
     

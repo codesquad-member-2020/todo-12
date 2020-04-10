@@ -15,9 +15,14 @@ class TaskViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var addTaskButton: UIButton!
     @IBAction func addTaskButtonPushed(_ sender: UIButton) {
-        dataSource.model?.append(card: Card(id: 0, title: "추가된 제목", content: "추가된 내용", author: "author by iOS"))
+        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditTaskViewController else {return}
         let indexPath = IndexPath(row: taskTabelView.numberOfRows(inSection: 0), section: 0)
-        taskTabelView.insertRows(at: [indexPath], with: .automatic)
+
+        editView.createHandler = {
+            self.dataSource.model?.append(card: $0)
+            self.taskTabelView.insertRows(at: [indexPath], with: .automatic)
+        }
+        self.present(editView, animated: true)
     }
     
     let dataSource = TaskDataSource()
@@ -35,7 +40,7 @@ class TaskViewController: UIViewController, UITableViewDelegate {
             guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditTaskViewController else {return}
             editView.model = self.dataSource.model?.cards[$0]
             editView.editedModelIndex = $0
-            editView.handler = {
+            editView.editHandler = {
                 self.dataSource.model?.cards[$0] = $1
                 self.taskTabelView.reloadData()
             }
