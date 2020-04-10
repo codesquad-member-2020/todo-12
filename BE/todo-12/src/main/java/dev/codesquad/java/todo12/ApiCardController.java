@@ -25,26 +25,24 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    //Post
-    @GetMapping("/create/{categoryId}")
-    public ResponseEntity create(@PathVariable Long categoryId) {
+    @PostMapping("/create/{categoryId}")
+    public ResponseEntity create(@PathVariable Long categoryId, @RequestBody String title, @RequestBody String content) {
         Category category = getCategory(categoryId);
-        Card card = new Card("input_title","input_content");
+        Card card = new Card(title, content);
         category.addCard(card);
         categoryRepository.save(category);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    //Put
-    @GetMapping("/update/{id}")
-    public ResponseEntity update(@PathVariable Long id) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody String content) {
         Card card = getCard(id);
-        card.update("input_content");
+        card.update(content);
         cardRepository.save(card);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
         card.delete();

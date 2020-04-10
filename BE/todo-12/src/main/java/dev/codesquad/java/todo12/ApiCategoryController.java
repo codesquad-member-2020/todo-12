@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
@@ -17,9 +15,13 @@ public class ApiCategoryController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    KanbanRepository kanbanRepository;
+
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity(getKanban(1L), HttpStatus.OK);
+        //return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -28,24 +30,22 @@ public class ApiCategoryController {
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
-    @GetMapping("/update/{id}")
-    public ResponseEntity update(@PathVariable Long id) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody String name) {
         Category category = getCategory(id);
-        category.update("input_category_name");
+        category.update(name);
         categoryRepository.save(category);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
-    // Post
-    @GetMapping("/create")
-    public ResponseEntity create() {
-        Category category = new Category("input_category_name");
+    @PostMapping("/create")
+    public ResponseEntity create(@PathVariable String name) {
+        Category category = new Category(name);
         categoryRepository.save(category);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
-    // Delete
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Category category = getCategory(id);
         category.delete();
@@ -55,6 +55,10 @@ public class ApiCategoryController {
 
     private Category getCategory(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    }
+
+    private Kanban getKanban(Long id) {
+        return kanbanRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 칸반 없음"));
     }
 
     @ExceptionHandler
