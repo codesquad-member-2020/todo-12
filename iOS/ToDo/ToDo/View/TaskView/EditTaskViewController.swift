@@ -36,7 +36,7 @@ class EditTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        setPlaceHolder()
+        setPlaceHolder()
         contentsTextView.delegate = contentsTextViewDelegate
         setupView()
         contentsTextViewDelegate.handler = {
@@ -57,7 +57,6 @@ class EditTaskViewController: UIViewController {
             contentsTextView.textColor = .gray
             return
         }
-        
         contentsTextView.textColor = .label
     }
     
