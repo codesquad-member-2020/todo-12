@@ -1,10 +1,10 @@
 export class Model {
   // constructor() {
-  //   this._observers = new Set();
+  //   this._observers =[];
   // }
 
   // subscribe(observer) {
-  //   this._observers.add(observer);
+  //   this._observers.push(observer);
   // }
 
   // unsubscribe(observer) {

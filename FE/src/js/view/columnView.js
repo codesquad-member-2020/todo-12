@@ -11,14 +11,16 @@ export class ColumnView {
       ""
     );
     if (tplAddColumn) columnsHtml += tplAddColumn();
-    console.log(columnsHtml);
 
     columnArea.innerHTML = columnsHtml;
   }
 
-  columnNameRender(name) {
-    //section에 아이디 추가
-    //column__title 모두가져와서 네임추가
+  columnNameRender(name, column) {
+    //column을 돌며 column name을 추가해준다.
+    const title = _$(".column__title", true, column);
+
+    title.forEach((nameArea) => (nameArea.innerText = name));
+    column.id = `todo__${name}`;
   }
 
   cardCountRender(name) {

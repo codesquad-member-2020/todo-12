@@ -1,4 +1,5 @@
 import { fetchData } from "../utils/util.js";
+import { mock } from "../mock.js";
 
 export class Controller {
   constructor({ views, models }) {
@@ -8,12 +9,14 @@ export class Controller {
   }
 
   init() {
-    const url =
-      "https://cors-anywhere.herokuapp.com/http://15.165.163.174:8080/mock";
+    // const url =
+    //   "https://cors-anywhere.herokuapp.com/http://15.165.163.174:8080/mock";
 
-    fetchData(url).then((initialData) =>
-      this._columnModel.handleInitialData(initialData.categories)
-    );
+    // fetchData(url).then((initialData) =>
+    //   this._columnModel.handleInitialData(initialData.categories)
+    // );
+
+    this._columnModel.handleInitialData(mock.categories);
 
     //categories 변수화?
 

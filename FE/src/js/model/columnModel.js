@@ -1,4 +1,5 @@
 import { Model } from "./model.js";
+import { _$, __, _c, __$ } from "../utils/util.js";
 import { timeForToday } from "../utils/timeForToday.js";
 
 export class ColumnModel extends Model {
@@ -13,26 +14,29 @@ export class ColumnModel extends Model {
     const columnLength = initialData.length;
     this.setColumnList(columnLength);
 
-    // initialData.forEach((column) => {
-    //   const { id, name, cards } = column;
-    //   this.setColumnNameList(id, name);
-    //   this.setCardList(id, cards);
-    // });
+    initialData.forEach((column, index) => {
+      const { id, name, cards } = column;
+      this.setColumnNameList(id, name, this._columnList[index]);
+      // this.setCardList(id, cards);
+    });
   }
 
   setColumnList(length) {
     const columnList = new Array(length);
-    console.log(this._views);
     this._views.forEach((view) => view.columnRender([...columnList]));
+    return (this._columnList = [..._$(".todo__column", true)]);
   }
 
-  setColumnNameList(id, name) {
+  getColumnList() {
+    return this._columnNameList;
+  }
+
+  setColumnNameList(id, name, column) {
     //변화가 있을때 => 칼럼 제목, 카드카운트, 카드
     if (this._columnNameList.has(name)) return;
 
     this._columnNameList.set(id, name);
-
-    return this.notyfi(columnNameRender, name);
+    return this._views.forEach((view) => view.columnNameRender(name, column));
   }
 
   getColumnNameList() {
