@@ -51,14 +51,32 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/move/{categoryId}/{id}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id) {
+    @GetMapping("/move/{categoryId}/{id}/{index}")
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable int index) {
         Category toCategory = getCategory(categoryId);
         Card card = getCard(id);
         cardRepository.delete(card);
-        toCategory.addCard(card);
+        toCategory.addCard(index, card);
         categoryRepository.save(toCategory);
-        return new ResponseEntity(toCategory, HttpStatus.OK);
+        return new ResponseEntity(card, HttpStatus.OK);
+    }
+
+    @GetMapping("/move2/{categoryId}/{id}/{categoryKey}")
+    public ResponseEntity move2(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Long categoryKey) {
+
+        Card card = getCard(id);
+        logger.info("categoryKye? {}", categoryKey);
+        card.moveCard(categoryId, categoryKey);
+        cardRepository.save(card);
+        logger.info("cut1");
+
+        Category toCategory = getCategory(categoryId);
+        logger.info("cut2");
+
+        categoryRepository.save(toCategory);
+        logger.info("cut3");
+
+        return new ResponseEntity(categoryRepository.findById(categoryId), HttpStatus.OK);
     }
 
     private Card getCard(Long id) {

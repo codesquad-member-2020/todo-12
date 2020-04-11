@@ -20,6 +20,10 @@ public class Category {
         this.deleted = false;
     }
 
+    public void addCard(int index, Card card) {
+        cards.add(index, card);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

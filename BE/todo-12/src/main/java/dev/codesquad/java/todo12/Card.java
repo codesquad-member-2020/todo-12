@@ -12,13 +12,14 @@ import java.time.format.DateTimeFormatter;
 public class Card {
     @Id
     private Long id;
+    private Long category;
+    private Long categoryKey;
     private String title;
     private String content;
     private String author;
     private String createTime;
     private String modifiedTime;
     private boolean deleted;
-    private Long categoryKey;
 
     public Card(String title, String content) {
         this.title = title;
@@ -31,6 +32,11 @@ public class Card {
 
     private static String seoulTime() {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public void moveCard(Long category, Long categoryKey) {
+        this.category = category;
+        this.categoryKey = categoryKey;
     }
 
     public void update(String title, String content) {
