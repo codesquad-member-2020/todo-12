@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-
 @RestController
 @RequestMapping("/card")
 public class ApiCardController {
@@ -50,6 +49,16 @@ public class ApiCardController {
         card.delete();
         cardRepository.save(card);
         return new ResponseEntity(card, HttpStatus.OK);
+    }
+
+    @GetMapping("/move/{categoryId}/{id}")
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id) {
+        Category toCategory = getCategory(categoryId);
+        Card card = getCard(id);
+        cardRepository.delete(card);
+        toCategory.addCard(card);
+        categoryRepository.save(toCategory);
+        return new ResponseEntity(toCategory, HttpStatus.OK);
     }
 
     private Card getCard(Long id) {

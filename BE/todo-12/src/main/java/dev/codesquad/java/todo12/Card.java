@@ -18,6 +18,7 @@ public class Card {
     private String createTime;
     private String modifiedTime;
     private boolean deleted;
+    private Long categoryKey;
 
     public Card(String title, String content) {
         this.title = title;
