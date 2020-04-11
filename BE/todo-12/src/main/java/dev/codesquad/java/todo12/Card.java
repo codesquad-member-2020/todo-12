@@ -39,6 +39,14 @@ public class Card {
         this.categoryKey = categoryKey;
     }
 
+    public Long getCategoryKey() {
+        return categoryKey;
+    }
+
+    public boolean isEqualsCategoryKey(Long categoryKey) {
+        return categoryKey.equals(this.categoryKey);
+    }
+
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
@@ -52,6 +60,8 @@ public class Card {
     public String toString() {
         return "Card{" +
                 "id=" + id +
+                ", category=" + category +
+                ", categoryKey=" + categoryKey +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +

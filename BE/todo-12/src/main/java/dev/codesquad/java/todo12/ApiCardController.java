@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/card")
@@ -51,8 +54,8 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/move/{categoryId}/{id}/{index}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable int index) {
+    @GetMapping("/move2/{categoryId}/{id}/{index}")
+    public ResponseEntity move2(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable int index) {
         Category toCategory = getCategory(categoryId);
         Card card = getCard(id);
         cardRepository.delete(card);
@@ -61,22 +64,48 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/move2/{categoryId}/{id}/{categoryKey}")
-    public ResponseEntity move2(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Long categoryKey) {
-
+    @GetMapping("/move/{categoryId}/{id}/{categoryKey}")
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Long categoryKey) {
         Card card = getCard(id);
-        logger.info("categoryKye? {}", categoryKey);
         card.moveCard(categoryId, categoryKey);
         cardRepository.save(card);
-        logger.info("cut1");
 
         Category toCategory = getCategory(categoryId);
-        logger.info("cut2");
+        List<Card> cardList = toCategory.getCards();
+
+        logger.info("before: {}", card);
 
         categoryRepository.save(toCategory);
-        logger.info("cut3");
+        Card updatedCard = getCard(id);
+        logger.info("after: {}", updatedCard);
 
-        return new ResponseEntity(categoryRepository.findById(categoryId), HttpStatus.OK);
+        if (card.getCategoryKey() < updatedCard.getCategoryKey()) {
+            Collections.swap(cardList, Math.toIntExact(updatedCard.getCategoryKey())-1, Math.toIntExact(updatedCard.getCategoryKey()));
+        } else if (card.getCategoryKey() > updatedCard.getCategoryKey()) {
+            Collections.swap(cardList, Math.toIntExact(updatedCard.getCategoryKey())+1, Math.toIntExact(updatedCard.getCategoryKey()));
+        }
+        logger.info("final: {}", cardList);
+        categoryRepository.save(toCategory);
+
+        return new ResponseEntity(getCategory(categoryId), HttpStatus.OK);
+    }
+
+    @GetMapping("/delete/{id}/{categoryId}")
+    public ResponseEntity deletego(@PathVariable Long id, @PathVariable Long categoryId) {
+        Card card = getCard(id);
+        cardRepository.delete(card);
+        Category category = getCategory(categoryId);
+        categoryRepository.save(category);
+        return new ResponseEntity(category, HttpStatus.OK);
+    }
+
+    @GetMapping("/add/{categoryId}")
+    public ResponseEntity addgo(@PathVariable Long categoryId){
+        Card card = new Card("새거", "택배언제와");
+        Category category = getCategory(categoryId);
+        category.addCard(card);
+        categoryRepository.save(category);
+        return new ResponseEntity(category, HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
