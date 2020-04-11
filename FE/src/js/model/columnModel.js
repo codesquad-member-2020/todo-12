@@ -1,10 +1,11 @@
-import { timeForToday } from "../utils/timeForToday";
+import { timeForToday } from "../utils/timeForToday.js";
 
 class columnModel extends model {
   constructor() {
     super();
     this._columnNameList = new Map();
     this._cardList = new Map();
+    this._cardCount = new Map();
   }
 
   handleInitialData(initialData) {
@@ -15,6 +16,8 @@ class columnModel extends model {
       this.setCardList(id, cards);
     });
   }
+
+  init() {}
 
   setColumnNameList(id, name) {
     //변화가 있을때 => 칼럼 제목, 카드카운트, 카드
@@ -31,6 +34,7 @@ class columnModel extends model {
 
   setCardList(columnId, card) {
     this._cardList.set(columnId, card);
+    this.setCardCount(columnId, card);
 
     return this.notyfi(columnId, card);
   }
@@ -39,8 +43,8 @@ class columnModel extends model {
     return this._cardList;
   }
 
-  setCardCount() {
-    this._cardCount = this._cardList.size;
+  setCardCount(columnId, card) {
+    return this._cardCount.set(columnId, card.length);
   }
 
   getCardConut() {
