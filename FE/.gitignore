@@ -186,3 +186,5 @@ fastlane/test_output
 
 # TypeScript Generated Files
 *.d.ts
+
+1.md

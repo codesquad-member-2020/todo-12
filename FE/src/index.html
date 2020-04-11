@@ -3,20 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
     />
-    <title>To do</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <script type="module" src="./js/index.js"></script>
   </head>
 
   <body>
     <div id="wrap">
-      <header id="header" class="flex">
-        <h1>TODO 서비스</h1>
-        <button type="button" class="header__menu-btn">menu</button>
-      </header>
-
+      
       <!-- menu -->
       <div id="activity-menu">
         <h2 class="blind">활동 메뉴</h2>
@@ -54,134 +52,7 @@
       <!-- //menu -->
 
       <main id="todo" class="flex">
-        <section id="todo__todo" class="todo__column">
-          <h2 class="blind">To do</h2>
-          <div class="column__header flex">
-            <div>
-              <span class="column__card-count">1</span>
-              <span class="column__title">To do</span>
-            </div>
-            <div>
-              <button type="button" class="plus-btn">
-                <i class="fas fa-plus"></i>
-              </button>
-              <button type="button" class='close-btn'>
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-        </div>
-          <!-- add 입력창 -->
-          <div id="add__todo">
-            <div class="input-box">
-              <textarea name="" id="" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" class="add__input"></textarea>
-            </div>
-          <div class="add__btn">
-              <button type="button" class="btn__green">Add</button>
-              <button type="button" class="btn__cancel">Cancel</button>
-           </div>
-         </div>
-          <!-- //add 입력창 -->
 
-          <ul class="column__cards">
-            <li class="column__card flex">
-                <div class="card__left flex">
-                   <div class="card__contents">
-                      <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">할일내용</span>
-                   </div>
-                   <div class="card__btn">
-                    <button type="button" class="close-btn">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <span class="card__author">Added by<strong> 작성자</strong></span>
-                </div>
-            </li>
-          </ul>
-        </section>
-
-        <section id="todo__inprogress" class="todo__column">
-          <h2 class="blind">In progress</h2>
-          <div class="column__header flex">
-           <div>
-              <span class="column__card-count">0</span>
-              <span class="column__title">In progress</span>
-            </div>
-            <div>
-              <button type="button" class="plus-btn">
-                <i class="fas fa-plus"></i>
-              </button>
-              <button type="button" class='close-btn'>
-                <i class="fas fa-times"></i>
-              </button>
-          </div>
-        </div>
-          
-          <ul class="column__cards">
-            <li class="column__card flex">
-                <div class="card__left flex">
-                   <div class="card__contents">
-                      <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">할일내용</span>
-                   </div>
-                   <div class="card__btn">
-                    <button type="button" class="close-btn">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <span class="card__author">Added by<strong> 작성자</strong></span>
-                </div>
-            </li>
-          </ul>
-        </section>
-        <section id="todo__done" class="todo__column">
-          <h2 class="blind">Done</h2>
-          <div class="column__header flex">
-            <div>
-              <span class="column__card-count">0</span>
-              <span class="column__title">Done</span>
-            </div>
-            <div>
-              <button type="button" class="plus-btn">
-                <i class="fas fa-plus"></i>
-              </button>
-              <button type="button" class='close-btn'>
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-
-          <ul class="column__cards">
-            <li class="column__card flex">
-                <div class="card__left flex">
-                   <div class="card__contents">
-                      <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">할일내용</span>
-                   </div>
-                   <div class="card__btn">
-                    <button type="button" class="close-btn">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <span class="card__author">Added by<strong> 작성자</strong></span>
-                </div>
-            </li>
-          </ul>
-        </section>
-        <section id="todo__add-column" class="todo__column flex">
-        <div class="add-column__btn">
-          <button type="button">
-            <i class="fas fa-plus"></i> 
-            <span>Add column</span>
-          </button>
-        </div>
-        </section>
       </main>
       
          <!--Edit note popup -->
