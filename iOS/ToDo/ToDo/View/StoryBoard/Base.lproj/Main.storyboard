@@ -244,7 +244,7 @@
         <!--Edit Task View Controller-->
         <scene sceneID="lh3-k3-Xpw">
             <objects>
-                <viewController id="GNu-Jw-Jo3" customClass="EditTaskViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editViewController" id="GNu-Jw-Jo3" customClass="EditTaskViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4AN-Ps-4mo">
                         <rect key="frame" x="0.0" y="0.0" width="429" height="934"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -292,7 +292,7 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TI-7f-UH8">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TI-7f-UH8">
                                         <rect key="frame" x="282.5" y="0.0" width="46.5" height="46.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" image="arrow.up.circle.fill" catalog="system"/>
@@ -338,6 +338,7 @@
                     </view>
                     <connections>
                         <outlet property="contentsTextView" destination="g4Q-YV-BvA" id="XMQ-Fe-XCu"/>
+                        <outlet property="editButton" destination="9TI-7f-UH8" id="qGN-gy-kfc"/>
                         <outlet property="limitLabel" destination="dVg-yg-myC" id="2kS-co-N9M"/>
                         <outlet property="titleTextField" destination="2uY-DE-HsU" id="v1j-SR-ThU"/>
                     </connections>

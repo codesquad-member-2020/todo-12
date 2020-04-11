@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     }
     
     private func setModel(viewController: TaskViewController?, model: Model, index: Int) {
-        viewController?.model = model.categories[index]
+        viewController?.dataSource.model = model.categories[index]
         viewController?.taskTabelView.reloadData()
         viewController?.titleLabel.text = model.categories[index].name
         viewController?.addTaskButton.isEnabled = true

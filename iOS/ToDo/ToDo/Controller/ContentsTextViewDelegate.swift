@@ -14,7 +14,7 @@ class ContentsTextViewDelegate: NSObject, UITextViewDelegate {
     private(set) var limit = 500
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.gray {
+        if textView.textColor == UIColor.gray && textView.text == "Contents" {
             textView.text = ""
         }
         textView.textColor = .label
