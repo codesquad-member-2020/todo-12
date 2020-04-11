@@ -1,24 +1,9 @@
 export class Model {
-  // constructor() {
-  //   this._observers =[];
-  // }
-
-  // subscribe(observer) {
-  //   this._observers.push(observer);
-  // }
-
-  // unsubscribe(observer) {
-  //   this._observers = [...this._observers].filter(
-  //     (subscriber) => subscriber !== observer
-  //   );
-  // }
-
-  // notify(data) {
-  //   this._observers.forEach((observer) => {
-  //     observer(data);
-  //   });
-  // }
   constructor(...views) {
     this._views = views;
+  }
+
+  notify(func) {
+    return this._views.forEach(func);
   }
 }

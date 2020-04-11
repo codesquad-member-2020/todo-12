@@ -14,54 +14,53 @@ export class ColumnModel extends Model {
     const columnLength = initialData.length;
     this.setColumnList(columnLength);
 
-    initialData.forEach((column, index) => {
-      const { id, name, cards } = column;
-      this.setColumnNameList(id, name, this._columnList[index]);
-      this.setCardList(id, cards, this._columnList[index]);
+    initialData.forEach((columnData, index) => {
+      const { id, name, cards } = columnData;
+      const currentColumn = this._columnList[index];
+
+      this.setColumnNameList(id, name, currentColumn);
+      this.setCardList(cards, currentColumn);
     });
   }
 
-  //map의 key로 id를 설정했는데 column으로 바꾸면??
-
   setColumnList(length) {
     const columnList = new Array(length);
-    this._views.forEach((view) => view.columnRender([...columnList]));
+    this.notify((view) => view.columnRender([...columnList]));
+
     return (this._columnList = [..._$(".todo__column", true)]);
   }
 
   getColumnList() {
-    return this._columnNameList;
+    return this._columnList;
   }
 
   setColumnNameList(id, name, column) {
     //변화가 있을때 => 칼럼 제목, 카드카운트, 카드
     if (this._columnNameList.has(name)) return;
 
-    this._columnNameList.set(id, name);
-    return this._views.forEach((view) => view.columnNameRender(name, column));
+    this._columnNameList.set(column, { id, name });
+    return this.notify((view) => view.columnNameRender(name, column));
   }
 
   getColumnNameList() {
     return this._columnNameList;
   }
 
-  setCardList(columnId, card, column) {
-    this._cardList.set(columnId, card);
-    this.setNumberOfCards(columnId, card, column);
+  setCardList(card, column) {
+    this._cardList.set(column, card);
+    this.setNumberOfCards(card, column);
 
-    return this._views.forEach((view) => view.cardListRender(card, column));
+    return this.notify((view) => view.cardListRender(card, column));
   }
 
   getCardList() {
     return this._cardList;
   }
 
-  setNumberOfCards(columnId, card, column) {
-    this._numberOfCards.set(columnId, card.length);
+  setNumberOfCards({ length }, column) {
+    this._numberOfCards.set(column, length);
 
-    return this._views.forEach((view) =>
-      view.numberOfCardsRender(card.length, column)
-    );
+    return this.notify((view) => view.numberOfCardsRender(length, column));
   }
 
   getNumberOfCards() {
