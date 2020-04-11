@@ -32,6 +32,7 @@ class EditTaskViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var limitLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     
     public var model: Card?
     public var editedModelIndex: Int?
@@ -46,6 +47,7 @@ class EditTaskViewController: UIViewController {
         contentsTextView.delegate = contentsTextViewDelegate
         setupView()
         contentsTextViewDelegate.handler = {
+            self.editButton.isEnabled = self.buttonEnable(text: self.contentsTextView.text)
             self.updateLimitLabel(factor: $0)
         }
     }
@@ -73,5 +75,9 @@ class EditTaskViewController: UIViewController {
         attributedString.addAttribute(.foregroundColor, value: factor ? UIColor.label : UIColor.red, range: (limit as NSString).range(of: count))
         
         limitLabel.attributedText = attributedString
+    }
+    
+    func buttonEnable(text: String) -> Bool{
+        return text == "Contents" || text == "" ? false : true
     }
 }
