@@ -1,11 +1,11 @@
-export function columnTpl(title, count) {
+export function tplColumn() {
   const column = `
-              <section id="todo__done" class="todo__column">
-                <h2 class="blind">${title}</h2>
+              <section class="todo__column">
+                <h2 class="column__title blind"></h2>
                 <div class="column__header flex">
                   <div>
-                    <span class="column__card-count">${count}</span>
-                    <span class="column__title">${title}</span>
+                    <span class="column__card-count"></span>
+                    <span class="column__title"></span>
                   </div>
                   <div>
                     <button type="button" class="plus-btn">
@@ -31,4 +31,19 @@ export function columnTpl(title, count) {
               `;
 
   return column;
+}
+
+export function tplAddColumn() {
+  const addColumn = `
+  <section id="todo__add-column" class="todo__column flex">
+  <div class="add-column__btn">
+    <button type="button">
+      <i class="fas fa-plus"></i> 
+      <span>Add column</span>
+    </button>
+  </div>
+  </section>
+  `;
+
+  return addColumn;
 }

@@ -1,23 +1,30 @@
+import { Model } from "./model.js";
 import { timeForToday } from "../utils/timeForToday.js";
 
-class columnModel extends model {
-  constructor() {
-    super();
+export class ColumnModel extends Model {
+  constructor(...views) {
+    super(...views);
     this._columnNameList = new Map();
     this._cardList = new Map();
     this._cardCount = new Map();
   }
 
   handleInitialData(initialData) {
-    //categories 변수화?
-    initialData.categories.forEach((column) => {
-      const { id, name, cards } = column;
-      this.setColumnNameList(id, name);
-      this.setCardList(id, cards);
-    });
+    const columnLength = initialData.length;
+    this.setColumnList(columnLength);
+
+    // initialData.forEach((column) => {
+    //   const { id, name, cards } = column;
+    //   this.setColumnNameList(id, name);
+    //   this.setCardList(id, cards);
+    // });
   }
 
-  init() {}
+  setColumnList(length) {
+    const columnList = new Array(length);
+    console.log(this._views);
+    this._views.forEach((view) => view.columnRender([...columnList]));
+  }
 
   setColumnNameList(id, name) {
     //변화가 있을때 => 칼럼 제목, 카드카운트, 카드
@@ -25,7 +32,7 @@ class columnModel extends model {
 
     this._columnNameList.set(id, name);
 
-    return this.notyfi(nameRender, name);
+    return this.notyfi(columnNameRender, name);
   }
 
   getColumnNameList() {

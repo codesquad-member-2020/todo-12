@@ -50,9 +50,14 @@ export function __(target) {
   };
 }
 
-export const fetchData = async (url, requestOption = { method: "GET" }) => {
-  const response = await fetch(url, requestOption);
-  const json = await response.json();
-  const data = await json;
-  return data;
-};
+// export const fetchData = async (url, requestOption = { method: "GET" }) => {
+//   const response = await fetch(url, requestOption);
+//   const json = await response.json();
+//   return json;
+// };
+
+export function fetchData(url, requestOption = { method: "GET" }) {
+  return fetch(url, requestOption)
+    .then((res) => res.json())
+    .then((data) => data);
+}

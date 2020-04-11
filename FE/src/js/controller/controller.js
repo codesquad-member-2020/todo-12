@@ -1,23 +1,30 @@
 import { fetchData } from "../utils/util.js";
 
-class Controller {
+export class Controller {
   constructor({ views, models }) {
     this._view = [...views];
     this._columnModel = models.columnModel;
+    console.log(this._columnModel, this._view);
   }
 
   init() {
-    const initialData = this.fetchData("http://15.165.163.174:8080/mock");
-    this._columnModel.handleInitialData(initialData);
+    const url =
+      "https://cors-anywhere.herokuapp.com/http://15.165.163.174:8080/mock";
+
+    fetchData(url).then((initialData) =>
+      this._columnModel.handleInitialData(initialData.categories)
+    );
+
+    //categories 변수화?
+
     //history fetch
   }
-
-
-
-  _handleResponseData({name, id}) {
-    // if(name) this._columnModel.setColumnNameList(id, name);
-
 }
+
+//   _handleResponseData({name, id}) {
+//     if(name) this._columnModel.setColumnNameList(id, name);
+
+// }
 
 //카드 갯수센다
 //컬럼랜더링한다

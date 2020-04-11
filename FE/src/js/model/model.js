@@ -1,21 +1,24 @@
-class Observable {
-  constructor() {
-    this._observers = new Set();
-  }
+export class Model {
+  // constructor() {
+  //   this._observers = new Set();
+  // }
 
-  subscribe(observer) {
-    this._observers.add(observer);
-  }
+  // subscribe(observer) {
+  //   this._observers.add(observer);
+  // }
 
-  unsubscribe(observer) {
-    this._observers = [...this._observers].filter(
-      (subscriber) => subscriber !== observer
-    );
-  }
+  // unsubscribe(observer) {
+  //   this._observers = [...this._observers].filter(
+  //     (subscriber) => subscriber !== observer
+  //   );
+  // }
 
-  notify(func, data) {
-    this._observers.forEach((observer) => {
-      if (observer === func) observer(data);
-    });
+  // notify(data) {
+  //   this._observers.forEach((observer) => {
+  //     observer(data);
+  //   });
+  // }
+  constructor(...views) {
+    this._views = views;
   }
 }
