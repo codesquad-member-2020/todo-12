@@ -1,5 +1,5 @@
-import { tplColumn, tplAddColumn } from "../tpl/columnTpl.js";
-import { tplCard } from "../tpl/cardTpl.js";
+import { tplColumn, tplAddColumn } from "../tpl/tplColumn.js";
+import { tplCard } from "../tpl/tplCard.js";
 import { _$, __, _c, __$ } from "../utils/util.js";
 
 export class ColumnView {

@@ -64,17 +64,17 @@ export class ColumnModel extends Model {
     );
   }
 
-  getCardConut() {
+  getNumberOfCards() {
     return this._numberOfCards;
   }
 
-  setTimeModified(create, modified) {
-    this._timeModified = timeForToday(create, modified);
+  // setTimeModified(create, modified) {
+  //   this._timeModified = timeForToday(create, modified);
 
-    return this.notyfi();
-  }
+  //   return this.notyfi();
+  // }
 
-  getTimeModified() {
-    return this._timeModified;
-  }
+  // getTimeModified() {
+  //   return this._timeModified;
+  // }
 }
