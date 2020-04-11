@@ -47,7 +47,7 @@ export class ColumnModel extends Model {
 
   setCardList(columnId, card, column) {
     this._cardList.set(columnId, card);
-    // this.setNumberOfCards(columnId, card);
+    this.setNumberOfCards(columnId, card, column);
 
     return this._views.forEach((view) => view.cardListRender(card, column));
   }
@@ -56,10 +56,11 @@ export class ColumnModel extends Model {
     return this._cardList;
   }
 
-  setNumberOfCards(columnId, card) {
-    return this._numberOfCards.set(columnId, card.length);
+  setNumberOfCards(columnId, card, column) {
+    this._numberOfCards.set(columnId, card.length);
+
     return this._views.forEach((view) =>
-      view.numberOfCardsRender(card, column)
+      view.numberOfCardsRender(card.length, column)
     );
   }
 

@@ -5,6 +5,7 @@ import { _$, __, _c, __$ } from "../utils/util.js";
 export class ColumnView {
   constructor() {}
 
+  // 수정하기
   columnRender(columnList) {
     const columnArea = _$("#todo");
     let columnsHtml = columnList.reduce(
@@ -29,14 +30,13 @@ export class ColumnView {
 
     cards.forEach((card) => {
       const cardHtml = tplCard(card);
-      cardArea.insertAdjacentHTML("afterend", cardHtml);
+      cardArea.insertAdjacentHTML("afterbegin", cardHtml);
     });
   }
 
-  numberOfCardsRender(card, column) {
+  numberOfCardsRender(numberOfCards, column) {
     const countArea = _$(".column__card-count", false, column);
-    // countArea.innerText =
-    //section에 아이디 추가
-    //column__card-count 모두가져와서 네임추가
+
+    countArea.innerText = numberOfCards;
   }
 }
