@@ -23,8 +23,8 @@ export function tplColumn() {
                 <!-- add 입력창 -->
       
                 <!-- card -->
-                <div id="column__card-wrap">
-                </div>
+                <ul class="column__cards">
+                </ul>
                 <!-- //card -->
               
               </section>

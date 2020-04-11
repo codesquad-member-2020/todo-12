@@ -93,6 +93,11 @@ h1 {
   font-size: 90%;
   color: #586069;
 }
+
+#todo .card__author > strong {
+  font-weight: bold;
+}
+
 .flex {
   display: flex;
   justify-content: center;

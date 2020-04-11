@@ -1,12 +1,10 @@
-export function cardTpl(card, index) {
-  if (index === 0)
-    const card = `
-    <ul class="column__cards">
+export function tplCard({ content, author }) {
+  const card = `
             <li class="column__card flex">
                 <div class="card__left flex">
                    <div class="card__contents">
                       <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">할일내용</span>
+                      <span class="card__content">${content}</span>
                    </div>
                    <div class="card__btn">
                     <button type="button" class="close-btn">
@@ -15,10 +13,9 @@ export function cardTpl(card, index) {
                   </div>
                 </div>
                 <div class="card__right">
-                  <span class="card__author">Added by<strong> 작성자</strong></span>
+                  <span class="card__author">Added by <strong>${author}</strong></span>
                 </div>
             </li>
-          </ul>
           `;
   return card;
 }

@@ -7,7 +7,7 @@ export class ColumnModel extends Model {
     super(...views);
     this._columnNameList = new Map();
     this._cardList = new Map();
-    this._cardCount = new Map();
+    this._numberOfCards = new Map();
   }
 
   handleInitialData(initialData) {
@@ -17,9 +17,11 @@ export class ColumnModel extends Model {
     initialData.forEach((column, index) => {
       const { id, name, cards } = column;
       this.setColumnNameList(id, name, this._columnList[index]);
-      // this.setCardList(id, cards);
+      this.setCardList(id, cards, this._columnList[index]);
     });
   }
+
+  //map의 key로 id를 설정했는데 column으로 바꾸면??
 
   setColumnList(length) {
     const columnList = new Array(length);
@@ -43,23 +45,26 @@ export class ColumnModel extends Model {
     return this._columnNameList;
   }
 
-  setCardList(columnId, card) {
+  setCardList(columnId, card, column) {
     this._cardList.set(columnId, card);
-    this.setCardCount(columnId, card);
+    // this.setNumberOfCards(columnId, card);
 
-    return this.notyfi(columnId, card);
+    return this._views.forEach((view) => view.cardListRender(card, column));
   }
 
   getCardList() {
     return this._cardList;
   }
 
-  setCardCount(columnId, card) {
-    return this._cardCount.set(columnId, card.length);
+  setNumberOfCards(columnId, card) {
+    return this._numberOfCards.set(columnId, card.length);
+    return this._views.forEach((view) =>
+      view.numberOfCardsRender(card, column)
+    );
   }
 
   getCardConut() {
-    return this._cardCount;
+    return this._numberOfCards;
   }
 
   setTimeModified(create, modified) {
