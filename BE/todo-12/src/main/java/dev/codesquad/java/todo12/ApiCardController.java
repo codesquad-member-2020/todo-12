@@ -52,10 +52,10 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/move/{categoryId}/{id}/{categoryKey}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Integer categoryKey) {
+    @PutMapping("/move/{categoryId}/{id}")
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @RequestBody HashMap<String, Integer> cardsIndex) {
         Card card = getCard(id);
-        card.moveCard(categoryId, categoryKey);
+        card.moveCard(categoryId, cardsIndex.get("categoryKey"));
         cardRepository.save(card);
 
         // 카드가 이동 된 카테고리의 카드 리스트 재정렬
@@ -67,10 +67,10 @@ public class ApiCardController {
         // 카드리스트가 categoryRepository.save() 후 정렬되어 categoryKey 값이 id에 따라 변경된다.
         Card movedCard = getCard(id);
 
-        checkCategoryKeyValidation(toCategory, categoryKey);
+        checkCategoryKeyValidation(toCategory, cardsIndex.get("categoryKey"));
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
-        return new ResponseEntity(getCategory(categoryId), HttpStatus.OK);
+        return new ResponseEntity(getCard(id), HttpStatus.OK);
     }
 
     @GetMapping("/move2/{categoryId}/{id}/{index}")
