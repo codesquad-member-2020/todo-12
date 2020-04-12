@@ -58,6 +58,10 @@ export function __(target) {
   };
 }
 
+export function filterNumber(str) {
+  return str.trim().replace(/[^0-9]/g, "");
+}
+
 export function fetchData(
   url,
   method,

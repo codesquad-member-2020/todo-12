@@ -18,7 +18,7 @@ export function tplColumn(id) {
                 </div>
       
                 <!-- add Card -->
-                <form class="add__todo" action="#">
+                <form class="add__todo" action="" method="post">
                  <div class="input-box">
                       <textarea name="" id="" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" class="add__input"></textarea>
                    </div>

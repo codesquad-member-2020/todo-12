@@ -1,9 +1,12 @@
-import { _$, __, _c, __$, _a$ } from "../lib/util.js";
+import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
 export class AddCard {
   constructor() {
     this.btnShowingAddForm = "btn-showing-add-card";
     this.addCardInput = "add__input";
     this.cancelCardBtn = "cancel-card-btn";
+    this.addCardBtn = "add-card-btn";
+    this.addCardForm = ".add__todo";
+    // this.fetchUrl = `https://cors-anywhere.herokuapp.com/http://15.165.163.174:8080/card/create/${categoryId}`;
   }
 
   addEventHandler({ target, currentTarget }) {
@@ -18,6 +21,8 @@ export class AddCard {
       case classList.contains(this.cancelCardBtn):
         this.onCancelCardBtn(currentTarget);
         break;
+      case classList.contains(this.addCardBtn):
+        this.onAddCardBtn(currentTarget);
     }
   }
 
@@ -49,5 +54,15 @@ export class AddCard {
   onCancelCardBtn(currentColumn) {
     const closeBtn = _$(".btn-showing-add-card", currentColumn);
     closeBtn.click();
+  }
+
+  onAddCardBtn(currentColumn) {
+    const columnId = filterNumber(currentColumn.id);
+    const currentForm = _$(this.addCardForm, currentColumn);
+    const addApi = `http://15.165.163.174:8080/card/create/${columnId}`;
+    currentForm.action = addApi;
+
+    //카드 추가
+    //카드갯수추가
   }
 }
