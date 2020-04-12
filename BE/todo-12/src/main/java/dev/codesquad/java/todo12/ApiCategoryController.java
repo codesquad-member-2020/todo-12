@@ -23,8 +23,7 @@ public class ApiCategoryController {
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
-        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
+        return new ResponseEntity(getKanban(1L), HttpStatus.OK);
         //return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
     }
 

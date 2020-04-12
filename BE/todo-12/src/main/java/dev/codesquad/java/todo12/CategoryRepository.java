@@ -10,11 +10,12 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
     @Query("Select * from category where name = :name")
     Optional<Category> findCategoryByName(String name);
 
-    @Query("Select * from category left join card on category.id = card.category" +
+    @Query("Select * from category left outer join card on category.id = card.category" +
             " where card.deleted = false and category.id = :id")
     Optional<List<Card>> findByIdOnlyDeletedFalse(Long id);
 
-    @Query("Select * from category left outer join card on category.id = card.category" +
-            " where card.deleted = false and category.id = 2")
+    @Query("Select * from category left join card on category.id = card.category" +
+            " where card.deleted = false and card.category = 2")
     Optional<List<Card>> findAllDeletedFalse();
+    // Category 로 반환 어떻게 할까?
 }
