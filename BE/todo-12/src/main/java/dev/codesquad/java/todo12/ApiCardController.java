@@ -83,17 +83,8 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}/{categoryId}")
-    public ResponseEntity deletego(@PathVariable Long id, @PathVariable Long categoryId) {
-        Card card = getCard(id);
-        cardRepository.delete(card);
-        Category category = getCategory(categoryId);
-        categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
-    }
-
     @GetMapping("/add/{categoryId}")
-    public ResponseEntity addgo(@PathVariable Long categoryId){
+    public ResponseEntity addTest(@PathVariable Long categoryId){
         Card card = new Card("새거", "택배언제와");
         Category category = getCategory(categoryId);
         category.addCard(card);
@@ -101,8 +92,16 @@ public class ApiCardController {
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity deleteTest(@PathVariable Long id) {
+        Card card = getCard(id);
+        card.delete();
+        cardRepository.save(card);
+        return new ResponseEntity(card, HttpStatus.OK);
+    }
+
     private Card getCard(Long id) {
-        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findByIdOnlyDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
     }
 
     private Category getCategory(Long id) {
