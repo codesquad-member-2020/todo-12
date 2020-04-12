@@ -16,6 +16,7 @@ export class Column {
   init() {
     this.columnView.setHandler({
       handleAddCardBtn: this.handleAddCardBtn.bind(this),
+      handleInputFocus: this.handleInputFocus.bind(this),
     });
   }
 
@@ -27,12 +28,16 @@ export class Column {
 
   handleAddCardBtn({ target, currentTarget }) {
     const addCardBtn = _$(".add-card-btn", currentTarget);
-    console.log(addCardBtn, target.parentNode);
     if (target.parentNode !== addCardBtn) return;
+
     const addCard = ".add__todo";
     const currentAddCard = _$(addCard, currentTarget);
 
     __(currentAddCard).toggle();
+  }
+
+  handleInputFocus() {
+    // btn.disabled = false;
   }
 
   setNumberOfCards(columnId) {
