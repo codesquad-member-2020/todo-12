@@ -82,3 +82,13 @@ export const mock = {
     },
   ],
 };
+
+export const deleteData = {
+  id: 1,
+  title: "1번제목",
+  content: "1번내용",
+  author: "1번저자",
+  createTime: null,
+  modifiedTime: null,
+  deleted: true,
+};
