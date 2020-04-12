@@ -1,6 +1,6 @@
-export function tplCard({ content, author }) {
+export function tplCard({ id, content, author }) {
   const card = `
-            <li class="column__card flex">
+            <li class="column__card flex" id="card-data-id-${id}">
                 <div class="card__left flex">
                    <div class="card__contents">
                       <i class="far fa-calendar-check card__icon"></i>
