@@ -15,9 +15,11 @@ export class Column {
 
   init() {
     this.columnView.setHandler({
-      addCardBtnHandler: this.handleAddCardBtn.bind(this),
-      addCardInputHandler: this.handleAddCardInput.bind(this),
-      addInputBlurHandler: this.handleAddInputBlur.bind(this),
+      btnShowingAddFormHandler: this.onBtnShowingAddForm.bind(this),
+      addCardInputFocusHandler: this.onAddCardInputFocus.bind(this),
+      addCardInputBlurHandler: this.onAddCardInputBlur.bind(this),
+      addCardActivationBtnHandler: this.onAddCardActivationBtn.bind(this),
+      // handleAddCardBtn
     });
   }
 
@@ -27,29 +29,35 @@ export class Column {
   //2. 데이터 패치이벤트 달아주기
   //3. 뷰를 불러서 추가 기능 달기
 
-  handleAddCardBtn({ target, currentTarget }) {
-    const addCardBtn = _$(".add-card-btn", currentTarget);
-    if (target.parentNode !== addCardBtn) return;
+  onBtnShowingAddForm({ target, currentTarget }) {
+    const btnShowingAddForm = _$(".btn-showing-add-card", currentTarget);
+    if (target.parentNode !== btnShowingAddForm) return;
 
-    const addCard = ".add__todo";
-    const currentAddCard = _$(addCard, currentTarget);
+    const addForm = ".add__todo";
+    const currentAddForm = _$(addForm, currentTarget);
 
-    __(currentAddCard).toggle();
+    __(currentAddForm).toggle();
   }
 
-  handleAddCardInput({ target, currentTarget }) {
+  onAddCardInputFocus({ target, currentTarget }) {
     const addCardInput = _$(".add__input", currentTarget);
     if (target !== addCardInput) return;
 
-    return _c(target).add("input-active");
+    return _c(target).add("input-active"); //뷰가 담당?
     // btn.disabled = false;
   }
 
-  handleAddInputBlur({ target, currentTarget }) {
-    const addCardInput = _$(".add__input", currentTarget);
-    // if (target !== addCardInput) return;
+  onAddCardInputBlur({ target }) {
+    return _c(target).remove("input-active"); //뷰가 담당?
+  }
 
-    return _c(target).remove("input-active");
+  onAddCardActivationBtn({ target, currentTarget }) {
+    const addCardInput = _$(".add__input", currentTarget);
+    const addCardBtn = _$(".add-card-btn", currentTarget);
+    if (target !== addCardInput) return;
+
+    if (!addCardInput.value) return (addCardBtn.disabled = true);
+    addCardBtn.disabled = false;
   }
 
   setNumberOfCards(columnId) {

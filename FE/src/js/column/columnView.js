@@ -8,18 +8,21 @@ export class ColumnView {
   }
 
   setHandler(handler) {
-    this.addCardBtnHandler = handler.addCardBtnHandler;
-    this.addCardInputHandler = handler.addCardInputHandler;
-    this.addInputBlurHandler = handler.addInputBlurHandler;
+    this.btnShowingAddFormHandler = handler.btnShowingAddFormHandler;
+    this.addCardInputFocusHandler = handler.addCardInputFocusHandler;
+    this.addCardInputBlurHandler = handler.addCardInputBlurHandler;
+    this.addCardActivationBtnHandler = handler.addCardActivationBtnHandler;
     // this.addCancelBtnHandler = handler.addCancelBtnHandler;
   }
 
   addEventHandler(column) {
-    __(column).on("click", (event) => this.addCardBtnHandler(event));
-    __(column).on("click", (event) => this.addCardInputHandler(event));
+    __(column).on("click", (event) => this.btnShowingAddFormHandler(event));
+    __(column).on("click", (event) => this.addCardInputFocusHandler(event));
+    __(column).on("input", (event) => this.addCardActivationBtnHandler(event));
 
     const addCardInput = _$(".add__input", column);
-    __(addCardInput).on("blur", (event) => this.addInputBlurHandler(event));
+    __(addCardInput).on("blur", (event) => this.addCardInputBlurHandler(event));
+    // __(addCardInput).on("focus", (event) => this.addCardInputBlurHandler(event));
   }
 
   columnRender(columnId) {

@@ -8,7 +8,7 @@ export function tplColumn(id) {
                     <span class="column__title"></span>
                   </div>
                   <div>
-                    <button type="button" class="plus-btn add-card-btn">
+                    <button type="button" class="plus-btn btn-showing-add-card">
                       <i class="fas fa-plus"></i>
                     </button>
                     <button type="button" class="close-btn">
@@ -18,15 +18,15 @@ export function tplColumn(id) {
                 </div>
       
                 <!-- add Card -->
-                <div class="add__todo">
+                <form class="add__todo" action="#">
                  <div class="input-box">
                       <textarea name="" id="" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" class="add__input"></textarea>
                    </div>
                   <div class="add__btn">
-                     <button type="button" class="btn__green " disabled='disabled'>Add</button>
+                     <button type="submit" class="btn__green add-card-btn" disabled='disabled'>Add</button>
                      <button type="button" class="btn__cancel" id="cancel-card-btn">Cancel</button>
                   </div>
-                </div>
+                </form>
                 <!-- //add Card -->
       
                 <!-- card -->
