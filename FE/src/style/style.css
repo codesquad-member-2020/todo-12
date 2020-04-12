@@ -119,3 +119,7 @@ h1 {
 #wrap .close-btn i:hover {
   color: #2188ff;
 }
+
+#wrap .on-block {
+  display: block;
+}

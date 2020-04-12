@@ -7,10 +7,21 @@ export class ColumnView {
     this.cardArea = _$(".column__cards");
   }
 
-  columnRender(id) {
-    const columnsHtml = tplColumn(id);
+  setHandler(handler) {
+    this.addCardBtnHandler = handler.handleAddCardBtn;
+  }
+
+  addEventHandler(column) {
+    __(column).on("click", (event) => this.addCardBtnHandler(event));
+  }
+
+  columnRender(columnId) {
+    const columnsHtml = tplColumn(columnId);
 
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
+    const currentColumn = _$(`#column-data-id-${columnId}`);
+
+    this.addEventHandler(currentColumn);
   }
 
   addColumnRender() {

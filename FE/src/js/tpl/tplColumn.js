@@ -8,19 +8,26 @@ export function tplColumn(id) {
                     <span class="column__title"></span>
                   </div>
                   <div>
-                    <button type="button" class="plus-btn">
+                    <button type="button" class="plus-btn add-card-btn">
                       <i class="fas fa-plus"></i>
                     </button>
-                    <button type="button" class='close-btn'>
+                    <button type="button" class="close-btn">
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
       
-                <!-- add 입력창 -->
-                <div id="add__todo">
+                <!-- add Card -->
+                <div class="add__todo">
+                 <div class="input-box">
+                      <textarea name="" id="" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" class="add__input"></textarea>
+                   </div>
+                  <div class="add__btn">
+                     <button type="button" class="btn__green">Add</button>
+                     <button type="button" class="btn__cancel" id="cancel-card-btn">Cancel</button>
+                  </div>
                 </div>
-                <!-- add 입력창 -->
+                <!-- //add Card -->
       
                 <!-- card -->
                 <ul class="column__cards">

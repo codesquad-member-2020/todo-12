@@ -1,4 +1,4 @@
-#add__todo {
+#todo .add__todo {
   display: none;
   margin-bottom: 20px;
 }
@@ -24,14 +24,14 @@
   color: #b8bcc1;
 }
 
-#add__todo .add__btn {
+#todo .add__todo .add__btn {
   display: flex;
   justify-content: space-between;
   margin-top: 6px;
 }
 
 .btn__green,
-#add__todo .btn__cancel {
+#todo .add__todo .btn__cancel {
   line-height: 20px;
   height: 37px;
   font-weight: 600;
@@ -54,13 +54,13 @@
   border-color: rgba(27, 31, 35, 0.5);
 }
 
-#add__todo .btn__cancel {
+#todo .add__todo .btn__cancel {
   color: #24292e;
   background-color: #eff3f6;
   background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
 }
 
-#add__todo .btn__cancel:hover {
+#todo .add__todo .btn__cancel:hover {
   background-color: #e6ebf1;
   background-image: linear-gradient(-180deg, #f0f3f6, #e6ebf1 90%);
   background-position: -0.5em;
