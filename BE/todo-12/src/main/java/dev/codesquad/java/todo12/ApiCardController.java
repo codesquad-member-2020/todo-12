@@ -65,28 +65,29 @@ public class ApiCardController {
     }
 
     @GetMapping("/move/{categoryId}/{id}/{categoryKey}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Long categoryKey) {
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Integer categoryKey) {
         Card card = getCard(id);
         card.moveCard(categoryId, categoryKey);
         cardRepository.save(card);
 
         Category toCategory = getCategory(categoryId);
         List<Card> cardList = toCategory.getCards();
-
-        logger.info("before: {}", card);
-
         categoryRepository.save(toCategory);
-        Card updatedCard = getCard(id);
-        logger.info("after: {}", updatedCard);
 
-        if (card.getCategoryKey() < updatedCard.getCategoryKey()) {
-            Collections.swap(cardList, Math.toIntExact(updatedCard.getCategoryKey())-1, Math.toIntExact(updatedCard.getCategoryKey()));
-        } else if (card.getCategoryKey() > updatedCard.getCategoryKey()) {
-            Collections.swap(cardList, Math.toIntExact(updatedCard.getCategoryKey())+1, Math.toIntExact(updatedCard.getCategoryKey()));
+        Card movedCard = getCard(id);
+
+        if (categoryKey + 1 > cardList.size()) {
+            throw new DataNotFoundException("Wrong CategoryKey");
         }
-        logger.info("final: {}", cardList);
-        categoryRepository.save(toCategory);
 
+        if (card.IsIncreased(movedCard.getCategoryKey())) {
+            toCategory.swapWithBeforeCard(movedCard.getCategoryKey());
+        }
+        if (card.IsDecreased(movedCard.getCategoryKey())) {
+            toCategory.swapWithAfterCard(movedCard.getCategoryKey());
+        }
+
+        categoryRepository.save(toCategory);
         return new ResponseEntity(getCategory(categoryId), HttpStatus.OK);
     }
 

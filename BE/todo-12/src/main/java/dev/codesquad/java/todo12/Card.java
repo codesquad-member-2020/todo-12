@@ -13,7 +13,7 @@ public class Card {
     @Id
     private Long id;
     private Long category;
-    private Long categoryKey;
+    private Integer categoryKey;
     private String title;
     private String content;
     private String author;
@@ -34,16 +34,24 @@ public class Card {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public void moveCard(Long category, Long categoryKey) {
+    public void moveCard(Long category, Integer categoryKey) {
         this.category = category;
         this.categoryKey = categoryKey;
     }
 
-    public Long getCategoryKey() {
+    public int getCategoryKey() {
         return categoryKey;
     }
 
-    public boolean isEqualsCategoryKey(Long categoryKey) {
+    public boolean IsIncreased(Integer categoryKey) {
+        return this.categoryKey < categoryKey;
+    }
+
+    public boolean IsDecreased(Integer categoryKey) {
+        return this.categoryKey > categoryKey;
+    }
+
+    public boolean isEqualsCategoryKey(Integer categoryKey) {
         return categoryKey.equals(this.categoryKey);
     }
 

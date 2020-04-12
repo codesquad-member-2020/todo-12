@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter @Setter
@@ -22,6 +23,14 @@ public class Category {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public void swapWithBeforeCard(Integer categoryKey) {
+        Collections.swap(cards, categoryKey - 1, categoryKey);
+    }
+
+    public void swapWithAfterCard(Integer categoryKey) {
+        Collections.swap(cards, categoryKey + 1, categoryKey);
     }
 
     public void addCard(int index, Card card) {
