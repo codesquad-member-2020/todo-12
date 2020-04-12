@@ -1,4 +1,4 @@
-import { _$, __ } from "../lib/util.js";
+import { _$, __, _c } from "../lib/util.js";
 // import { tplAddCard } from "../tpl.tpladdCard.js";
 
 export class Column {
@@ -15,8 +15,9 @@ export class Column {
 
   init() {
     this.columnView.setHandler({
-      handleAddCardBtn: this.handleAddCardBtn.bind(this),
-      handleInputFocus: this.handleInputFocus.bind(this),
+      addCardBtnHandler: this.handleAddCardBtn.bind(this),
+      addCardInputHandler: this.handleAddCardInput.bind(this),
+      addInputBlurHandler: this.handleAddInputBlur.bind(this),
     });
   }
 
@@ -36,8 +37,19 @@ export class Column {
     __(currentAddCard).toggle();
   }
 
-  handleInputFocus() {
+  handleAddCardInput({ target, currentTarget }) {
+    const addCardInput = _$(".add__input", currentTarget);
+    if (target !== addCardInput) return;
+
+    return _c(target).add("input-active");
     // btn.disabled = false;
+  }
+
+  handleAddInputBlur({ target, currentTarget }) {
+    const addCardInput = _$(".add__input", currentTarget);
+    // if (target !== addCardInput) return;
+
+    return _c(target).remove("input-active");
   }
 
   setNumberOfCards(columnId) {

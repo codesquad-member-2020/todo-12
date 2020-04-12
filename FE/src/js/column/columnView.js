@@ -8,11 +8,18 @@ export class ColumnView {
   }
 
   setHandler(handler) {
-    this.addCardBtnHandler = handler.handleAddCardBtn;
+    this.addCardBtnHandler = handler.addCardBtnHandler;
+    this.addCardInputHandler = handler.addCardInputHandler;
+    this.addInputBlurHandler = handler.addInputBlurHandler;
+    // this.addCancelBtnHandler = handler.addCancelBtnHandler;
   }
 
   addEventHandler(column) {
     __(column).on("click", (event) => this.addCardBtnHandler(event));
+    __(column).on("click", (event) => this.addCardInputHandler(event));
+
+    const addCardInput = _$(".add__input", column);
+    __(addCardInput).on("blur", (event) => this.addInputBlurHandler(event));
   }
 
   columnRender(columnId) {
