@@ -12,13 +12,15 @@ export class ColumnView {
     this.addCardInputFocusHandler = handler.addCardInputFocusHandler;
     this.addCardInputBlurHandler = handler.addCardInputBlurHandler;
     this.addCardActivationBtnHandler = handler.addCardActivationBtnHandler;
-    // this.addCancelBtnHandler = handler.addCancelBtnHandler;
+    this.cancelCardBtnHandler = handler.cancelCardBtnHandler;
   }
 
   addEventHandler(column) {
     __(column).on("click", (event) => this.btnShowingAddFormHandler(event));
     __(column).on("click", (event) => this.addCardInputFocusHandler(event));
     __(column).on("input", (event) => this.addCardActivationBtnHandler(event));
+    __(column).on("click", (event) => this.cancelCardBtnHandler(event));
+    //수정하기 메서드 하나 설치후 if문으로 타겟을 검색해서 처리히가
 
     const addCardInput = _$(".add__input", column);
     __(addCardInput).on("blur", (event) => this.addCardInputBlurHandler(event));

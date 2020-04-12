@@ -19,6 +19,7 @@ export class Column {
       addCardInputFocusHandler: this.onAddCardInputFocus.bind(this),
       addCardInputBlurHandler: this.onAddCardInputBlur.bind(this),
       addCardActivationBtnHandler: this.onAddCardActivationBtn.bind(this),
+      cancelCardBtnHandler: this.onCancelCardBtn.bind(this),
       // handleAddCardBtn
     });
   }
@@ -31,7 +32,7 @@ export class Column {
 
   onBtnShowingAddForm({ target, currentTarget }) {
     const btnShowingAddForm = _$(".btn-showing-add-card", currentTarget);
-    if (target.parentNode !== btnShowingAddForm) return;
+    if (target !== btnShowingAddForm) return;
 
     const addForm = ".add__todo";
     const currentAddForm = _$(addForm, currentTarget);
@@ -58,6 +59,13 @@ export class Column {
 
     if (!addCardInput.value) return (addCardBtn.disabled = true);
     addCardBtn.disabled = false;
+  }
+
+  onCancelCardBtn({ target, currentTarget }) {
+    const cancelCardBtn = _$(".cancel-card-btn", currentTarget);
+    const closeBtn = _$(".btn-showing-add-card", currentTarget);
+    if (target !== cancelCardBtn) return;
+    closeBtn.click();
   }
 
   setNumberOfCards(columnId) {

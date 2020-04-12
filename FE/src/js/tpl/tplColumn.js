@@ -8,8 +8,8 @@ export function tplColumn(id) {
                     <span class="column__title"></span>
                   </div>
                   <div>
-                    <button type="button" class="plus-btn btn-showing-add-card">
-                      <i class="fas fa-plus"></i>
+                    <button type="button" class="plus-btn">
+                      <i class="fas fa-plus btn-showing-add-card""></i>
                     </button>
                     <button type="button" class="close-btn">
                       <i class="fas fa-times"></i>
@@ -24,7 +24,7 @@ export function tplColumn(id) {
                    </div>
                   <div class="add__btn">
                      <button type="submit" class="btn__green add-card-btn" disabled='disabled'>Add</button>
-                     <button type="button" class="btn__cancel" id="cancel-card-btn">Cancel</button>
+                     <button type="button" class="btn__cancel cancel-card-btn">Cancel</button>
                   </div>
                 </form>
                 <!-- //add Card -->
