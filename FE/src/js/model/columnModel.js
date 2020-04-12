@@ -1,6 +1,6 @@
 import { Model } from "./model.js";
-import { _$, __, _c, __$ } from "../utils/util.js";
-import { timeForToday } from "../utils/timeForToday.js";
+import { _$, __, _c, __$ } from "../lib/util.js";
+import { timeForToday } from "../lib/timeForToday.js";
 
 export class ColumnModel extends Model {
   constructor(...views) {
@@ -11,21 +11,27 @@ export class ColumnModel extends Model {
   }
 
   handleInitialData(initialData) {
-    const columnLength = initialData.length;
-    this.setColumnList(columnLength);
-
     initialData.forEach((columnData, index) => {
       const { id, name, cards } = columnData;
       const currentColumn = this._columnList[index];
 
+      this.setColumnList(id);
       this.setColumnNameList(id, name, currentColumn);
-      this.setCardList(cards, currentColumn);
+      this.initCard(id, cards);
     });
+
+    this._views.addColumnRender();
   }
 
-  setColumnList(length) {
-    const columnList = new Array(length);
-    this.notify((view) => view.columnRender([...columnList]));
+  initCard(columnId, cards) {
+    cards.forEach((card) =>
+      this.notify((view) => view.cardRender(columnId, card))
+    );
+    this.setNumberOfCards(columnId);
+  }
+
+  setColumnList(id) {
+    this.notify((view) => view.columnRender(id));
 
     return (this._columnList = [..._$(".todo__column", true)]);
   }
@@ -57,10 +63,21 @@ export class ColumnModel extends Model {
     return this._cardList;
   }
 
-  setNumberOfCards({ length }, column) {
-    this._numberOfCards.set(column, length);
+  deleteCard(card, column) {
+    this._cardList.delete(column, card);
+    this.setNumberOfCards(card, column);
 
-    return this.notify((view) => view.numberOfCardsRender(length, column));
+    return this.notify((view) => view.cardListRender(card, column));
+  }
+
+  setNumberOfCards(columnId) {
+    const column = _$(`column-data-id${columnId}`);
+
+    this._numberOfCards = _a$(".column__card", column).length;
+
+    return this.notify((view) =>
+      view.numberOfCardsRender(this._numberOfCards, column)
+    );
   }
 
   getNumberOfCards() {
