@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CardRepository extends CrudRepository<Card, Long> {
     @Query("Select * from category where name = :name")
-    Optional<Category> findCategoryByName(String name);
+    Optional<Card> findCardByName(String name);
 }
