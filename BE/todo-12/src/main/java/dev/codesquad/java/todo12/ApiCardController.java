@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +52,27 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
+    @GetMapping("/move/{categoryId}/{id}/{categoryKey}")
+    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Integer categoryKey) {
+        Card card = getCard(id);
+        card.moveCard(categoryId, categoryKey);
+        cardRepository.save(card);
+
+        // 카드가 이동 된 카테고리의 카드 리스트 재정렬
+        // categoryKey 동일한 경우 id 순서에 따라 정렬된다.
+        Category toCategory = getCategory(categoryId);
+        categoryRepository.save(toCategory);
+
+        // 변경된 categoryKey 정보 가져오기
+        // 카드리스트가 categoryRepository.save() 후 정렬되어 categoryKey 값이 id에 따라 변경된다.
+        Card movedCard = getCard(id);
+
+        checkCategoryKeyValidation(toCategory, categoryKey);
+        swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
+        categoryRepository.save(toCategory);
+        return new ResponseEntity(getCategory(categoryId), HttpStatus.OK);
+    }
+
     @GetMapping("/move2/{categoryId}/{id}/{index}")
     public ResponseEntity move2(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable int index) {
         Category toCategory = getCategory(categoryId);
@@ -62,33 +81,6 @@ public class ApiCardController {
         toCategory.addCard(index, card);
         categoryRepository.save(toCategory);
         return new ResponseEntity(card, HttpStatus.OK);
-    }
-
-    @GetMapping("/move/{categoryId}/{id}/{categoryKey}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable Integer categoryKey) {
-        Card card = getCard(id);
-        card.moveCard(categoryId, categoryKey);
-        cardRepository.save(card);
-
-        Category toCategory = getCategory(categoryId);
-        List<Card> cardList = toCategory.getCards();
-        categoryRepository.save(toCategory);
-
-        Card movedCard = getCard(id);
-
-        if (categoryKey + 1 > cardList.size()) {
-            throw new DataNotFoundException("Wrong CategoryKey");
-        }
-
-        if (card.IsIncreased(movedCard.getCategoryKey())) {
-            toCategory.swapWithBeforeCard(movedCard.getCategoryKey());
-        }
-        if (card.IsDecreased(movedCard.getCategoryKey())) {
-            toCategory.swapWithAfterCard(movedCard.getCategoryKey());
-        }
-
-        categoryRepository.save(toCategory);
-        return new ResponseEntity(getCategory(categoryId), HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}/{categoryId}")
@@ -115,6 +107,22 @@ public class ApiCardController {
 
     private Category getCategory(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    }
+
+    private void swapCardIfCategoryKeyChanged(Card card, Category category, Integer movedCategoryKey) {
+        if (card.IsIncreasedCategoryKey(movedCategoryKey)) {
+            category.swapWithBeforeCard(movedCategoryKey);
+        }
+        if (card.IsDecreasedCategoryKey(movedCategoryKey)) {
+            category.swapWithAfterCard(movedCategoryKey);
+        }
+    }
+
+    private void checkCategoryKeyValidation(Category category, Integer categoryKey) {
+        List<Card> cards = category.getCards();
+        if (categoryKey > cards.size() - 1) {
+            throw new DataNotFoundException("존재하지 않는 카테고리 키");
+        }
     }
 
     @ExceptionHandler

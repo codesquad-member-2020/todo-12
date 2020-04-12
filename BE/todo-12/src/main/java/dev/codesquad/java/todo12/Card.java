@@ -1,5 +1,6 @@
 package dev.codesquad.java.todo12;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -43,16 +44,12 @@ public class Card {
         return categoryKey;
     }
 
-    public boolean IsIncreased(Integer categoryKey) {
+    public boolean IsIncreasedCategoryKey(Integer categoryKey) {
         return this.categoryKey < categoryKey;
     }
 
-    public boolean IsDecreased(Integer categoryKey) {
+    public boolean IsDecreasedCategoryKey(Integer categoryKey) {
         return this.categoryKey > categoryKey;
-    }
-
-    public boolean isEqualsCategoryKey(Integer categoryKey) {
-        return categoryKey.equals(this.categoryKey);
     }
 
     public void update(String title, String content) {
