@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -22,7 +23,8 @@ public class ApiCategoryController {
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(getKanban(1L), HttpStatus.OK);
+        return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
+        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
         //return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
     }
 
@@ -57,6 +59,10 @@ public class ApiCategoryController {
 
     private Category getCategory(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    }
+
+    private List<Card> getCardList(Long id) {
+        return categoryRepository.findByIdOnlyDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }
 
     private Kanban getKanban(Long id) {
