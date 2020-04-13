@@ -21,6 +21,10 @@ class BoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadModel()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moveToDone(_:)),
+                                               name: .moveToDone,
+                                               object: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,6 +67,17 @@ class BoardViewController: UIViewController {
         viewController?.cardTabelView.reloadData()
         viewController?.titleLabel.text = model.categories[index].name
         viewController?.addCardButton.isEnabled = true
+    }
+    
+    @objc func moveToDone(_ notification: Notification) {
+        guard let card = notification.userInfo?["card"] as? Card else {return}
+        guard let dataSource = doneViewController?.cardTabelView.dataSource as? CardDataSource else {return}
+        guard let row = dataSource.model?.count else {return}
+        dataSource.model?.append(card: card)
+        
+        let indexPath = IndexPath(row: row, section: 0)
+        
+        doneViewController?.cardTabelView.insertRows(at: [indexPath], with: .automatic)
     }
 }
 

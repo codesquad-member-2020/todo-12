@@ -25,14 +25,24 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let moveToDone = UIAction(title: "move to done") { action in }
+            
+            let dataSource = tableView.dataSource as? CardDataSource
+            
+            let moveToDone = UIAction(title: "move to done") { _ in
+                guard let card = dataSource?.model?.card(at: indexPath.row) else {return}
+                NotificationCenter.default.post(name: .moveToDone,
+                                                object: self,
+                                                userInfo: ["card" : card])
+                
+                dataSource?.model?.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
             
             let edit = UIAction(title: "edit...") { _ in
                 self.handler(indexPath.row)
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                let dataSource = tableView.dataSource as? CardDataSource
                 dataSource?.model?.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
@@ -42,4 +52,8 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
         }
         return configuration
     }
+}
+
+extension Notification.Name {
+    static let moveToDone = Notification.Name("moveToDone")
 }
