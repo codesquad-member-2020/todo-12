@@ -29,6 +29,9 @@ export function __$(element) {
     hide(className = "on-block") {
       target.classList.remove(className);
     },
+    toggle(className = "on-block") {
+      target.classList.toggle(className);
+    },
     transition(target, property) {
       target.style.transition = property;
     },
@@ -43,6 +46,9 @@ export function __(target) {
     show(className = "on-block") {
       target.classList.add(className);
     },
+    toggle(className = "on-block") {
+      target.classList.toggle(className);
+    },
     hide(className = "on-block") {
       target.classList.remove(className);
     },
@@ -50,6 +56,10 @@ export function __(target) {
       target.style.transition = property;
     },
   };
+}
+
+export function filterNumber(str) {
+  return str.trim().replace(/[^0-9]/g, "");
 }
 
 export function fetchData(
