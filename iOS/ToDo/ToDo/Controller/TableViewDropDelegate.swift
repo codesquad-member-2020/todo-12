@@ -26,24 +26,16 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
                 NotificationCenter.default.post(name: .exchangeCellOnSameTableView,
                                                 object: self,
                                                 userInfo: ["sourceIndexPath" : sourceItemPath, "destinationIndexPath" : destinationIndexPath])
-            } else if let dragObejct = item.dragItem.localObject as? DragObject {
-                guard let sourceModel = dragObejct.dataSource.model else {return}
-                let sourceIndexPath = dragObejct.indexPath
+            } else if let dragObject = item.dragItem.localObject as? DragObject {
+                guard let sourceModel = dragObject.dataSource.model else {return}
+                let sourceIndexPath = dragObject.indexPath
                 dataSource.model?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
-                DispatchQueue.main.async {
-                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-                    self.removeSourceTableData(object: dragObejct)
-                }
+                dragObject.dataSource.model?.remove(at: dragObject.indexPath.row)
+                NotificationCenter.default.post(name: .exchangeCellOnDifferentTableView,
+                                                object: self,
+                                                userInfo: ["dragObject" : dragObject, "destinationIndexPath" : destinationIndexPath])
             }
         }
-    }
-    
-    func removeSourceTableData(object: Any?) {
-        guard let dragObject = object as? DragObject else {return}
-        dragObject.tableView.beginUpdates()
-        dragObject.dataSource.model?.remove(at: dragObject.indexPath.row)
-        dragObject.tableView.deleteRows(at: [dragObject.indexPath], with: .automatic)
-        dragObject.tableView.endUpdates()
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
@@ -53,4 +45,5 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
 
 extension Notification.Name {
     static let exchangeCellOnSameTableView = Notification.Name("exchangeCellOnSameTableView")
+    static let exchangeCellOnDifferentTableView = Notification.Name("exchangeCellOnDifferentTableView")
 }

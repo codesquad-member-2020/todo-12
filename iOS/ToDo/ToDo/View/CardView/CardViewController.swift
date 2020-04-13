@@ -17,7 +17,7 @@ class CardViewController: UIViewController, UITableViewDelegate {
     @IBAction func addCardButtonPushed(_ sender: UIButton) {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         let indexPath = IndexPath(row: cardTabelView.numberOfRows(inSection: 0), section: 0)
-
+        
         editView.createHandler = {
             self.dataSource.model?.append(card: $0)
             self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
@@ -54,6 +54,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(exchangeCellOnSametableView(_:)),
                                                name: .exchangeCellOnSameTableView,
                                                object: dropDelegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(exchangeCellOnDifferentTableView(_:)),
+                                               name: .exchangeCellOnDifferentTableView,
+                                               object: dropDelegate)
     }
     
     @objc func deleteRow(_ notification: Notification) {
@@ -76,12 +80,23 @@ class CardViewController: UIViewController, UITableViewDelegate {
     
     @objc func exchangeCellOnSametableView(_ notification: Notification) {
         guard let sourceIndexPath = notification.userInfo?["sourceIndexPath"] as? IndexPath, let destinationIndexPath = notification.userInfo?["destinationIndexPath"] as? IndexPath else {return}
-
+        
         DispatchQueue.main.async {
             self.cardTabelView.beginUpdates()
             self.cardTabelView.deleteRows(at: [sourceIndexPath], with: .automatic)
             self.cardTabelView.insertRows(at: [destinationIndexPath], with: .automatic)
             self.cardTabelView.endUpdates()
+        }
+    }
+    
+    @objc func exchangeCellOnDifferentTableView(_ notification: Notification) {
+        guard let dragObject = notification.userInfo?["dragObject"] as? DragObject else {return}
+        guard let destinationIndexPath = notification.userInfo?["destinationIndexPath"] as? IndexPath else {return}
+        DispatchQueue.main.async {
+            self.cardTabelView.insertRows(at: [destinationIndexPath], with: .automatic)
+            dragObject.tableView.beginUpdates()
+            dragObject.tableView.deleteRows(at: [dragObject.indexPath], with: .automatic)
+            dragObject.tableView.endUpdates()
         }
     }
     
