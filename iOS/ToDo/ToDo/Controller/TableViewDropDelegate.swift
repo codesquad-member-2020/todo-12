@@ -23,12 +23,9 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
         for item in coordinator.items {
             if let sourceItemPath = item.sourceIndexPath {
                 dataSource.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
-                DispatchQueue.main.async {
-                    tableView.beginUpdates()
-                    tableView.deleteRows(at: [sourceItemPath], with: .automatic)
-                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-                    tableView.endUpdates()
-                }
+                NotificationCenter.default.post(name: .exchangeCellOnSameTableView,
+                                                object: self,
+                                                userInfo: ["sourceIndexPath" : sourceItemPath, "destinationIndexPath" : destinationIndexPath])
             } else if let dragObejct = item.dragItem.localObject as? DragObject {
                 guard let sourceModel = dragObejct.dataSource.model else {return}
                 let sourceIndexPath = dragObejct.indexPath
@@ -52,5 +49,8 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
-    
+}
+
+extension Notification.Name {
+    static let exchangeCellOnSameTableView = Notification.Name("exchangeCellOnSameTableView")
 }

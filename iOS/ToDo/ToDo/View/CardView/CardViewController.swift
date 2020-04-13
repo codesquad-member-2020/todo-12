@@ -50,6 +50,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(startEditCard(_:)),
                                                name: .startEditCard,
                                                object: delegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(exchangeCellOnSametableView(_:)),
+                                               name: .exchangeCellOnSameTableView,
+                                               object: dropDelegate)
     }
     
     @objc func deleteRow(_ notification: Notification) {
@@ -68,6 +72,17 @@ class CardViewController: UIViewController, UITableViewDelegate {
             self.cardTabelView.reloadData()
         }
         self.present(editView, animated: true)
+    }
+    
+    @objc func exchangeCellOnSametableView(_ notification: Notification) {
+        guard let sourceIndexPath = notification.userInfo?["sourceIndexPath"] as? IndexPath, let destinationIndexPath = notification.userInfo?["destinationIndexPath"] as? IndexPath else {return}
+
+        DispatchQueue.main.async {
+            self.cardTabelView.beginUpdates()
+            self.cardTabelView.deleteRows(at: [sourceIndexPath], with: .automatic)
+            self.cardTabelView.insertRows(at: [destinationIndexPath], with: .automatic)
+            self.cardTabelView.endUpdates()
+        }
     }
     
     private func setLabelRadius() {
