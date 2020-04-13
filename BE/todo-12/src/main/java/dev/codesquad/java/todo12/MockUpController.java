@@ -73,20 +73,18 @@ public class MockUpController {
     @GetMapping("/delete/{id}")
     public ResponseEntity deleteTest(@PathVariable Long id) {
         Card card = getCard(id);
-        card.delete();
-        cardRepository.save(card);
+        cardRepository.delete(card);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity test() {
-        return new ResponseEntity(categoryRepository.findByIdDeletedFalse(3L), HttpStatus.OK);
-        //return new ResponseEntity(cardRepository.findCardsByIdDeletedFalse(1L), HttpStatus.OK);
-        //return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
+        return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
+        //return new ResponseEntity(categoryRepository.findByIdDeletedFalse(3L), HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
-        return cardRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
     }
 
     private Category getCategory(Long id) {

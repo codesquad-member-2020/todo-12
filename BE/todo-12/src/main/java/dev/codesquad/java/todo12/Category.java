@@ -31,10 +31,6 @@ public class Category {
         return cards.get(cards.size() - 1);
     }
 
-    public void setDeletedFalseCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public void swapWithBeforeCard(Integer categoryKey) {
         Collections.swap(cards, categoryKey - 1, categoryKey);
     }
