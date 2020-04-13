@@ -33,6 +33,7 @@ public class ApiCategoryController {
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
         Category category = getCategory(id);
+        category.setDeletedFalseCards(getCardList(id));
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
@@ -68,7 +69,7 @@ public class ApiCategoryController {
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }
 
     private List<Card> getCardList(Long id) {
