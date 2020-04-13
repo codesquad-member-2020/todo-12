@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BoardViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
-    private var todoViewController: TaskViewController?
-    private var inProgressViewController: TaskViewController?
-    private var doneViewController: TaskViewController?
+    private var todoViewController: CardViewController?
+    private var inProgressViewController: CardViewController?
+    private var doneViewController: CardViewController?
     
     private let endPoint = "https://4122ebd9-5e04-4a5b-a913-fe458d2e91d4.mock.pstmn.io"
     
@@ -25,15 +25,15 @@ class ViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "todo" {
-            todoViewController = segue.destination as? TaskViewController
+            todoViewController = segue.destination as? CardViewController
         }
         
         if segue.identifier == "inProgress" {
-            inProgressViewController = segue.destination as? TaskViewController
+            inProgressViewController = segue.destination as? CardViewController
         }
         
         if segue.identifier == "done" {
-            doneViewController = segue.destination as? TaskViewController
+            doneViewController = segue.destination as? CardViewController
         }
     }
     
@@ -58,11 +58,11 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setModel(viewController: TaskViewController?, model: Model, index: Int) {
+    private func setModel(viewController: CardViewController?, model: Model, index: Int) {
         viewController?.dataSource.model = model.categories[index]
-        viewController?.taskTabelView.reloadData()
+        viewController?.cardTabelView.reloadData()
         viewController?.titleLabel.text = model.categories[index].name
-        viewController?.addTaskButton.isEnabled = true
+        viewController?.addCardButton.isEnabled = true
     }
 }
 

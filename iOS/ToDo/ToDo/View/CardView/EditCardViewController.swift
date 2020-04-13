@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditTaskViewController: UIViewController {
+class EditCardViewController: UIViewController {
     
     @IBAction func cancelButtonPushed(_ sender: UIButton) {
         dismiss(animated: true)

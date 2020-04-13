@@ -25,11 +25,19 @@ struct Category: Codable {
     }
     
     func author(of index: Int) -> String {
-        return cards[index].author
+        return "author by " + cards[index].author
+    }
+    
+    func card(at index: Int) -> Card {
+        return cards[index]
     }
     
     mutating func append(card: Card) {
         cards.append(card)
+    }
+    
+    mutating func insert(_ newElement: Card, at index: Int) {
+        cards.insert(newElement, at: index)
     }
     
     mutating func remove(at index: Int) {

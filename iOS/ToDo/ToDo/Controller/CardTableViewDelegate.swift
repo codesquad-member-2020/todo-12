@@ -8,13 +8,13 @@
 
 import UIKit
 
-class TaskTableViewDelegate: NSObject, UITableViewDelegate {
+class CardTableViewDelegate: NSObject, UITableViewDelegate {
     
     var handler: (Int) -> () = {_ in}
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
-            let taskDataSource = tableView.dataSource as? TaskDataSource
+            let taskDataSource = tableView.dataSource as? CardDataSource
             taskDataSource?.model?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
@@ -32,7 +32,7 @@ class TaskTableViewDelegate: NSObject, UITableViewDelegate {
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                let dataSource = tableView.dataSource as? TaskDataSource
+                let dataSource = tableView.dataSource as? CardDataSource
                 dataSource?.model?.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
