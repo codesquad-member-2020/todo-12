@@ -43,6 +43,7 @@ public class ApiCardController {
         Card card = getCard(id);
         card.update(cardInfo.get("title"), cardInfo.get("content"));
         cardRepository.save(card);
+        card = getCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -51,6 +52,7 @@ public class ApiCardController {
         Card card = getCard(id);
         card.delete();
         cardRepository.save(card);
+        //card = getCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -72,7 +74,8 @@ public class ApiCardController {
         checkCategoryKeyValidation(toCategory, cardsIndex.get("categoryKey"));
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
-        return new ResponseEntity(getCard(id), HttpStatus.OK);
+        card = getCard(id);
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 
     private Card getCard(Long id) {

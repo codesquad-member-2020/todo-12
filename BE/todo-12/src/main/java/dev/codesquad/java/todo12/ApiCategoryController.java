@@ -33,18 +33,26 @@ public class ApiCategoryController {
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
+//    @PostMapping("/create")
+//    public ResponseEntity create(@RequestBody HashMap<String, String> categoryInfo) {
+//        Category category = new Category(categoryInfo.get("name"));
+//        Kanban kanban = getKanban(1L);
+//        logger.info("4");
+//        kanban.addCategory(category);
+//        logger.info("3");
+//        kanbanRepository.save(kanban);
+//        logger.info("2"); // here
+//        category = kanban.getLastCategory();
+//        logger.info("1");
+//        return new ResponseEntity(category, HttpStatus.OK);
+//    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> categoryInfo) {
         Category category = getCategory(id);
         category.update(categoryInfo.get("name"));
         categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity create(@PathVariable String name) {
-        Category category = new Category(name);
-        categoryRepository.save(category);
+        category = getCategory(id);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 

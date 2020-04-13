@@ -19,6 +19,10 @@ public class Kanban {
         categories.add(category);
     }
 
+    public Category getLastCategory() {
+        return categories.get(categories.size() - 1);
+    }
+
     @Override
     public String toString() {
         return "Kanban{" +
