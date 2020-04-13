@@ -50,10 +50,8 @@ public class ApiCardController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
-        card.delete();
-        cardRepository.save(card);
-        //card = getCard(id);
-        return new ResponseEntity(card, HttpStatus.OK);
+        cardRepository.delete(card);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     @PutMapping("/{id}/move/{categoryId}")
@@ -80,7 +78,7 @@ public class ApiCardController {
     }
 
     private Card getCard(Long id) {
-        return cardRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
     }
 
     private Category getCategory(Long id) {
