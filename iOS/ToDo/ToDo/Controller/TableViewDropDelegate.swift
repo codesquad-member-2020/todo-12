@@ -22,7 +22,7 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
         
         for item in coordinator.items {
             if let sourceItemPath = item.sourceIndexPath {
-                dataSource.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                moveItem(dataSource: dataSource,at: sourceItemPath.row, to: destinationIndexPath.row)
                 NotificationCenter.default.post(name: .exchangeCellOnSameTableView,
                                                 object: self,
                                                 userInfo: ["sourceIndexPath" : sourceItemPath, "destinationIndexPath" : destinationIndexPath])
@@ -36,6 +36,13 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
                                                 userInfo: ["dragObject" : dragObject, "destinationIndexPath" : destinationIndexPath])
             }
         }
+    }
+    
+    func moveItem(dataSource: CardDataSource, at sourceIndex: Int, to destinationIndex: Int) {
+        guard sourceIndex != destinationIndex else {return}
+        guard let dragItem = dataSource.model?.card(at: sourceIndex) else {return}
+        dataSource.model?.remove(at: sourceIndex)
+        dataSource.model?.insert(dragItem, at: destinationIndex)
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
