@@ -27,7 +27,7 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @PostMapping("/create/{categoryId}")
+    @PostMapping("/{categoryId}")
     public ResponseEntity create(@PathVariable Long categoryId, @RequestBody HashMap<String, String> cardInfo) {
         Category category = getCategory(categoryId);
         Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
@@ -38,7 +38,7 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> cardInfo) {
         Card card = getCard(id);
         card.update(cardInfo.get("title"), cardInfo.get("content"));
@@ -47,7 +47,7 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
         card.delete();
@@ -56,8 +56,9 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @PutMapping("/move/{categoryId}/{id}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @RequestBody HashMap<String, Integer> cardsIndex) {
+    @PutMapping("/{id}/move/{categoryId}")
+    public ResponseEntity move(@PathVariable Long id, @PathVariable Long categoryId,
+                               @RequestBody HashMap<String, Integer> cardsIndex) {
         Card card = getCard(id);
         card.moveCard(categoryId, cardsIndex.get("categoryKey"));
         cardRepository.save(card);
