@@ -22,35 +22,35 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
         
         for item in coordinator.items {
             if let sourceItemPath = item.sourceIndexPath {
-                dataSource.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
-                DispatchQueue.main.async {
-                    tableView.beginUpdates()
-                    tableView.deleteRows(at: [sourceItemPath], with: .automatic)
-                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-                    tableView.endUpdates()
-                }
-            } else if let dragObejct = item.dragItem.localObject as? DragObject {
-                guard let sourceModel = dragObejct.dataSource.model else {return}
-                let sourceIndexPath = dragObejct.indexPath
-                dataSource.model?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
-                DispatchQueue.main.async {
-                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-                    self.removeSourceTableData(object: dragObejct)
-                }
+                moveItem(dataSource: dataSource,at: sourceItemPath.row, to: destinationIndexPath.row)
+                NotificationCenter.default.post(name: .exchangeCellOnSameTableView,
+                                                object: self,
+                                                userInfo: ["sourceIndexPath" : sourceItemPath, "destinationIndexPath" : destinationIndexPath])
+            } else if let dragObject = item.dragItem.localObject as? DragObject {
+                guard let sourceModel = dragObject.dataSource.category else {return}
+                let sourceIndexPath = dragObject.indexPath
+                dataSource.category?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
+                dragObject.dataSource.category?.remove(at: dragObject.indexPath.row)
+                NotificationCenter.default.post(name: .exchangeCellOnDifferentTableView,
+                                                object: self,
+                                                userInfo: ["dragObject" : dragObject, "destinationIndexPath" : destinationIndexPath])
             }
         }
     }
     
-    func removeSourceTableData(object: Any?) {
-        guard let dragObject = object as? DragObject else {return}
-        dragObject.tableView.beginUpdates()
-        dragObject.dataSource.model?.remove(at: dragObject.indexPath.row)
-        dragObject.tableView.deleteRows(at: [dragObject.indexPath], with: .automatic)
-        dragObject.tableView.endUpdates()
+    func moveItem(dataSource: CardDataSource, at sourceIndex: Int, to destinationIndex: Int) {
+        guard sourceIndex != destinationIndex else {return}
+        guard let dragItem = dataSource.category?.card(at: sourceIndex) else {return}
+        dataSource.category?.remove(at: sourceIndex)
+        dataSource.category?.insert(dragItem, at: destinationIndex)
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
-    
+}
+
+extension Notification.Name {
+    static let exchangeCellOnSameTableView = Notification.Name("exchangeCellOnSameTableView")
+    static let exchangeCellOnDifferentTableView = Notification.Name("exchangeCellOnDifferentTableView")
 }
