@@ -33,7 +33,12 @@ public class ApiCardController {
         Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
         category.addCard(card);
         categoryRepository.save(category);
-        return new ResponseEntity(card, HttpStatus.OK);
+
+        int listLength = category.getCards().size() - 1 ;
+        category = getCategory(categoryId);
+
+        System.out.println("my new card : " + category.getCards().get(listLength) );
+        return new ResponseEntity(category.getCards().get(listLength), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
