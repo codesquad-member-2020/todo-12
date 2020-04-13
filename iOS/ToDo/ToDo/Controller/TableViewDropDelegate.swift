@@ -29,8 +29,24 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
                     tableView.insertRows(at: [destinationIndexPath], with: .automatic)
                     tableView.endUpdates()
                 }
+            } else if let dragObejct = item.dragItem.localObject as? DragObject {
+                guard let sourceModel = dragObejct.dataSource.model else {return}
+                let sourceIndexPath = dragObejct.indexPath
+                dataSource.model?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
+                DispatchQueue.main.async {
+                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+                    self.removeSourceTableData(object: dragObejct)
+                }
             }
         }
+    }
+    
+    func removeSourceTableData(object: Any?) {
+        guard let dragObject = object as? DragObject else {return}
+        dragObject.tableView.beginUpdates()
+        dragObject.dataSource.model?.remove(at: dragObject.indexPath.row)
+        dragObject.tableView.deleteRows(at: [dragObject.indexPath], with: .automatic)
+        dragObject.tableView.endUpdates()
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
