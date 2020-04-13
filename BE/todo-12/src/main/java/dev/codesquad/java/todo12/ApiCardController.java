@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/card")
 public class ApiCardController {
-    Logger logger = LoggerFactory.getLogger(ApiCardController.class);
+    private Logger logger = LoggerFactory.getLogger(ApiCardController.class);
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    CardRepository cardRepository;
+    private CardRepository cardRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
@@ -82,7 +82,7 @@ public class ApiCardController {
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }
 
     private void swapCardIfCategoryKeyChanged(Card card, Category category, Integer movedCategoryKey) {

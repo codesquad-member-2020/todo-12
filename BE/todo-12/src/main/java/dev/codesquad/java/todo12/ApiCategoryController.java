@@ -13,16 +13,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
-    Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
+    private Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
 
     @Autowired
-    CardRepository cardRepository;
+    private CardRepository cardRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    KanbanRepository kanbanRepository;
+    private KanbanRepository kanbanRepository;
 
     @GetMapping("")
     public ResponseEntity viewAll() {
