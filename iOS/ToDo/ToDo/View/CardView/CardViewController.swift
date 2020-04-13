@@ -41,26 +41,33 @@ class CardViewController: UIViewController, UITableViewDelegate {
         dataSource.handler = {
             self.numOfCardsLabel.text = String(self.dataSource.model?.count ?? 0)
         }
-        delegate.handler = {
-            guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
-            editView.model = self.dataSource.model?.cards[$0]
-            editView.editedModelIndex = $0
-            editView.editHandler = {
-                self.dataSource.model?.cards[$0] = $1
-                self.cardTabelView.reloadData()
-            }
-            self.present(editView, animated: true)
-        }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteRow(_:)),
                                                name: .deleteIndexPath,
+                                               object: delegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(startEditCard(_:)),
+                                               name: .startEditCard,
                                                object: delegate)
     }
     
     @objc func deleteRow(_ notification: Notification) {
         guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else {return}
         cardTabelView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    @objc func startEditCard(_ notification: Notification) {
+        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
+        guard let editIndex = notification.userInfo?["editIndex"] as? Int else {return}
+        
+        editView.model = self.dataSource.model?.cards[editIndex]
+        editView.editedModelIndex = editIndex
+        editView.editHandler = {
+            self.dataSource.model?.cards[$0] = $1
+            self.cardTabelView.reloadData()
+        }
+        self.present(editView, animated: true)
     }
     
     private func setLabelRadius() {

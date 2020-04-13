@@ -35,7 +35,9 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
             }
             
             let edit = UIAction(title: "edit...") { _ in
-                self.handler(indexPath.row)
+                NotificationCenter.default.post(name: .startEditCard,
+                                                object: self,
+                                                userInfo: ["editIndex" : indexPath.row])
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
@@ -61,4 +63,5 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
 extension Notification.Name {
     static let moveToDone = Notification.Name("moveToDone")
     static let deleteIndexPath = Notification.Name("deleteIndexPath")
+    static let startEditCard = Notification.Name("startEditCard")
 }
