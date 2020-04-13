@@ -25,7 +25,7 @@ struct Category: Codable {
     }
     
     func author(of index: Int) -> String {
-        return cards[index].author
+        return "author by " + cards[index].author
     }
     
     func card(at index: Int) -> Card {

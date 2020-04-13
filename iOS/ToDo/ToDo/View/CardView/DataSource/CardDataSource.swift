@@ -23,10 +23,8 @@ class CardDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as? CardCell else {return UITableViewCell()}
-        
-        cell.titleLabel.text = model?.title(of: indexPath.row)
-        cell.contentLabel.text = model?.content(of: indexPath.row)
-        cell.authorLabel.text = "author by " + ((model?.author(of: indexPath.row)) ?? "")
+        guard let card = model?.cards[indexPath.row] else {return UITableViewCell()}
+        cell.configure(with: card)
         
         return cell
     }
