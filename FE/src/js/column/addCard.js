@@ -1,6 +1,8 @@
 import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
-export class AddCard {
+import { Observable } from "./observable.js";
+export class AddCard extends Observable {
   constructor() {
+    super();
     this.btnShowingAddForm = "btn-showing-add-card";
     this.addCardInput = "add__input";
     this.cancelCardBtn = "cancel-card-btn";
@@ -60,12 +62,15 @@ export class AddCard {
   }
 
   onAddCardBtn(currentColumn) {
+    event.preventDefault();
     const columnId = filterNumber(currentColumn.id);
     const currentForm = _$(this.addCardForm, currentColumn);
-    const addApi = `http://15.165.163.174:8080/card/create/${columnId}`;
-    currentForm.action = addApi;
+    const addUrl = `http://15.165.163.174:8080/card/create/${columnId}`;
 
-    //카드 추가
-    //카드갯수추가
+    const value = currentForm.content.value;
+    const json = { content: value };
+
+    // fetchData(addUrl, "POST", JSON.stringify(json));
+    this.notify(columnId, json);
   }
 }
