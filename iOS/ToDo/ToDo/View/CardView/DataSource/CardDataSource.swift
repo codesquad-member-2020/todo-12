@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskDataSource: NSObject, UITableViewDataSource {
+class CardDataSource: NSObject, UITableViewDataSource {
     
     var model: Category? {
         didSet {

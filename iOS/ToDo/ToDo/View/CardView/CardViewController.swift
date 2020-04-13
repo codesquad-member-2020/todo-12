@@ -25,14 +25,17 @@ class CardViewController: UIViewController, UITableViewDelegate {
         self.present(editView, animated: true)
     }
     
-    let dataSource = TaskDataSource()
-    private let delegate = TaskTableViewDelegate()
+    let dataSource = CardDataSource()
+    private let delegate = CardTableViewDelegate()
+    private let dragDelegate = TableViewDragDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelRadius()
         cardTabelView.dataSource = dataSource
         cardTabelView.delegate = delegate
+        cardTabelView.dragDelegate = dragDelegate
+        cardTabelView.dragInteractionEnabled = true
         dataSource.handler = {
             self.numOfCardsLabel.text = String(self.dataSource.model?.count ?? 0)
         }
