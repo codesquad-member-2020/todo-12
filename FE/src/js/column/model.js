@@ -49,6 +49,7 @@ export class Model {
   setCardList(columnId, card) {
     const column = this.columnList.get(columnId);
     const cardId = card.id;
+
     this.cardList.set(cardId, { card: card, columnId: columnId });
 
     // this.cardList.set(cardId, { columnId });

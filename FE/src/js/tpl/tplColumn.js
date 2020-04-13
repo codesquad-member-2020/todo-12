@@ -20,7 +20,7 @@ export function tplColumn(id) {
                 <!-- add Card -->
                 <form class="add__todo" method="post" >
                  <div class="input-box">
-                      <textarea name="content" id="content" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note"></textarea>
+                      <textarea name="content" id="content" maxlength="500" aria-label="내용을 입력하세요" placeholder="Enter a note" id="js-add-card-input"></textarea>
                    </div>
                   <div class="add__btn">
                      <button type="submit" class="btn__green" id="js-add-card-btn" disabled='disabled'>Add</button>

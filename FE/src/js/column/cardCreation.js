@@ -1,13 +1,14 @@
 import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
-import { Observable } from "./observable.js";
-export class CardCreation extends Observable {
-  constructor() {
-    super();
+export class CardCreation {
+  constructor({ columnView, model }) {
     this.btnShowingAddForm = "js-btn-showing-creation";
     this.addCardInput = "content";
     this.cancelCardBtn = "js-cancel-card-btn";
     this.addCardBtn = "js-add-card-btn";
     this.addCardForm = ".add__todo";
+    this.model = model;
+    this.columnView = columnView;
+    this.columnView.subscribe(this.addEventHandler.bind(this));
     // this.fetchUrl = `https://cors-anywhere.herokuapp.com/http://15.165.163.174:8080/card/create/${categoryId}`;
   }
 
@@ -35,7 +36,6 @@ export class CardCreation extends Observable {
 
   onInputEvents(currentColumn) {
     const addCardInput = _$("#" + this.addCardInput, currentColumn);
-    console.log(addCardInput);
     __(addCardInput).on("blur", () => _c(addCardInput).remove("input-active"));
     _c(addCardInput).add("input-active"); //함수로 만들기
 
@@ -53,7 +53,7 @@ export class CardCreation extends Observable {
 
   onCancelCardBtn(currentColumn) {
     const closeBtn = _$("#" + this.btnShowingAddForm, currentColumn);
-    const addCardInput = _$("." + this.addCardInput, currentColumn);
+    const addCardInput = _$("#" + this.addCardInput, currentColumn);
 
     closeBtn.click();
     addCardInput.value = "";
@@ -64,11 +64,13 @@ export class CardCreation extends Observable {
     const columnId = filterNumber(currentColumn.id);
     const currentForm = _$(this.addCardForm, currentColumn);
     const addUrl = `http://15.165.163.174:8080/card/create/${columnId}`;
+    const addCardInput = _$("#" + this.addCardInput, currentColumn);
 
     const value = currentForm.content.value;
     const json = { content: value };
-
     // fetchData(addUrl, "POST", JSON.stringify(json));
-    this.notify(columnId, json);
+    this.model.setCardList(columnId, json);
+    this.model.setNumberOfCard(columnId);
+    addCardInput.value = "";
   }
 }
