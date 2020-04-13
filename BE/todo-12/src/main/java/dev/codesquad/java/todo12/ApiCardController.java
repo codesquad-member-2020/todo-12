@@ -33,6 +33,8 @@ public class ApiCardController {
         Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
         category.addCard(card);
         categoryRepository.save(category);
+        category = getCategory(categoryId);
+        card = category.getLastCard();
         return new ResponseEntity(card, HttpStatus.OK);
     }
 

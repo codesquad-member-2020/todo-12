@@ -63,7 +63,11 @@ public class MockUpController {
         Category category = getCategory(categoryId);
         category.addCard(card);
         categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
+
+        category = getCategory(categoryId);
+        card = category.getLastCard();
+
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")

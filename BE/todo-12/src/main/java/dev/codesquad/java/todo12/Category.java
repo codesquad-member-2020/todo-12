@@ -25,6 +25,10 @@ public class Category {
         return cards;
     }
 
+    public Card getLastCard() {
+        return cards.get(cards.size() - 1);
+    }
+
     public void swapWithBeforeCard(Integer categoryKey) {
         Collections.swap(cards, categoryKey - 1, categoryKey);
     }
