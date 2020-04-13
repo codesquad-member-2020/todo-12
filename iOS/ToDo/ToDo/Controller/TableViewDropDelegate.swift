@@ -27,10 +27,10 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
                                                 object: self,
                                                 userInfo: ["sourceIndexPath" : sourceItemPath, "destinationIndexPath" : destinationIndexPath])
             } else if let dragObject = item.dragItem.localObject as? DragObject {
-                guard let sourceModel = dragObject.dataSource.model else {return}
+                guard let sourceModel = dragObject.dataSource.category else {return}
                 let sourceIndexPath = dragObject.indexPath
-                dataSource.model?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
-                dragObject.dataSource.model?.remove(at: dragObject.indexPath.row)
+                dataSource.category?.insert(sourceModel.card(at: sourceIndexPath.row), at: destinationIndexPath.row)
+                dragObject.dataSource.category?.remove(at: dragObject.indexPath.row)
                 NotificationCenter.default.post(name: .exchangeCellOnDifferentTableView,
                                                 object: self,
                                                 userInfo: ["dragObject" : dragObject, "destinationIndexPath" : destinationIndexPath])
@@ -40,9 +40,9 @@ class TableViewDropDelegate: NSObject, UITableViewDropDelegate {
     
     func moveItem(dataSource: CardDataSource, at sourceIndex: Int, to destinationIndex: Int) {
         guard sourceIndex != destinationIndex else {return}
-        guard let dragItem = dataSource.model?.card(at: sourceIndex) else {return}
-        dataSource.model?.remove(at: sourceIndex)
-        dataSource.model?.insert(dragItem, at: destinationIndex)
+        guard let dragItem = dataSource.category?.card(at: sourceIndex) else {return}
+        dataSource.category?.remove(at: sourceIndex)
+        dataSource.category?.insert(dragItem, at: destinationIndex)
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {

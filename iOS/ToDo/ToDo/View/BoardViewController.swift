@@ -63,7 +63,7 @@ class BoardViewController: UIViewController {
     }
     
     private func setModel(viewController: CardViewController?, model: Model, index: Int) {
-        viewController?.dataSource.model = model.categories[index]
+        viewController?.dataSource.category = model.categories[index]
         viewController?.cardTabelView.reloadData()
         viewController?.titleLabel.text = model.categories[index].name
         viewController?.addCardButton.isEnabled = true
@@ -72,8 +72,8 @@ class BoardViewController: UIViewController {
     @objc func moveToDone(_ notification: Notification) {
         guard let card = notification.userInfo?["card"] as? Card else {return}
         guard let dataSource = doneViewController?.cardTabelView.dataSource as? CardDataSource else {return}
-        guard let row = dataSource.model?.count else {return}
-        dataSource.model?.append(card: card)
+        guard let row = dataSource.category?.count else {return}
+        dataSource.category?.append(card: card)
         
         let indexPath = IndexPath(row: row, section: 0)
         

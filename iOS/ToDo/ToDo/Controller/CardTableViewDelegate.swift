@@ -27,7 +27,7 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
             guard let dataSource = tableView.dataSource as? CardDataSource else {return UIMenu(title: "")}
             
             let moveToDone = UIAction(title: "move to done") { _ in
-                guard let card = dataSource.model?.card(at: indexPath.row) else {return}
+                guard let card = dataSource.category?.card(at: indexPath.row) else {return}
                 NotificationCenter.default.post(name: .moveToDone,
                                                 object: self,
                                                 userInfo: ["card" : card])
@@ -52,7 +52,7 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
     
     func deleteModel(dataSource: CardDataSource, indexPath: IndexPath, delay: Double) {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay){
-            dataSource.model?.remove(at: indexPath.row)
+            dataSource.category?.remove(at: indexPath.row)
             NotificationCenter.default.post(name: .deleteIndexPath,
                                             object: self,
                                             userInfo: ["indexPath" : indexPath])

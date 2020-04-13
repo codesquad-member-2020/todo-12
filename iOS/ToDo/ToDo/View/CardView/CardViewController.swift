@@ -19,7 +19,7 @@ class CardViewController: UIViewController, UITableViewDelegate {
         let indexPath = IndexPath(row: cardTabelView.numberOfRows(inSection: 0), section: 0)
         
         editView.createHandler = {
-            self.dataSource.model?.append(card: $0)
+            self.dataSource.category?.append(card: $0)
             self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
         }
         self.present(editView, animated: true)
@@ -33,15 +33,26 @@ class CardViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelRadius()
+        setupTableView()
+        setupTableViewDragAndDrop()
+        setupNotification()
+    }
+    
+    func setupTableView() {
         cardTabelView.dataSource = dataSource
         cardTabelView.delegate = delegate
+        dataSource.handler = {
+            self.numOfCardsLabel.text = String(self.dataSource.category?.count ?? 0)
+        }
+    }
+    
+    func setupTableViewDragAndDrop() {
         cardTabelView.dragDelegate = dragDelegate
         cardTabelView.dropDelegate = dropDelegate
         cardTabelView.dragInteractionEnabled = true
-        dataSource.handler = {
-            self.numOfCardsLabel.text = String(self.dataSource.model?.count ?? 0)
-        }
-        
+    }
+    
+    func setupNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteRow(_:)),
                                                name: .deleteIndexPath,
@@ -69,10 +80,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         guard let editIndex = notification.userInfo?["editIndex"] as? Int else {return}
         
-        editView.model = self.dataSource.model?.cards[editIndex]
+        editView.model = self.dataSource.category?.cards[editIndex]
         editView.editedModelIndex = editIndex
         editView.editHandler = {
-            self.dataSource.model?.cards[$0] = $1
+            self.dataSource.category?.cards[$0] = $1
             self.cardTabelView.reloadData()
         }
         self.present(editView, animated: true)
