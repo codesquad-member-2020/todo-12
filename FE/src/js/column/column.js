@@ -15,6 +15,7 @@ export class Column {
 
   addEventHandler(column) {
     __(column).on("click", (event) => this.addCard.addEventHandler(event));
+    //각 기능들이 구독해서 이벤트를 설치한다
   }
 
   columnRender(columnId) {

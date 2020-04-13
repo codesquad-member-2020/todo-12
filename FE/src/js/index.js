@@ -2,7 +2,7 @@ import { tplHeader } from "./tpl/tplHeader.js";
 import { _$, fetchGetData } from "./lib/util.js";
 // import { Card } from "../../delete/card/card.js";
 import { Column } from "./column/column.js";
-import { AddCard } from "./column/addCard.js";
+import { CardCreation } from "./column/cardCreation.js";
 import { Model } from "./column/model.js";
 import { mock } from "./mock.js";
 
@@ -12,8 +12,8 @@ function init() {
   const header = tplHeader();
   _$("#wrap").insertAdjacentHTML("afterbegin", header);
 
-  const addCard = new AddCard();
-  const column = new Column(addCard);
+  const cardCreation = new CardCreation();
+  const column = new Column(cardCreation);
   const model = new Model(column);
   // const card = new Card();
   // const card = new Card(cardView);
