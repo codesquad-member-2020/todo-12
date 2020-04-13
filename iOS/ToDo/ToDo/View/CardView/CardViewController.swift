@@ -51,6 +51,16 @@ class CardViewController: UIViewController, UITableViewDelegate {
             }
             self.present(editView, animated: true)
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deleteRow(_:)),
+                                               name: .deleteIndexPath,
+                                               object: delegate)
+    }
+    
+    @objc func deleteRow(_ notification: Notification) {
+        guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else {return}
+        cardTabelView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     private func setLabelRadius() {

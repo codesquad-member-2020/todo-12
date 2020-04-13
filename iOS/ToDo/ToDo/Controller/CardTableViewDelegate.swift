@@ -13,11 +13,9 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
     var handler: (Int) -> () = {_ in}
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { action, view, completionHandler in
-            let taskDataSource = tableView.dataSource as? CardDataSource
-            taskDataSource?.model?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            completionHandler(true)
+        let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { _, _, _ in
+            guard let cardDataSource = tableView.dataSource as? CardDataSource else {return}
+            self.deleteModel(dataSource: cardDataSource, indexPath: indexPath, delay: 0)
         })
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
@@ -33,7 +31,7 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
                 NotificationCenter.default.post(name: .moveToDone,
                                                 object: self,
                                                 userInfo: ["card" : card])
-                self.deleteAction(dataSource: dataSource, indexPath: indexPath, tableView: tableView, delay: 0.7)
+                self.deleteModel(dataSource: dataSource, indexPath: indexPath, delay: 0.7)
             }
             
             let edit = UIAction(title: "edit...") { _ in
@@ -41,7 +39,7 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                self.deleteAction(dataSource: dataSource, indexPath: indexPath, tableView: tableView, delay: 0.7)
+                self.deleteModel(dataSource: dataSource, indexPath: indexPath, delay: 0.7)
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
             
@@ -50,14 +48,17 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
         return configuration
     }
     
-    func deleteAction(dataSource: CardDataSource, indexPath: IndexPath, tableView: UITableView, delay: Double) {
+    func deleteModel(dataSource: CardDataSource, indexPath: IndexPath, delay: Double) {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay){
             dataSource.model?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            NotificationCenter.default.post(name: .deleteIndexPath,
+                                            object: self,
+                                            userInfo: ["indexPath" : indexPath])
         }
     }
 }
 
 extension Notification.Name {
     static let moveToDone = Notification.Name("moveToDone")
+    static let deleteIndexPath = Notification.Name("deleteIndexPath")
 }
