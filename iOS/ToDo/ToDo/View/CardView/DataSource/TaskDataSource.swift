@@ -22,7 +22,7 @@ class TaskDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as? TaskCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as? CardCell else {return UITableViewCell()}
         
         cell.titleLabel.text = model?.title(of: indexPath.row)
         cell.contentLabel.text = model?.content(of: indexPath.row)

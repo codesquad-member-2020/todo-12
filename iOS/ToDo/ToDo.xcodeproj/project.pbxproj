@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A53B1D09243DF39000A22F9C /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditTaskViewController.swift */; };
+		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
 		A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */; };
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
 		A53B1D12243EFA1600A22F9C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D11243EFA1600A22F9C /* Model.swift */; };
@@ -15,15 +15,15 @@
 		A53B1D16243EFABE00A22F9C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D15243EFABE00A22F9C /* Card.swift */; };
 		A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9285D243AF8DC008A75EF /* AppDelegate.swift */; };
 		A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */; };
-		A5D92862243AF8DC008A75EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92861243AF8DC008A75EF /* ViewController.swift */; };
+		A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92861243AF8DC008A75EF /* BoardViewController.swift */; };
 		A5D92865243AF8DC008A75EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D92863243AF8DC008A75EF /* Main.storyboard */; };
 		A5D92867243AF8DE008A75EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D92866243AF8DE008A75EF /* Assets.xcassets */; };
 		A5D9286A243AF8DE008A75EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D92868243AF8DE008A75EF /* LaunchScreen.storyboard */; };
 		A5D92875243AF8DE008A75EF /* ToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92874243AF8DE008A75EF /* ToDoTests.swift */; };
 		A5D92884243B3FC6008A75EF /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */; };
-		A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288B243B64A2008A75EF /* TaskViewController.swift */; };
+		A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288B243B64A2008A75EF /* CardViewController.swift */; };
 		A5D92890243C4AD7008A75EF /* TaskDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288F243C4AD7008A75EF /* TaskDataSource.swift */; };
-		A5D92892243C4B56008A75EF /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92891243C4B56008A75EF /* TaskCell.swift */; };
+		A5D92892243C4B56008A75EF /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92891243C4B56008A75EF /* CardCell.swift */; };
 		A5E4522E24402B570067B917 /* TaskTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4522D24402B570067B917 /* TaskTableViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A53B1D08243DF39000A22F9C /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
+		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
 		A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsTextViewDelegate.swift; sourceTree = "<group>"; };
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
 		A53B1D11243EFA1600A22F9C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		A5D9285A243AF8DC008A75EF /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D9285D243AF8DC008A75EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A5D92861243AF8DC008A75EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A5D92861243AF8DC008A75EF /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
 		A5D92864243AF8DC008A75EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5D92866243AF8DE008A75EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5D92869243AF8DE008A75EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,9 +56,9 @@
 		A5D92874243AF8DE008A75EF /* ToDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTests.swift; sourceTree = "<group>"; };
 		A5D92876243AF8DE008A75EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
-		A5D9288B243B64A2008A75EF /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		A5D9288B243B64A2008A75EF /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		A5D9288F243C4AD7008A75EF /* TaskDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataSource.swift; sourceTree = "<group>"; };
-		A5D92891243C4B56008A75EF /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		A5D92891243C4B56008A75EF /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		A5E4522D24402B570067B917 /* TaskTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,22 +145,22 @@
 			isa = PBXGroup;
 			children = (
 				A5E451FA243F349D0067B917 /* StoryBoard */,
-				A5E451F5243F34470067B917 /* TaskView */,
-				A5D92861243AF8DC008A75EF /* ViewController.swift */,
+				A5E451F5243F34470067B917 /* CardView */,
+				A5D92861243AF8DC008A75EF /* BoardViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		A5E451F5243F34470067B917 /* TaskView */ = {
+		A5E451F5243F34470067B917 /* CardView */ = {
 			isa = PBXGroup;
 			children = (
 				A5E451F9243F34910067B917 /* Cell */,
 				A5E451F8243F34880067B917 /* DataSource */,
-				A5D9288B243B64A2008A75EF /* TaskViewController.swift */,
+				A5D9288B243B64A2008A75EF /* CardViewController.swift */,
 				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
-				A53B1D08243DF39000A22F9C /* EditTaskViewController.swift */,
+				A53B1D08243DF39000A22F9C /* EditCardViewController.swift */,
 			);
-			path = TaskView;
+			path = CardView;
 			sourceTree = "<group>";
 		};
 		A5E451F8243F34880067B917 /* DataSource */ = {
@@ -174,7 +174,7 @@
 		A5E451F9243F34910067B917 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A5D92891243C4B56008A75EF /* TaskCell.swift */,
+				A5D92891243C4B56008A75EF /* CardCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -289,18 +289,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5D92862243AF8DC008A75EF /* ViewController.swift in Sources */,
+				A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */,
 				A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */,
 				A53B1D12243EFA1600A22F9C /* Model.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
-				A5D92892243C4B56008A75EF /* TaskCell.swift in Sources */,
-				A5D9288C243B64A2008A75EF /* TaskViewController.swift in Sources */,
+				A5D92892243C4B56008A75EF /* CardCell.swift in Sources */,
+				A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
 				A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */,
 				A53B1D16243EFABE00A22F9C /* Card.swift in Sources */,
 				A5E4522E24402B570067B917 /* TaskTableViewDelegate.swift in Sources */,
 				A53B1D14243EFA2900A22F9C /* Category.swift in Sources */,
-				A53B1D09243DF39000A22F9C /* EditTaskViewController.swift in Sources */,
+				A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */,
 				A5D92890243C4AD7008A75EF /* TaskDataSource.swift in Sources */,
 				A5D92884243B3FC6008A75EF /* HistoryTableViewController.swift in Sources */,
 			);
