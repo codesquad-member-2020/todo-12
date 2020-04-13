@@ -80,7 +80,8 @@ public class MockUpController {
 
     @GetMapping("/")
     public ResponseEntity test() {
-        return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
+        return new ResponseEntity(cardRepository.findCardsByIdOnlyDeletedFalse(1L), HttpStatus.OK);
+        //return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
