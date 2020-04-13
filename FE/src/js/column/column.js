@@ -56,8 +56,6 @@ export class Column {
   cardRender(columnId, card) {
     const DATA_ID = `#column-data-id-`;
 
-    console.log(this.cardArea);
-
     const column = _$(`${DATA_ID}${columnId}`);
     const cardArea = _$(this.cardArea, column);
     const cardHtml = tplCard(card);
