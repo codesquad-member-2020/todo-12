@@ -26,16 +26,14 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             
-            let dataSource = tableView.dataSource as? CardDataSource
+            guard let dataSource = tableView.dataSource as? CardDataSource else {return UIMenu(title: "")}
             
             let moveToDone = UIAction(title: "move to done") { _ in
-                guard let card = dataSource?.model?.card(at: indexPath.row) else {return}
+                guard let card = dataSource.model?.card(at: indexPath.row) else {return}
                 NotificationCenter.default.post(name: .moveToDone,
                                                 object: self,
                                                 userInfo: ["card" : card])
-                
-                dataSource?.model?.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.deleteAction(dataSource: dataSource, indexPath: indexPath, tableView: tableView, delay: 0.7)
             }
             
             let edit = UIAction(title: "edit...") { _ in
@@ -43,14 +41,20 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                dataSource?.model?.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.deleteAction(dataSource: dataSource, indexPath: indexPath, tableView: tableView, delay: 0.7)
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
             
             return menu
         }
         return configuration
+    }
+    
+    func deleteAction(dataSource: CardDataSource, indexPath: IndexPath, tableView: UITableView, delay: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay){
+            dataSource.model?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
 
