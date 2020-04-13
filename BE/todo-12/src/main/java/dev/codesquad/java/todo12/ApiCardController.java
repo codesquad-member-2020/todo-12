@@ -80,7 +80,7 @@ public class ApiCardController {
     }
 
     private Card getCard(Long id) {
-        return cardRepository.findByIdOnlyDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
     }
 
     private Category getCategory(Long id) {

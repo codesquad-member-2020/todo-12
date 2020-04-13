@@ -16,6 +16,9 @@ public class ApiCategoryController {
     Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
 
     @Autowired
+    CardRepository cardRepository;
+
+    @Autowired
     CategoryRepository categoryRepository;
 
     @Autowired
@@ -69,7 +72,7 @@ public class ApiCategoryController {
     }
 
     private List<Card> getCardList(Long id) {
-        return categoryRepository.findByIdOnlyDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return cardRepository.findCardsByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 리스트 없음"));
     }
 
     private Kanban getKanban(Long id) {

@@ -80,12 +80,13 @@ public class MockUpController {
 
     @GetMapping("/")
     public ResponseEntity test() {
-        return new ResponseEntity(cardRepository.findCardsByIdOnlyDeletedFalse(1L), HttpStatus.OK);
+        return new ResponseEntity(categoryRepository.findByIdDeletedFalse(3L), HttpStatus.OK);
+        //return new ResponseEntity(cardRepository.findCardsByIdDeletedFalse(1L), HttpStatus.OK);
         //return new ResponseEntity(categoryRepository.findAllDeletedFalse(), HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
-        return cardRepository.findByIdOnlyDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
     }
 
     private Category getCategory(Long id) {

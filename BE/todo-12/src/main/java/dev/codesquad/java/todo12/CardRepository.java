@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface CardRepository extends CrudRepository<Card, Long> {
     @Query("Select * from card where card.deleted = false and card.category = :id")
-    Optional<List<Card>> findCardsByIdOnlyDeletedFalse(Long id);
+    Optional<List<Card>> findCardsByIdDeletedFalse(Long id);
 
     @Query("Select * from card where card.deleted = false and id = :id")
-    Optional<Card> findByIdOnlyDeletedFalse(Long id);
+    Optional<Card> findByIdDeletedFalse(Long id);
 }
