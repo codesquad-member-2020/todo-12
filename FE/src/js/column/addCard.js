@@ -53,7 +53,10 @@ export class AddCard {
 
   onCancelCardBtn(currentColumn) {
     const closeBtn = _$(".btn-showing-add-card", currentColumn);
+    const addCardInput = _$("." + this.addCardInput, currentColumn);
+
     closeBtn.click();
+    addCardInput.value = "";
   }
 
   onAddCardBtn(currentColumn) {

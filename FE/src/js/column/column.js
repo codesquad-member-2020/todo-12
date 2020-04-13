@@ -7,6 +7,18 @@ export class Column {
     this.addCard = addCard;
   }
 
+  init(initialData) {
+    initialData.forEach((columnData) => {
+      const { id, name } = columnData;
+
+      this.columnRender(id);
+      this.columnNameRender(id, name);
+      this.numberOfCardsRender(id);
+    });
+
+    this.addColumnRender();
+  }
+
   addEventHandler(column) {
     __(column).on("click", (event) => this.addCard.addEventHandler(event));
   }

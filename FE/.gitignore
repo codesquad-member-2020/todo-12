@@ -188,3 +188,4 @@ fastlane/test_output
 *.d.ts
 
 1.md
+delete*
