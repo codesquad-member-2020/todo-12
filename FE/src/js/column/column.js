@@ -9,21 +9,8 @@ export class Column {
     this.addCard = addCard;
     this.addCard.subscribe(
       this.cardRender.bind(this),
-      this.numberOfCardsRender.bind(this)
+      this.numberOfCardRender.bind(this)
     );
-  }
-
-  init(initialData) {
-    initialData.forEach((columnData) => {
-      const { id, name, cards } = columnData;
-
-      this.columnRender(id);
-      this.columnNameRender(id, name);
-      cards.forEach((card) => this.cardRender(id, card));
-      this.numberOfCardsRender(id);
-    });
-
-    this.addColumnRender();
   }
 
   addEventHandler(column) {
@@ -46,28 +33,21 @@ export class Column {
     this.columnArea.insertAdjacentHTML("beforeend", addColumn);
   }
 
-  columnNameRender(columnId, name) {
-    const column = _$(`#column-data-id-${columnId}`);
+  columnNameRender(name, column) {
     const title = _a$(".column__title", column);
 
     title.forEach((nameArea) => (nameArea.innerText = name));
   }
 
-  cardRender(columnId, card) {
-    const DATA_ID = `#column-data-id-`;
-
-    const column = _$(`${DATA_ID}${columnId}`);
+  cardRender(card, column) {
     const cardArea = _$(this.cardArea, column);
     const cardHtml = tplCard(card);
 
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
   }
 
-  numberOfCardsRender(columnId) {
-    const column = _$(`#column-data-id-${columnId}`);
+  numberOfCardRender(numberOfCard, column) {
     const countArea = _$(".column__card-count", column);
-
-    const numberOfCards = _a$(".column__card", column).length;
-    countArea.innerText = numberOfCards;
+    return (countArea.innerText = numberOfCard);
   }
 }
