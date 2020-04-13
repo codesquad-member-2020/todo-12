@@ -30,4 +30,12 @@ class CardDataSource: NSObject, UITableViewDataSource {
         
         return cell
     }
+    
+    func moveItem(at sourceIndex: Int, to destinationIndex: Int) {
+        guard sourceIndex != destinationIndex else {return}
+        guard let dragItem = model?.card(at: sourceIndex) else {return}
+        
+        model?.remove(at: sourceIndex)
+        model?.insert(dragItem, at: destinationIndex)
+    }
 }
