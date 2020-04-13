@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A5065704244402BC003D725F /* TableViewDragDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5065703244402BC003D725F /* TableViewDragDelegate.swift */; };
+		A50657062444066E003D725F /* TableViewDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50657052444066E003D725F /* TableViewDropDelegate.swift */; };
 		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
 		A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */; };
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		A5065703244402BC003D725F /* TableViewDragDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDragDelegate.swift; sourceTree = "<group>"; };
+		A50657052444066E003D725F /* TableViewDropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDropDelegate.swift; sourceTree = "<group>"; };
 		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
 		A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsTextViewDelegate.swift; sourceTree = "<group>"; };
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */,
 				A5E4522D24402B570067B917 /* CardTableViewDelegate.swift */,
 				A5065703244402BC003D725F /* TableViewDragDelegate.swift */,
+				A50657052444066E003D725F /* TableViewDropDelegate.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
 				A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */,
+				A50657062444066E003D725F /* TableViewDropDelegate.swift in Sources */,
 				A53B1D16243EFABE00A22F9C /* Card.swift in Sources */,
 				A5E4522E24402B570067B917 /* CardTableViewDelegate.swift in Sources */,
 				A53B1D14243EFA2900A22F9C /* Category.swift in Sources */,

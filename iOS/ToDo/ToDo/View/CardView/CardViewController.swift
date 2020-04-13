@@ -28,6 +28,7 @@ class CardViewController: UIViewController, UITableViewDelegate {
     let dataSource = CardDataSource()
     private let delegate = CardTableViewDelegate()
     private let dragDelegate = TableViewDragDelegate()
+    private let dropDelegate = TableViewDropDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class CardViewController: UIViewController, UITableViewDelegate {
         cardTabelView.dataSource = dataSource
         cardTabelView.delegate = delegate
         cardTabelView.dragDelegate = dragDelegate
+        cardTabelView.dropDelegate = dropDelegate
         cardTabelView.dragInteractionEnabled = true
         dataSource.handler = {
             self.numOfCardsLabel.text = String(self.dataSource.model?.count ?? 0)
