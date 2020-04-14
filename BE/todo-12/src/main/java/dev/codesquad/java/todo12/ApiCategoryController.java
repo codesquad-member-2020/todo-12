@@ -23,8 +23,7 @@ public class ApiCategoryController {
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(categoryRepository.findCategoriesByIdDeletedFalse(), HttpStatus.OK);
-        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
+        return new ResponseEntity(getCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -66,6 +65,10 @@ public class ApiCategoryController {
 
     private Category getCategory(Long id) {
         return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    }
+
+    private List<Category> getCategories() {
+        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException("카테고리 없음"));
     }
 
     private Kanban getKanban(Long id) {
