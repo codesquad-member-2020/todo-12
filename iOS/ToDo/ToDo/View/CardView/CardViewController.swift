@@ -25,10 +25,15 @@ class CardViewController: UIViewController, UITableViewDelegate {
         self.present(editView, animated: true)
     }
     
-    let dataSource = CardDataSource()
+    private let dataSource = CardDataSource()
     private let delegate = CardTableViewDelegate()
     private let dragDelegate = TableViewDragDelegate()
     private let dropDelegate = TableViewDropDelegate()
+    private var category: Category? {
+        didSet {
+            dataSource.category = category
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +59,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
     
     func setupNotification() {
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveModel(_:)),
+                                               name: .distributeModel,
+                                               object: self)
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteRow(_:)),
                                                name: .deleteIndexPath,
                                                object: delegate)
@@ -69,6 +78,11 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(exchangeCellOnDifferentTableView(_:)),
                                                name: .exchangeCellOnDifferentTableView,
                                                object: dropDelegate)
+    }
+    
+    @objc func receiveModel(_ notification: Notification) {
+        guard let category = notification.userInfo?["category"] as? Category else {return}
+        self.category = category
     }
     
     @objc func deleteRow(_ notification: Notification) {

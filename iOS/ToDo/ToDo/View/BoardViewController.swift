@@ -63,10 +63,12 @@ class BoardViewController: UIViewController {
     }
     
     private func setModel(viewController: CardViewController?, model: Model, index: Int) {
-        viewController?.dataSource.category = model.categories[index]
+        NotificationCenter.default.post(name: .distributeModel, object: viewController,
+                                        userInfo: ["category" : model.categories[index]])
         viewController?.cardTabelView.reloadData()
         viewController?.titleLabel.text = model.categories[index].name
         viewController?.addCardButton.isEnabled = true
+        
     }
     
     @objc func moveToDone(_ notification: Notification) {
@@ -81,3 +83,6 @@ class BoardViewController: UIViewController {
     }
 }
 
+extension Notification.Name {
+    static let distributeModel = Notification.Name("distributeModel")
+}
