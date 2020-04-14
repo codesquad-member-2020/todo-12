@@ -19,12 +19,13 @@
 - `dev`: 디폴트 브랜치
 - `feature/be-` : 백엔드 피쳐 개발 브랜치
 - `feature/fe-` : 프론트엔드 피쳐 개발 브랜치
-- `feature/iOs-` : 모바일 iOS 피쳐 개발 브랜치
+- `feature/iOS-` : 모바일 iOS 피쳐 개발 브랜치
 - 예시 : feature/be-location, feature/fe-dust, feature/iOS-forecast
 - 브랜치 작업 마무리되면 dev에 PR 후 merge한다. (PR merge는 각 클래스별로 진행한다.)
 - Merge 된 브랜치는 삭제한다.
 
 ## Project References
 
-- [Mockup API document](https://documenter.getpostman.com/view/10828534/SzYbzdNz?version=latest)
+- [API document](https://documenter.getpostman.com/view/10828534/SzYbzdNz?version=latest)
 - [요구사항 기능서](https://docs.google.com/spreadsheets/d/1eD8tuBxiQHYOtk7LWXB2ekjnvItjdt4UWi5ZC3x2kgk/edit?usp=sharing)
+

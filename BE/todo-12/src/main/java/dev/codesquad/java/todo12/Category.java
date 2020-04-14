@@ -1,5 +1,6 @@
 package dev.codesquad.java.todo12;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -23,6 +24,11 @@ public class Category {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    @JsonIgnore
+    public Card getLastCard() {
+        return cards.get(cards.size() - 1);
     }
 
     public void swapWithBeforeCard(Integer categoryKey) {

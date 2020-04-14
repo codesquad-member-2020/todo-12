@@ -21,9 +21,7 @@ CREATE TABLE card  (
   title varchar (64),
   content varchar (128),
   author varchar (64),
-  create_time datetime,
   modified_time datetime,
-  deleted boolean,
   category int references category(id),
   category_key int
 );

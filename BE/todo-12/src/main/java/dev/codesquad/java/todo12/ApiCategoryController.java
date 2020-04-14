@@ -8,22 +8,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
-    Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
+    private Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    KanbanRepository kanbanRepository;
+    private KanbanRepository kanbanRepository;
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(getKanban(1L), HttpStatus.OK);
-        //return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity(categoryRepository.findCategoriesByIdDeletedFalse(), HttpStatus.OK);
+        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -31,32 +32,40 @@ public class ApiCategoryController {
         Category category = getCategory(id);
         return new ResponseEntity(category, HttpStatus.OK);
     }
+// 버그 잡는중
+//    @PostMapping("/create")
+//    public ResponseEntity create(@RequestBody HashMap<String, String> categoryInfo) {
+//        Category category = new Category(categoryInfo.get("name"));
+//        Kanban kanban = getKanban(1L);
+//        logger.info("4");
+//        kanban.addCategory(category);
+//        logger.info("3 /// {}", category);
+//        kanbanRepository.save(kanban);
+//        logger.info("2"); // here
+//        category = kanban.getLastCategory();
+//        logger.info("1");
+//        return new ResponseEntity(category, HttpStatus.OK);
+//    }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> categoryInfo) {
         Category category = getCategory(id);
         category.update(categoryInfo.get("name"));
         categoryRepository.save(category);
+        category = getCategory(id);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity create(@PathVariable String name) {
-        Category category = new Category(name);
-        categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Category category = getCategory(id);
         category.delete();
         categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }
 
     private Kanban getKanban(Long id) {

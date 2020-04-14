@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/card")
 public class ApiCardController {
-    Logger logger = LoggerFactory.getLogger(ApiCardController.class);
+    private Logger logger = LoggerFactory.getLogger(ApiCardController.class);
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    CardRepository cardRepository;
+    private CardRepository cardRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
@@ -27,35 +27,37 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @PostMapping("/create/{categoryId}")
+    @PostMapping("/{categoryId}")
     public ResponseEntity create(@PathVariable Long categoryId, @RequestBody HashMap<String, String> cardInfo) {
         Category category = getCategory(categoryId);
         Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
         category.addCard(card);
         categoryRepository.save(category);
+        category = getCategory(categoryId);
+        card = category.getLastCard();
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> cardInfo) {
         Card card = getCard(id);
         card.update(cardInfo.get("title"), cardInfo.get("content"));
         cardRepository.save(card);
+        card = getCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
-        card.delete();
-        cardRepository.save(card);
-        return new ResponseEntity(card, HttpStatus.OK);
+        cardRepository.delete(card);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
-    @PutMapping("/move/{categoryId}/{id}")
-    public ResponseEntity move(@PathVariable Long categoryId, @PathVariable Long id, @RequestBody HashMap<String, Integer> cardsIndex) {
+    @PutMapping("/{id}/move/{categoryId}/{categoryKey}")
+    public ResponseEntity move(@PathVariable Long id, @PathVariable Long categoryId, @PathVariable Integer categoryKey) {
         Card card = getCard(id);
-        card.moveCard(categoryId, cardsIndex.get("categoryKey"));
+        card.moveCard(categoryId, categoryKey);
         cardRepository.save(card);
 
         // 카드가 이동 된 카테고리의 카드 리스트 재정렬
@@ -67,38 +69,11 @@ public class ApiCardController {
         // 카드리스트가 categoryRepository.save() 후 정렬되어 categoryKey 값이 id에 따라 변경된다.
         Card movedCard = getCard(id);
 
-        checkCategoryKeyValidation(toCategory, cardsIndex.get("categoryKey"));
+        checkCategoryKeyValidation(toCategory, categoryKey);
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
-        return new ResponseEntity(getCard(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/move2/{categoryId}/{id}/{index}")
-    public ResponseEntity move2(@PathVariable Long categoryId, @PathVariable Long id, @PathVariable int index) {
-        Category toCategory = getCategory(categoryId);
-        Card card = getCard(id);
-        cardRepository.delete(card);
-        toCategory.addCard(index, card);
-        categoryRepository.save(toCategory);
+        card = getCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
-    }
-
-    @GetMapping("/delete/{id}/{categoryId}")
-    public ResponseEntity deletego(@PathVariable Long id, @PathVariable Long categoryId) {
-        Card card = getCard(id);
-        cardRepository.delete(card);
-        Category category = getCategory(categoryId);
-        categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
-    }
-
-    @GetMapping("/add/{categoryId}")
-    public ResponseEntity addgo(@PathVariable Long categoryId){
-        Card card = new Card("새거", "택배언제와");
-        Category category = getCategory(categoryId);
-        category.addCard(card);
-        categoryRepository.save(category);
-        return new ResponseEntity(category, HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
@@ -106,7 +81,7 @@ public class ApiCardController {
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
     }
 
     private void swapCardIfCategoryKeyChanged(Card card, Category category, Integer movedCategoryKey) {
