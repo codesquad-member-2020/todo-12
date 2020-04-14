@@ -12,7 +12,6 @@
 		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
 		A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */; };
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
-		A53B1D12243EFA1600A22F9C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D11243EFA1600A22F9C /* Model.swift */; };
 		A53B1D14243EFA2900A22F9C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D13243EFA2900A22F9C /* Category.swift */; };
 		A53B1D16243EFABE00A22F9C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D15243EFABE00A22F9C /* Card.swift */; };
 		A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9285D243AF8DC008A75EF /* AppDelegate.swift */; };
@@ -45,7 +44,6 @@
 		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
 		A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsTextViewDelegate.swift; sourceTree = "<group>"; };
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
-		A53B1D11243EFA1600A22F9C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A53B1D13243EFA2900A22F9C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A53B1D15243EFABE00A22F9C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		A5D9285A243AF8DC008A75EF /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */,
-				A53B1D11243EFA1600A22F9C /* Model.swift */,
 				A53B1D13243EFA2900A22F9C /* Category.swift */,
 				A53B1D15243EFABE00A22F9C /* Card.swift */,
 			);
@@ -297,7 +294,6 @@
 			files = (
 				A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */,
 				A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */,
-				A53B1D12243EFA1600A22F9C /* Model.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
 				A5065704244402BC003D725F /* TableViewDragDelegate.swift in Sources */,
 				A5D92892243C4B56008A75EF /* CardCell.swift in Sources */,

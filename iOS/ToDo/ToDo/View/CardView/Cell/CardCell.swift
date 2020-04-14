@@ -17,7 +17,7 @@ class CardCell: UITableViewCell {
     func configure(with card: Card) {
         titleLabel.text = card.title ?? "제목 없음"
         contentLabel.text = card.content
-        authorLabel.text = "author by " + card.author
+        authorLabel.text = "author by " + (card.author ?? "")
     }
 }
 
