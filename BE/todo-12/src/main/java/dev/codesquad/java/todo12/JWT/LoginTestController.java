@@ -10,7 +10,6 @@ public class LoginTestController {
 
 	@GetMapping
 	public String verifyApplicationAccess() {
-
 		return "올바른 jwt 를 입력하셨습니다";
 	}
 }

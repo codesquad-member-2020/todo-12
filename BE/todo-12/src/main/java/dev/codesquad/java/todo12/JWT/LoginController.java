@@ -26,13 +26,16 @@ public class LoginController {
     public ResponseEntity createToken(@RequestBody HashMap<String, String> userInfo) throws Exception {
         String inputId = userInfo.get("userId");
         String inputPassword = userInfo.get("password");
+
+        System.out.println("input id : " + inputId);
+        System.out.println("password : " + inputPassword);
         ///userRepository 에 해당하는 유저 정보가 있는 조회
 
         try {
             User existUser = userRepository.findUserByUserID(inputId).get();
             String existPassword = existUser.getPassword();
-            userRepository.findUserByUserID(inputId);
-            return new ResponseEntity(Jwts.builder().claim("user", "user").setSubject(existUser.getUserId()).setIssuedAt(new Date(System.currentTimeMillis()))
+//            userRepository.findUserByUserID(inputId);
+            return new ResponseEntity(Jwts.builder().claim("birthday", "12").setSubject(existUser.getUserId()).setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                     .signWith(SignatureAlgorithm.HS256, "secret").compact(), HttpStatus.OK);
         }   catch (NoSuchElementException e) {

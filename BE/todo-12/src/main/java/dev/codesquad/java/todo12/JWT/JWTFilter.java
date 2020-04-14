@@ -34,19 +34,18 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
+        if (authorizationHeader != null) {
+            jwt = authorizationHeader;
             username = jwtUtil.extractUsername(jwt);
             System.out.println("jwt : " + jwt + "username : " + username);
-
             User user = userRepository.findUserByUserID(username).get();
-
             if (jwtUtil.validateToken(jwt, user)) {
-
-                final Claims claims = Jwts.parser().setSigningKey("secret").parseClaimsJws(authorizationHeader.substring(7))
+                final Claims claims = Jwts.parser().setSigningKey("secret").parseClaimsJws(authorizationHeader)
                         .getBody();
                 request.setAttribute("claims", claims);
+                System.out.println("claims : " + claims);
             }
+            System.out.println("response : " + response);
             chain.doFilter(request, response);
         }
     }
