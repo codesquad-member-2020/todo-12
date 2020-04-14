@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/secured/app")
-public class ApplicationController {
+@RequestMapping("/login/test")
+public class LoginTestController {
 
 	@GetMapping
 	public String verifyApplicationAccess() {
 
-		return "Welcome!, you are secured";
+		return "올바른 jwt 를 입력하셨습니다";
 	}
 }

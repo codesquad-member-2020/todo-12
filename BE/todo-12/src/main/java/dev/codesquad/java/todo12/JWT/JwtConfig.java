@@ -16,7 +16,7 @@ public class JwtConfig {
     public FilterRegistrationBean<JWTFilter> filterRegistrationBean() {
         FilterRegistrationBean<JWTFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(jwtFilter);
-        filterRegistrationBean.addUrlPatterns("/secured/*");
+        filterRegistrationBean.addUrlPatterns("/login/test");
         return filterRegistrationBean;
     }
 }
