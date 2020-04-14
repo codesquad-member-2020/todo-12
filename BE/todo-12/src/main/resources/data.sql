@@ -16,7 +16,4 @@ insert into card(title, content, author, deleted, category, category_key) values
 insert into card(title, content, author, deleted, category, category_key) values ('11번제목', '11번내용', '11번저자', false, 1, 0);
 insert into card(title, content, author, deleted, category, category_key) values ('22번제목', '22번내용', '22번저자', false, 1, 1);
 
-insert into user(user_id, password) values ('xp', 'xp');
-insert into user(user_id, password) values ('henry', 'henry');
-insert into user(user_id, password) values ('ellin', 'ellin');
-insert into user(user_id, password) values ('olaf', 'olaf');
+insert into user(user_id, password) values ('todo12', 'todo12');
