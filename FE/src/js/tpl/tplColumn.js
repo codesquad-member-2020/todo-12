@@ -1,6 +1,6 @@
 export function tplColumn(id) {
   const column = `
-              <section class="todo__column" id="column-data-id-${id}">
+              <section class="todo__column" data-column-id=${id}>
                 <h2 class="column__title blind"></h2>
                 <div class="column__header flex">
                   <div>

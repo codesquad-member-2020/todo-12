@@ -8,20 +8,28 @@ export class ColumnView extends Observable {
     super();
     this.columnArea = _$("#todo");
     this.cardArea = ".column__cards";
-    this.dataIdName = "#column-data-id";
+    this.column = ".todo__column";
+    // this.card = ".column__card";
+    // this.dataIdName = "#column-data-id";
     this.cardSelectionFocus = true;
   }
 
   addEventHandler(column) {
     __(column).on("click", (event) => this.notify(event));
-    //각 기능들이 구독해서 이벤트를 설치한다
   }
 
   columnRender(columnId) {
     const columnsHtml = tplColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
 
-    const currentColumn = _$(`${this.dataIdName}-${columnId}`);
+    const AllColumns = _a$(this.column);
+
+    const currentColumn = [...AllColumns].find(
+      (column) => parseInt(column.dataset.columnId) === columnId
+    );
+
+    // const currentColumn = _$(`${this.dataIdName}-${columnId}`);
+
     this.addEventHandler(currentColumn);
     return currentColumn;
   }
@@ -39,10 +47,10 @@ export class ColumnView extends Observable {
     title.forEach((nameArea) => (nameArea.innerText = name));
   }
 
-  cardRender(card, column) {
+  cardRender(cardContent, column) {
     const cardArea = _$(this.cardArea, column);
-    const cardHtml = tplCard(card);
-
+    console.log(cardContent);
+    const cardHtml = tplCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
   }
 

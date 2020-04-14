@@ -1,16 +1,19 @@
-import { _$, __, _c, __$, _a$ } from "../lib/util.js";
+import { _$, __, _c, __$, _a$, fetchGetData } from "../lib/util.js";
 import { Observable } from "./observable.js";
 
 export class Model extends Observable {
   constructor(view) {
     super();
     this.view = view;
+    this.initialUrl = "http://15.165.163.174:8080";
     this.columnList = new Map();
-    this.columnNameList = new Map();
     this.cardList = new Map();
-    this.numberOfCardList = new Map();
     this.cardArea = ".column__card";
-    this.dataIdName = "#column-data-id";
+    this.card = ".column__card";
+  }
+
+  fetchinitialData() {
+    fetchGetData(this.initialUrl).then((initialData) => this.init(initialData));
   }
 
   init(initialData) {
@@ -18,9 +21,9 @@ export class Model extends Observable {
       const { id, name, cards } = columnData;
 
       this.setColumnList(id);
-      this.setColumnNameList(id, name);
+      this.setColumnName(id, name);
       cards.forEach((card) => this.setCardList(id, card));
-      this.setNumberOfCard(id);
+      this.setCardLength(id);
     });
 
     this.view.addColumnRender();
@@ -30,46 +33,96 @@ export class Model extends Observable {
   setColumnList(id) {
     const column = this.view.columnRender(id);
 
-    this.columnList.set(id, column);
+    this.columnList.set(column, {
+      id: id,
+      name: null,
+      cardLength: null,
+    });
+
+    this.columnList.set(id, {
+      column: column,
+      name: null,
+      cardLength: null,
+    });
   }
 
-  getColumnList() {
-    return this.columnList;
+  getColumn(obj) {
+    if (obj.id) return this.columnList.get(id).column;
+    if (obj.column) return this.columnList.get(column).column;
   }
 
-  setColumnNameList(id, name) {
-    if (this.columnNameList.get(id) === name) return;
+  setColumnName(id, name) {
+    if (this.columnList.get(id).name === name) return;
 
-    this.columnNameList.set(id, name);
-    this.view.columnNameRender(name, this.columnList.get(id));
+    const column = this.columnList.get(id).column;
+    this.view.columnNameRender(name, column);
+
+    this.columnList.get(id).name = name;
+    this.columnList.get(column).name = name;
+
+    // this.columnNameList.set(id, name);
+    // this.view.columnNameRender(name, this.columnList.get(id));
   }
 
-  getColumnNameList() {
-    return this.columnNameList;
+  getColumnName(obj) {
+    if (obj.id) return this.columnList.get(id).name;
+    if (obj.column) return this.columnList.get(column).name;
   }
 
-  setCardList(columnId, card) {
-    const column = this.columnList.get(columnId);
-    const cardId = card.id;
+  setCardList(columnId, cardContent) {
+    const column = this.columnList.get(columnId).column;
 
-    this.cardList.set(cardId, { card: card, columnId: columnId });
+    const cardId = cardContent.id;
 
-    return this.view.cardRender(card, column);
+    this.view.cardRender(cardContent, column);
+
+    const AllCards = _a$(this.card);
+    const card = [...AllCards].find(
+      (card) => parseInt(card.dataset.cardId) === cardContent.id
+    );
+
+    this.cardList.set(card, {
+      id: cardId,
+      cardContent: cardContent,
+      columnId: columnId,
+      column: column,
+    });
+
+    this.cardList.set(cardId, {
+      card: card,
+      cardContent: cardContent,
+      columnId: columnId,
+      column: column,
+    });
+
+    // const cardId = card.id;
+
+    // this.cardList.set(cardId, { card: card, columnId: columnId });
+
+    // return this.view.cardRender(card, column);
   }
 
-  getCardList() {
-    return this.cardList;
+  getCard(obj) {
+    if (obj.id) return this.cardList.get(id).card;
+    if (obj.column) return this.cardList.get(column).card;
   }
 
-  setNumberOfCard(columnId) {
-    const column = this.columnList.get(columnId);
+  setCardLength(columnId) {
+    const column = this.columnList.get(columnId).column;
+    const cardLength = _a$(this.cardArea, column).length;
 
-    const numberOfCard = _a$(this.cardArea, column).length;
-    return this.view.numberOfCardRender(numberOfCard, column);
+    this.view.numberOfCardRender(cardLength, column);
+
+    this.columnList.get(columnId).cardLength = cardLength;
+    this.columnList.get(column).cardLength = cardLength;
+    // const column = this.columnList.get(columnId);
+
+    // const numberOfCard = _a$(this.cardArea, column).length;
   }
 
-  getNumberOfCards() {
-    return this.numberOfCardList;
+  getCardLength(obj) {
+    if (obj.id) return this.columnList.get(id).cardLength;
+    if (obj.column) return this.columnList.get(column).cardLength;
   }
 
   // setTimeModified(create, modified) {

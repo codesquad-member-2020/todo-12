@@ -19,10 +19,10 @@ function init() {
   const cardMovement = new CardMovement({ model });
   // const card = new Card();
   // const card = new Card(cardView);
-  fetchInitialData(model, cardMovement);
+  model.fetchinitialData();
 }
 
-function fetchInitialData(model, cardMovement) {
+function fetchInitialData(model) {
   const url = "http://15.165.163.174:8080";
   // const url = "http://15.165.163.174/api";
 

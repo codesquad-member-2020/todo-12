@@ -62,7 +62,7 @@ export class CardCreation {
   }
 
   onAddCardBtn(currentColumn) {
-    const columnId = filterNumber(currentColumn.id);
+    const columnId = currentColumn.dataset.id;
     const currentForm = _$(this.addCardForm, currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
@@ -72,8 +72,12 @@ export class CardCreation {
 
     fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((data) => {
       this.model.setCardList(columnId, data);
-      this.model.setNumberOfCard(columnId);
+      this.model.setCardLength(columnId);
     });
     cardCreationInput.value = "";
+
+    //모델에게 ('add'와 컨텐츠와 컬럼정보를 넘겨준다 -아이디)객체로
+
+    //모델은 액션에게 전달  받은 아이디로
   }
 }

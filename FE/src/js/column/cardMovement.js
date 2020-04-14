@@ -13,6 +13,13 @@ export class CardMovement {
     const cards = _a$(this.card);
     const dragArea = _a$(this.dragArea);
 
+    //카드아이디, 컬럼아이디, 카드 몇번째인지
+    //끝 카드아이디 , 컬럼아이디, 카테고리키 => 돔에 접근해서 배열에 몇번째 인지 받아온다.
+    //카드아이디로 카드아이디 위치찾음 몇번 째 자식인지
+
+    //시작 돔 접근 아이디 가져온다
+    //
+
     cards.forEach((draggable) => {
       __(draggable).on("dragstart", (e) => {
         console.log(draggable);
