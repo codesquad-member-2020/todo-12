@@ -2,7 +2,7 @@ import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
 export class CardCreation {
   constructor({ columnView, model }) {
     this.btnShowingAddForm = "js-btn-showing-creation";
-    this.cardCreationInput = "content";
+    this.cardCreationInput = "js-card-creation-input";
     this.cancelCardBtn = "js-cancel-card-btn";
     this.addCardBtn = "js-add-card-btn";
     this.addCardForm = ".add__todo";
@@ -12,17 +12,18 @@ export class CardCreation {
   }
 
   addEventHandler({ target, currentTarget }) {
-    switch (target.id) {
-      case this.btnShowingAddForm:
+    const classList = target.classList;
+    switch (true) {
+      case classList.contains(this.btnShowingAddForm):
         this.onBtnShowingAddForm(currentTarget);
         break;
-      case this.cardCreationInput:
+      case classList.contains(this.cardCreationInput):
         this.onInputEvents(currentTarget);
         break;
-      case this.cancelCardBtn:
+      case classList.contains(this.cancelCardBtn):
         this.onCancelCardBtn(currentTarget);
         break;
-      case this.addCardBtn:
+      case classList.contains(this.addCardBtn):
         this.onAddCardBtn(currentTarget);
     }
   }
@@ -34,7 +35,7 @@ export class CardCreation {
   }
 
   onInputEvents(currentColumn) {
-    const cardCreationInput = _$("#" + this.cardCreationInput, currentColumn);
+    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
     __(cardCreationInput).on("blur", () =>
       _c(cardCreationInput).remove("input-active")
     );
@@ -46,15 +47,15 @@ export class CardCreation {
   }
 
   onActivationAddCardBtn(cardCreationInput, currentColumn) {
-    const addCardBtn = _$("#" + this.addCardBtn, currentColumn);
+    const addCardBtn = _$("." + this.addCardBtn, currentColumn);
 
     if (!cardCreationInput.value) return (addCardBtn.disabled = true);
     addCardBtn.disabled = false;
   }
 
   onCancelCardBtn(currentColumn) {
-    const closeBtn = _$("#" + this.btnShowingAddForm, currentColumn);
-    const cardCreationInput = _$("#" + this.cardCreationInput, currentColumn);
+    const closeBtn = _$("." + this.btnShowingAddForm, currentColumn);
+    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
     closeBtn.click();
     cardCreationInput.value = "";
@@ -63,13 +64,13 @@ export class CardCreation {
   onAddCardBtn(currentColumn) {
     const columnId = filterNumber(currentColumn.id);
     const currentForm = _$(this.addCardForm, currentColumn);
-    const creationUrl = `http://13.124.5.39:8080/card/${columnId}`;
-    const cardCreationInput = _$("#" + this.cardCreationInput, currentColumn);
+    const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
+    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
     const value = currentForm.content.value;
-    const json = { content: value };
+    const jsonBody = { content: value };
 
-    fetchData(creationUrl, "POST", JSON.stringify(json)).then((data) => {
+    fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((data) => {
       this.model.setCardList(columnId, data);
       this.model.setNumberOfCard(columnId);
     });

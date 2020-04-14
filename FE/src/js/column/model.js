@@ -1,13 +1,16 @@
 import { _$, __, _c, __$, _a$ } from "../lib/util.js";
+import { Observable } from "./observable.js";
 
-export class Model {
+export class Model extends Observable {
   constructor(view) {
+    super();
     this.view = view;
     this.columnList = new Map();
     this.columnNameList = new Map();
     this.cardList = new Map();
     this.numberOfCardList = new Map();
     this.cardArea = ".column__card";
+    this.dataIdName = "#column-data-id";
   }
 
   init(initialData) {
@@ -21,11 +24,12 @@ export class Model {
     });
 
     this.view.addColumnRender();
+    this.notify();
   }
 
   setColumnList(id) {
-    this.view.columnRender(id);
-    const strId = id.toString();
+    const column = this.view.columnRender(id);
+
     this.columnList.set(id, column);
   }
 
@@ -34,7 +38,6 @@ export class Model {
   }
 
   setColumnNameList(id, name) {
-    //변화가 있을때 => 칼럼 제목, 카드카운트, 카드
     if (this.columnNameList.get(id) === name) return;
 
     this.columnNameList.set(id, name);
@@ -51,8 +54,6 @@ export class Model {
 
     this.cardList.set(cardId, { card: card, columnId: columnId });
 
-    // this.cardList.set(cardId, { columnId });
-
     return this.view.cardRender(card, column);
   }
 
@@ -60,11 +61,10 @@ export class Model {
     return this.cardList;
   }
 
-  setNumberOfCard(id) {
-    const column = this.columnList.get(id);
-    const numberOfCard = _a$(this.cardArea, column).length;
+  setNumberOfCard(columnId) {
+    const column = this.columnList.get(columnId);
 
-    this.numberOfCardList.set(id, numberOfCard);
+    const numberOfCard = _a$(this.cardArea, column).length;
     return this.view.numberOfCardRender(numberOfCard, column);
   }
 

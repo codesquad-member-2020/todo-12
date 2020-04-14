@@ -8,20 +8,22 @@ export class ColumnView extends Observable {
     super();
     this.columnArea = _$("#todo");
     this.cardArea = ".column__cards";
+    this.dataIdName = "#column-data-id";
     this.cardSelectionFocus = true;
   }
 
   addEventHandler(column) {
     __(column).on("click", (event) => this.notify(event));
-
     //각 기능들이 구독해서 이벤트를 설치한다
   }
 
   columnRender(columnId) {
     const columnsHtml = tplColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
-    const currentColumn = _$(`#column-data-id-${columnId}`);
+
+    const currentColumn = _$(`${this.dataIdName}-${columnId}`);
     this.addEventHandler(currentColumn);
+    return currentColumn;
   }
 
   addColumnRender() {

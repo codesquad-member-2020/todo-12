@@ -1,11 +1,12 @@
 import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
 
 export class CardMovement {
-  constructor() {
-    this.dragArea = "#todo";
+  constructor({ model }) {
     this.dragArea = ".column__cards";
     this.card = ".column__card";
     this.dragging = "dragging";
+    this.model = model;
+    this.model.subscribe(this.addEventHandler.bind(this));
   }
 
   addEventHandler() {
@@ -14,6 +15,7 @@ export class CardMovement {
 
     cards.forEach((draggable) => {
       __(draggable).on("dragstart", (e) => {
+        console.log(draggable);
         _c(draggable).add(this.dragging);
       });
 
