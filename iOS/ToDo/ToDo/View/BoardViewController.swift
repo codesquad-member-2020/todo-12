@@ -12,11 +12,8 @@ class BoardViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
-    private var todoViewController: CardViewController?
-    private var inProgressViewController: CardViewController?
-    private var doneViewController: CardViewController?
     
-    private let endPoint = "https://4122ebd9-5e04-4a5b-a913-fe458d2e91d4.mock.pstmn.io"
+    private let endPoint = "http://13.124.5.39/api"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,62 +24,62 @@ class BoardViewController: UIViewController {
                                                object: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "todo" {
-            todoViewController = segue.destination as? CardViewController
-        }
-        
-        if segue.identifier == "inProgress" {
-            inProgressViewController = segue.destination as? CardViewController
-        }
-        
-        if segue.identifier == "done" {
-            doneViewController = segue.destination as? CardViewController
-        }
-    }
-    
     private func loadModel() {
-        NetworkConnection.request(resource: endPoint + "/mockup", errorHandler: {}) {
+        NetworkConnection.request(resource: endPoint, errorHandler: alertErrorNoResponse) {
             let decoder = JSONDecoder()
             do {
-                let model = try decoder.decode(Model.self, from: $0)
+                let model = try decoder.decode([Category].self, from: $0)
                 DispatchQueue.main.async {
-                    self.setModel(viewController: self.todoViewController, model: model, index: 0)
-                    self.setModel(viewController: self.inProgressViewController, model: model, index: 1)
-                    self.setModel(viewController: self.doneViewController, model: model, index: 2)
+                    for (index, child) in self.children.enumerated() {
+                        guard let viewController = child as? CardViewController else {return}
+                        self.setModel(viewController: viewController, model: model[index])
+                    }
                     self.activityIndicator.isHidden = true
                     self.menuButton.isEnabled = true
                 }
             } catch {
-                let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "뭔가 문제가 발생한 것 같습니다ㅠㅠ", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "넵...", style: .default)
-                alert.addAction(ok)
-                self.present(alert, animated: true)
+                self.alertErrorJsoneDecode()
             }
         }
     }
     
-    private func setModel(viewController: CardViewController?, model: Model, index: Int) {
+    private func alertErrorJsoneDecode() {
+        let alert = UIAlertController(title: "문제가 생겼어요", message: "데이터를 해석하다가 문제가 생겼어요ㅠㅠ", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "넵...", style: .default)
+        alert.addAction(ok)
+        DispatchQueue.main.async {
+        self.present(alert, animated: true)
+        }
+    }
+    
+    private func alertErrorNoResponse() {
+        let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "서버가 응답하지 않아요ㅠㅠ", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "넵...", style: .default)
+        alert.addAction(ok)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func setModel(viewController: CardViewController?, model: Category) {
         NotificationCenter.default.post(name: .distributeModel, object: viewController,
-                                        userInfo: ["category" : model.categories[index]])
+                                        userInfo: ["category" : model])
         viewController?.cardTabelView.reloadData()
-        viewController?.titleLabel.text = model.categories[index].name
+        viewController?.titleLabel.text = model.name
         viewController?.addCardButton.isEnabled = true
         
     }
     
     @objc func moveToDone(_ notification: Notification) {
         guard let card = notification.userInfo?["card"] as? Card else {return}
-        guard let dataSource = doneViewController?.cardTabelView.dataSource as? CardDataSource else {return}
-        guard let row = dataSource.category?.count else {return}
-        dataSource.category?.append(card: card)
-        
-        let indexPath = IndexPath(row: row, section: 0)
-        
-        doneViewController?.cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        guard let doneViewController = self.children.last as? CardViewController else {return}
+        NotificationCenter.default.post(name: .cardAppended,
+                                        object: doneViewController,
+                                        userInfo: ["card":card])
     }
 }
 
 extension Notification.Name {
     static let distributeModel = Notification.Name("distributeModel")
+    static let cardAppended = Notification.Name("cardAppended")
 }
