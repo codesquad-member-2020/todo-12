@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A5065704244402BC003D725F /* TableViewDragDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5065703244402BC003D725F /* TableViewDragDelegate.swift */; };
 		A50657062444066E003D725F /* TableViewDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50657052444066E003D725F /* TableViewDropDelegate.swift */; };
+		A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D3A9424462A85003CBA21 /* CardManager.swift */; };
 		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
 		A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */; };
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		A5065703244402BC003D725F /* TableViewDragDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDragDelegate.swift; sourceTree = "<group>"; };
 		A50657052444066E003D725F /* TableViewDropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDropDelegate.swift; sourceTree = "<group>"; };
+		A51D3A9424462A85003CBA21 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
 		A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsTextViewDelegate.swift; sourceTree = "<group>"; };
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */,
 				A53B1D13243EFA2900A22F9C /* Category.swift */,
 				A53B1D15243EFABE00A22F9C /* Card.swift */,
+				A51D3A9424462A85003CBA21 /* CardManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */,
+				A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */,
 				A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
 				A5065704244402BC003D725F /* TableViewDragDelegate.swift in Sources */,

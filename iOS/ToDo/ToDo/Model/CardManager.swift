@@ -1,16 +1,14 @@
 //
-//  Category.swift
+//  CardManager.swift
 //  ToDo
 //
-//  Created by 신한섭 on 2020/04/09.
+//  Created by 신한섭 on 2020/04/15.
 //  Copyright © 2020 신한섭. All rights reserved.
 //
 
 import Foundation
 
-struct Category: Codable {
-    var id: Int
-    var name: String
+class CardManager {
     var cards: [Card] {
         didSet {
             NotificationCenter.default.post(name: .cardChanged,
@@ -19,6 +17,10 @@ struct Category: Codable {
     }
     var count: Int {
         return cards.count
+    }
+    
+    init(cards: [Card]) {
+        self.cards = cards
     }
     
     func title(of index: Int) -> String {
@@ -37,16 +39,19 @@ struct Category: Codable {
         return cards[index]
     }
     
-    mutating func append(card: Card) {
+    func append(card: Card) {
         cards.append(card)
     }
     
-    mutating func insert(_ newElement: Card, at index: Int) {
+    func insert(_ newElement: Card, at index: Int) {
         cards.insert(newElement, at: index)
     }
     
-    mutating func remove(at index: Int) {
+    func remove(at index: Int) {
         cards.remove(at: index)
     }
 }
 
+extension Notification.Name {
+    static let cardChanged = Notification.Name("cardChanged")
+}
