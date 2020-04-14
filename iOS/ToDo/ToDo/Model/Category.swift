@@ -11,7 +11,12 @@ import Foundation
 struct Category: Codable {
     var id: Int
     var name: String
-    var cards: [Card]
+    var cards: [Card] {
+        didSet {
+            NotificationCenter.default.post(name: .cardChanged,
+                                            object: self)
+        }
+    }
     var count: Int {
         return cards.count
     }
@@ -43,4 +48,8 @@ struct Category: Codable {
     mutating func remove(at index: Int) {
         cards.remove(at: index)
     }
+}
+
+extension Notification.Name {
+    static let cardChanged = Notification.Name("cardChanged")
 }
