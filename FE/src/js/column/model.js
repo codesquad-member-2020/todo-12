@@ -25,8 +25,7 @@ export class Model {
 
   setColumnList(id) {
     this.view.columnRender(id);
-
-    const column = _$(`#column-data-id-${id}`);
+    const strId = id.toString();
     this.columnList.set(id, column);
   }
 
@@ -53,6 +52,7 @@ export class Model {
     this.cardList.set(cardId, { card: card, columnId: columnId });
 
     // this.cardList.set(cardId, { columnId });
+
     return this.view.cardRender(card, column);
   }
 

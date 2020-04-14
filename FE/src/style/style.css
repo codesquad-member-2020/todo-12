@@ -27,6 +27,7 @@ h1 {
   padding: 16px;
   height: 85vmin;
   overflow: auto;
+
   width: 22%;
   border-radius: 6px;
   border: 1px solid #e1e4e8;
@@ -53,6 +54,11 @@ h1 {
   font-size: 12px;
   background-color: rgba(27, 31, 35, 0.15);
 }
+
+#todo .column__cards {
+  height: 100%;
+}
+
 #todo .column__card {
   justify-content: space-between;
   flex-direction: column;
@@ -67,6 +73,11 @@ h1 {
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.17), 0 3px 3px rgba(0, 0, 0, 0.23);
   overflow: auto;
 }
+
+#todo .column__card.dragging {
+  opacity: 0.5;
+}
+
 #todo .card__left {
   justify-content: space-between;
 }
