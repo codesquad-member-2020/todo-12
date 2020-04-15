@@ -37,13 +37,7 @@ public class ApiCardController {
 
     @PostMapping("/{categoryId}")
     public ResponseEntity create(@PathVariable Long categoryId, @RequestBody HashMap<String, String> cardInfo) {
-        Category category = getCategory(categoryId);
-        Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
-        category.addCard(card);
-        categoryRepository.save(category);
-        category = getCategory(categoryId);
-        card = category.getLastCard();
-        logHistory(ADD, card.getTitle(), card.getContent(), null, category.getName());
+        Card card = cardService.createCard(categoryId, cardInfo);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
