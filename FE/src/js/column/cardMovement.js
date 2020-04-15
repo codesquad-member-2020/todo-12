@@ -1,11 +1,12 @@
 import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
+//카드 이동시 애니매에션 추가하기
 
 export class CardMovement {
   constructor({ model }) {
     this.dragArea = ".column__cards";
     this.card = ".column__card";
     this.dragging = "dragging";
-    this.column = "todo__column";
+    this.column = ".todo__column";
     this.model = model;
     this.model.subscribe(this.addEventHandler.bind(this));
   }
@@ -14,68 +15,84 @@ export class CardMovement {
     const cards = _a$(this.card);
     const dragArea = _a$(this.dragArea);
 
-    //카드아이디, 컬럼아이디, 카드 몇번째인지
-    //끝 카드아이디 , 컬럼아이디, 카테고리키 => 돔에 접근해서 배열에 몇번째 인지 받아온다.
-    //카드아이디로 카드아이디 위치찾음 몇번 째 자식인지
-
-    //시작 돔 접근 아이디 가져온다
-    //
-
     cards.forEach((draggable) => {
-      __(draggable).on("dragstart", ({ dataTransfer }) => {
-        _c(draggable).add(this.dragging);
+      __(draggable).on("dragstart", () => _c(draggable).add(this.dragging));
 
-        const column = this.model.getCardListByElement(draggable).column;
-        // dataTransfer.setData("columnId", column.dataSet.columnId);
-      });
-
-      __(draggable).on("dragend", ({ dataTransfer }) => {
-        console.log(dataTransfer);
-        _c(draggable).remove(this.dragging);
-
-        const cardList = this.model.getCardListByElement(draggable);
-
-        const previousColumnId = cardList.columnId;
-        const previousCardIndex = cardList.card.categoryKey;
-
-        const cardId = cardList.id;
-        const currentColumn = draggable.closest(".todo__column");
-        const columnList = this.model.getColumnListByElement(currentColumn);
-        // const currentColumnId = currentColumn.dataset.columnId;
-        const currentColumnId = columnList.id;
-
-        const currentDragArea = _$(this.dragArea, currentColumn);
-        const currentCardIndex = this.getChildIndex(draggable, currentDragArea);
-        // const currentCardLength = columnList.cardLength;
-
-        if (
-          previousColumnId === parseInt(currentColumnId) &&
-          previousCardIndex === currentCardIndex
-        )
-          return;
-        // this.fetchDataMovement(cardId, currentColumnId, currentCardIndex);
-        //패치요청
-      });
+      __(draggable).on("dragend", () => this.onDragEnd(draggable));
     });
 
     dragArea.forEach((cards) => {
-      __(cards).on("dragover", (e) => {
-        e.preventDefault();
-
-        const afterElement = this.getDragAfterElement(cards, e.clientY);
-        const draggable = _$("." + this.dragging);
-        if (afterElement === null) {
-          cards.appendChild(draggable);
-        } else {
-          cards.insertBefore(draggable, afterElement);
-        }
-      });
+      __(cards).on("dragover", (event) => this.onDragover(event, cards));
     });
   }
 
-  fetchDataMovement(cardId, columnId, cardIndex) {
-    const movementUrl = `http://15.165.163.174:8080/${cardId}/move/${columnId}/${cardIndex}`;
-    fetchData(movementUrl, "PUT").then((data) => console.log(data));
+  onDragEnd(draggable) {
+    _c(draggable).remove(this.dragging);
+
+    const {
+      previousColumnId,
+      previousCardIndex,
+      cardId,
+    } = this.getPreviousCardInfo(draggable);
+
+    const { currentColumnId, currentCardIndex } = this.getCurrentCardInfo(
+      draggable
+    );
+
+    const sameLocation =
+      previousColumnId === currentColumnId &&
+      previousCardIndex === currentCardIndex;
+
+    if (sameLocation) return;
+
+    this.fetchDataMovement(
+      cardId,
+      currentColumnId,
+      currentCardIndex,
+      previousColumnId
+    );
+  }
+
+  getPreviousCardInfo(draggable) {
+    const cardList = this.model.getCardListByElement(draggable);
+
+    const previousColumnId = cardList.columnId;
+    const previousCardIndex = cardList.card.categoryKey;
+    const cardId = cardList.id;
+
+    return { previousColumnId, previousCardIndex, cardId };
+  }
+
+  getCurrentCardInfo(draggable) {
+    const currentColumn = draggable.closest(this.column);
+    const currentColumnId = currentColumn.dataset.columnId;
+
+    const currentDragArea = _$(this.dragArea, currentColumn);
+    const currentCardIndex = this.getChildIndex(draggable, currentDragArea);
+
+    return { currentColumnId, currentCardIndex };
+  }
+
+  onDragover(event, cards) {
+    event.preventDefault();
+
+    const afterElement = this.getDragAfterElement(cards, event.clientY);
+    const draggable = _$("." + this.dragging);
+
+    if (afterElement === null) {
+      cards.appendChild(draggable);
+    } else {
+      cards.insertBefore(draggable, afterElement);
+    }
+  }
+
+  fetchDataMovement(cardId, columnId, cardIndex, previousColumnId) {
+    const movementUrl = `http://15.165.163.174/api/card/${cardId}/move/${columnId}/${cardIndex}`;
+    fetchData(movementUrl, "PUT").then((cardData) => {
+      this.model.setCardList(columnId, cardData, true);
+      this.model.increaseCardLength(columnId);
+      this.model.decreaseCardLength(previousColumnId);
+    });
   }
 
   getChildIndex(child, parent) {
@@ -88,7 +105,9 @@ export class CardMovement {
       `${this.card}:not(.${this.dragging})`,
       dragArea
     );
+
     const draggableElements = [...currentDragArea];
+
     return draggableElements.reduce(
       (closest, child) => {
         const box = child.getBoundingClientRect();

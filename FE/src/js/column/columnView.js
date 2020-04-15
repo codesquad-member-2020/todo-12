@@ -25,7 +25,7 @@ export class ColumnView extends Observable {
     const AllColumns = _a$(this.column);
 
     const currentColumn = [...AllColumns].find(
-      (column) => parseInt(column.dataset.columnId) === columnId
+      (column) => column.dataset.columnId === columnId
     );
 
     // const currentColumn = _$(`${this.dataIdName}-${columnId}`);

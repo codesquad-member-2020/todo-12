@@ -8,6 +8,7 @@ export class Model extends Observable {
     this.initialUrl = "http://15.165.163.174:8080";
     this.columnList = new Map();
     this.cardList = new Map();
+    this.cardLength = {};
     this.cardArea = ".column__card";
     this.card = ".column__card";
   }
@@ -19,11 +20,13 @@ export class Model extends Observable {
   init(initialData) {
     initialData.forEach((columnData) => {
       const { id, name, cards } = columnData;
+      let strId = id.toString();
 
-      this.setColumnList(id);
-      this.setColumnName(id, name);
-      cards.forEach((card) => this.setCardList(id, card));
-      this.setCardLength(id);
+      this.setColumnList(strId);
+      this.setColumnName(strId, name);
+      this.cardLength[strId] = cards.length;
+      cards.forEach((card) => this.setCardList(strId, card));
+      this.increaseCardLength(strId, false);
     });
 
     this.view.addColumnRender();
@@ -67,22 +70,19 @@ export class Model extends Observable {
     // this.view.columnNameRender(name, this.columnList.get(id));
   }
 
-  getColumnName(obj, value) {
-    if (obj.id) return this.columnList.get(id).value;
-    if (obj.column) return this.columnList.get(column).value;
+  getColumnName(column) {
+    return this.columnList.get(column).name;
   }
 
-  setCardList(columnId, cardContent) {
+  setCardList(columnId, cardContent, movement) {
     const column = this.columnList.get(columnId).column;
 
-    const cardId = cardContent.id;
+    const cardId = cardContent.id.toString();
 
-    this.view.cardRender(cardContent, column);
+    if (!movement) this.view.cardRender(cardContent, column);
 
     const AllCards = _a$(this.card);
-    const card = [...AllCards].find(
-      (card) => parseInt(card.dataset.cardId) === cardContent.id
-    );
+    const card = [...AllCards].find((card) => card.dataset.cardId === cardId);
 
     this.cardList.set(card, {
       id: cardId,
@@ -98,11 +98,7 @@ export class Model extends Observable {
       column: column,
     });
 
-    // const cardId = card.id;
-
-    // this.cardList.set(cardId, { card: card, columnId: columnId });
-
-    // return this.view.cardRender(card, column);
+    console.log(this.cardList);
   }
 
   getCardListById(id) {
@@ -113,22 +109,30 @@ export class Model extends Observable {
     return this.cardList.get(element);
   }
 
-  setCardLength(columnId) {
+  increaseCardLength(columnId, increase = true) {
     const column = this.columnList.get(columnId).column;
-    const cardLength = _a$(this.cardArea, column).length;
 
-    this.view.numberOfCardRender(cardLength, column);
+    if (increase) this.cardLength[columnId]++;
 
-    this.columnList.get(columnId).cardLength = cardLength;
-    this.columnList.get(column).cardLength = cardLength;
+    this.view.numberOfCardRender(this.cardLength[columnId], column);
+
+    // this.columnList.get(columnId).cardLength = cardLength;
+    // this.columnList.get(column).cardLength = cardLength;
     // const column = this.columnList.get(columnId);
 
     // const numberOfCard = _a$(this.cardArea, column).length;
   }
 
-  getCardLength(obj) {
-    return this.columnList.get(id).cardLength;
-    if (obj.column) return this.columnList.get(column).cardLength;
+  decreaseCardLength(columnId, decrease = true) {
+    const column = this.columnList.get(columnId).column;
+
+    if (decrease) this.cardLength[columnId]--;
+
+    this.view.numberOfCardRender(this.cardLength[columnId], column);
+  }
+
+  getCardLength(columnId) {
+    return this.cardLength[columnId];
   }
 
   // setTimeModified(create, modified) {

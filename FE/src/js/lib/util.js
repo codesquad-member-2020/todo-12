@@ -74,7 +74,6 @@ export function fetchData(
   requestOption = {
     method: method,
     mode: "cors",
-    //바디에 원하는 값 설정법, string으로 보내야하는지 ,
     body: body,
     headers: {
       "Content-Type": "application/json",

@@ -63,6 +63,7 @@ export class CardCreation {
 
   onAddCardBtn(currentColumn) {
     const columnId = currentColumn.dataset.id;
+    // const columnId = this.model.currentColumn.dataset.id;
     const currentForm = _$(this.addCardForm, currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);

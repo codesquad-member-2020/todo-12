@@ -29,11 +29,8 @@ function fetchInitialData(model) {
   fetchGetData(url).then((initialData) => {
     model.init(initialData);
   });
-  // columnView.init(mock.categories);
-  // model.init(mock.categories);
-  // card.init(mock.categories);
 
-  // cardMovement.addEventHandler();
+  // model.init(mock.categories);
 }
 
 window.addEventListener("DOMContentLoaded", init);
