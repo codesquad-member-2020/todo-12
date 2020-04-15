@@ -24,28 +24,20 @@ public class JWTFilter extends OncePerRequestFilter {
     private UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
-
-        System.out.println(" >>>> token : " + authorizationHeader);
-
         String username = null;
         String jwt = null;
 
         if (authorizationHeader != null) {
             jwt = authorizationHeader;
             username = jwtUtil.extractUsername(jwt);
-            System.out.println("jwt : " + jwt + "username : " + username);
             User user = userRepository.findUserByUserID(username).get();
             if (jwtUtil.validateToken(jwt, user)) {
                 final Claims claims = Jwts.parser().setSigningKey("secret").parseClaimsJws(authorizationHeader)
                         .getBody();
                 request.setAttribute("claims", claims);
-                System.out.println("claims : " + claims);
             }
-            System.out.println("response : " + response);
             chain.doFilter(request, response);
         }
     }
