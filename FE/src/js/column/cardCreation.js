@@ -75,7 +75,7 @@ export class CardCreation {
     const jsonBody = { content: value };
 
     fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((cardData) =>
-      this.addCardData(columnId, cardData)
+      this.addCardData(columnId, cardData, currentColumn)
     );
     cardCreationInput.value = "";
 
@@ -84,9 +84,11 @@ export class CardCreation {
     //모델은 액션에게 전달  받은 아이디로
   }
 
-  addCardData(columnId, cardData) {
+  addCardData(columnId, cardData, currentColumn) {
     this.model.setCardList(columnId, cardData);
     this.model.increaseCardLength(columnId);
-    _$("." + this.addCardBtn).disabled = "disabled";
+
+    const currentAddBtn = _$("." + this.addCardBtn, currentColumn);
+    currentAddBtn.disabled = "disabled";
   }
 }
