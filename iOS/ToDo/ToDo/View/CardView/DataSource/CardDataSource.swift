@@ -10,22 +10,21 @@ import UIKit
 
 class CardDataSource: NSObject, UITableViewDataSource {
     
-    var category: Category? {
-        didSet {
-            handler()
-        }
-    }
-    var handler: () -> () = {}
+    private var cardManager: CardManager?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return category?.count ?? 0
+        return cardManager?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as? CardCell else {return UITableViewCell()}
-        guard let card = category?.cards[indexPath.row] else {return UITableViewCell()}
+        guard let card = cardManager?.card(at: indexPath.row) else {return UITableViewCell()}
         cell.configure(with: card)
         
         return cell
+    }
+    
+    func setCardManager(cardManager: CardManager?) {
+        self.cardManager = cardManager
     }
 }

@@ -12,5 +12,5 @@ struct Card: Codable {
     var id: Int
     var title: String?
     var content: String
-    var author: String
+    var author: String?
 }
