@@ -14,17 +14,19 @@ public class History {
     private Long id;
     private String userId;
     private String action;
-    private String cardInfo;
+    private String cardTitle;
+    private String cardContent;
     private String fromCategory;
     private String toCategory;
     private String modifiedTime;
 
     public History() {}
 
-    public History(String action, String cardInfo, String fromCategory, String toCategory) {
+    public History(String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
         this.userId = "todo12";
         this.action = action;
-        this.cardInfo = cardInfo;
+        this.cardTitle = cardTitle;
+        this.cardContent = cardContent;
         this.fromCategory = fromCategory;
         this.toCategory = toCategory;
         this.modifiedTime = seoulTime();
@@ -40,7 +42,8 @@ public class History {
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", action='" + action + '\'' +
-                ", cardInfo='" + cardInfo + '\'' +
+                ", cardTitle='" + cardTitle + '\'' +
+                ", cardContent='" + cardContent + '\'' +
                 ", fromCategory='" + fromCategory + '\'' +
                 ", toCategory='" + toCategory + '\'' +
                 ", modifiedTime='" + modifiedTime + '\'' +
