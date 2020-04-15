@@ -16,12 +16,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var addCardButton: UIButton!
     @IBAction func addCardButtonPushed(_ sender: UIButton) {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
-        let indexPath = IndexPath(row: cardTabelView.numberOfRows(inSection: 0), section: 0)
         
-        //        editView.createHandler = {
-        //            self.dataSource.category?.append(card: $0)
-        //            self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
-        //        }
+        editView.createHandler = {
+            self.categoryManager?.insertCard(card: $0)
+        }
         self.present(editView, animated: true)
     }
     
