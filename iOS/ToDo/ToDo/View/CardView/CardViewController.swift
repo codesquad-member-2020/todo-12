@@ -67,6 +67,18 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(updateNumOfCardsLabel),
                                                name: .cardChanged,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(postMoveToDoneCard(_:)),
+                                               name: .postWillmoveToDoneIndex,
+                                               object: delegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(insertCard(_:)),
+                                               name: .cardInserted,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateFromInsertion(_:)),
+                                               name: .postInsertedIndex,
+                                               object: nil)
         //        NotificationCenter.default.addObserver(self,
         //                                               selector: #selector(startEditCard(_:)),
         //                                               name: .startEditCard,
@@ -79,6 +91,29 @@ class CardViewController: UIViewController, UITableViewDelegate {
         //                                               selector: #selector(exchangeCellOnDifferentTableView(_:)),
         //                                               name: .exchangeCellOnDifferentTableView,
         //                                               object: dropDelegate)
+    }
+    
+    @objc func updateFromInsertion(_ notification: Notification) {
+        guard let id = notification.userInfo?["id"] as? Int else {return}
+        guard id == categoryManager?.id else {return}
+        guard let index = notification.userInfo?["index"] as? Int else {return}
+        let indexPath = IndexPath(row: index, section: 0)
+        cardTabelView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
+    @objc func insertCard(_ notification: Notification) {
+        guard let id = notification.userInfo?["id"] as? Int else {return}
+        guard id == categoryManager?.id else {return}
+        guard let card = notification.userInfo?["card"] as? Card else {return}
+        categoryManager?.insertCard(card: card)
+    }
+    
+    @objc func postMoveToDoneCard(_ notification: Notification) {
+        guard let index = notification.userInfo?["index"] as? Int else {return}
+        guard let card = categoryManager?.card(at: index) else {return}
+        NotificationCenter.default.post(name: .postMoveToDoneCard,
+                                        object: nil,
+                                        userInfo: ["card" : card])
     }
     
     @objc func updateNumOfCardsLabel() {
@@ -148,4 +183,8 @@ class CardViewController: UIViewController, UITableViewDelegate {
         numOfCardsLabel.clipsToBounds = true
         numOfCardsLabel.layer.cornerRadius = superViewHeight * 0.24
     }
+}
+
+extension Notification.Name {
+    static let postMoveToDoneCard = Notification.Name("postMoveToDoneCard")
 }

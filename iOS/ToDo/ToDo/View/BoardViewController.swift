@@ -14,13 +14,14 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     private let endPoint = "http://15.165.163.174/api"
+    private var model: [Category] = [Category]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadModel()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToDone(_:)),
-                                               name: .moveToDone,
+                                               name: .postMoveToDoneCard,
                                                object: nil)
     }
     
@@ -28,11 +29,11 @@ class BoardViewController: UIViewController {
         NetworkConnection.request(resource: endPoint, errorHandler: alertErrorNoResponse) {
             let decoder = JSONDecoder()
             do {
-                let model = try decoder.decode([Category].self, from: $0)
+                self.model = try decoder.decode([Category].self, from: $0)
                 DispatchQueue.main.async {
                     for (index, child) in self.children.enumerated() {
                         guard let viewController = child as? CardViewController else {return}
-                        self.setModel(viewController: viewController, model: model[index])
+                        self.setModel(viewController: viewController, model: self.model[index])
                     }
                     self.activityIndicator.isHidden = true
                     self.menuButton.isEnabled = true
@@ -72,14 +73,14 @@ class BoardViewController: UIViewController {
     
     @objc func moveToDone(_ notification: Notification) {
         guard let card = notification.userInfo?["card"] as? Card else {return}
-        guard let doneViewController = self.children.last as? CardViewController else {return}
-        NotificationCenter.default.post(name: .cardAppended,
-                                        object: doneViewController,
-                                        userInfo: ["card":card])
+//        guard let doneViewController = self.children.last as? CardViewController else {return}
+        NotificationCenter.default.post(name: .cardInserted,
+                                        object: nil,
+                                        userInfo: ["card" : card, "id" : model[2].id])
     }
 }
 
 extension Notification.Name {
     static let distributeModel = Notification.Name("distributeModel")
-    static let cardAppended = Notification.Name("cardAppended")
+    static let cardInserted = Notification.Name("cardInserted")
 }

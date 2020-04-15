@@ -28,8 +28,21 @@ class CategoryManager {
                                         object: nil,
                                         userInfo: ["index" : index, "id" : id])
     }
+    
+    func insertCard(card: Card, at index: Int = -1) {
+        guard index == -1 else {return}
+        cardManager.append(card: card)
+        NotificationCenter.default.post(name: .postInsertedIndex,
+                                        object: nil,
+                                        userInfo: ["index" : count - 1, "id" : id])
+    }
+    
+    func card(at index: Int) -> Card{
+        return cardManager.card(at: index)
+    }
 }
 
 extension Notification.Name {
     static let postRemovedIndex = Notification.Name("postRemovedIndex")
+    static let postInsertedIndex = Notification.Name("postInsertedIndex")
 }
