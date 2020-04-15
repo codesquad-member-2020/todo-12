@@ -40,10 +40,7 @@ public class ApiCardController {
         categoryRepository.save(category);
         category = getCategory(categoryId);
         card = category.getLastCard();
-
-        History history = new History(ADD, card.getTitle(), card.getContent(), null, category.getName());
-        historyRepository.save(history);
-
+        logHistory(ADD, card.getTitle(), card.getContent(), null, category.getName());
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -53,10 +50,7 @@ public class ApiCardController {
         card.update(cardInfo.get("title"), cardInfo.get("content"));
         cardRepository.save(card);
         card = getCard(id);
-
-        History history = new History(UPDATE, card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
-        historyRepository.save(history);
-
+        logHistory(UPDATE, card.getTitle(), card.getContent(), null, getCategoryName(card.getCategoryId()));
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -64,10 +58,7 @@ public class ApiCardController {
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
         cardRepository.delete(card);
-
-        History history = new History(REMOVE, card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
-        historyRepository.save(history);
-
+        logHistory(REMOVE, card.getTitle(), card.getContent(), null, getCategoryName(card.getCategoryId()));
         return new ResponseEntity(OK, HttpStatus.OK);
     }
 
@@ -95,10 +86,7 @@ public class ApiCardController {
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
         card = getCard(id);
-
-        History history = new History(MOVE, card.getTitle(), card.getContent(), fromCategory.getName(), toCategory.getName());
-        historyRepository.save(history);
-
+        logHistory(MOVE, card.getTitle(), card.getContent(), fromCategory.getName(), toCategory.getName());
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -108,6 +96,15 @@ public class ApiCardController {
 
     private Category getCategory(Long id) {
         return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
+    }
+
+    private String getCategoryName(Long id) {
+        return categoryRepository.findNameById(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
+    }
+
+    private void logHistory(String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
+        History history = new History(action, cardTitle, cardContent, fromCategory, toCategory);
+        historyRepository.save(history);
     }
 
     private void swapCardIfCategoryKeyChanged(Card card, Category category, Integer movedCategoryKey) {
