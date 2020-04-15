@@ -22,7 +22,7 @@ public class ApiCategoryController {
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(getCategories(), HttpStatus.OK);
+        return new ResponseEntity(getAllCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -59,8 +59,8 @@ public class ApiCategoryController {
         return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
-    private List<Category> getCategories() {
-        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException(EMPTY_CATEGORY));
+    private List<Category> getAllCategories() {
+        return categoryRepository.findAllByDeletedFalse().orElseThrow(() -> new DataNotFoundException(EMPTY_CATEGORY));
     }
 
     @ExceptionHandler

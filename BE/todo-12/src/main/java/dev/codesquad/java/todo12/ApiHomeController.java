@@ -24,7 +24,7 @@ public class ApiHomeController {
 
     @GetMapping("/")
     public ResponseEntity home() {
-        return new ResponseEntity(getCategories(), HttpStatus.OK);
+        return new ResponseEntity(getAllCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/history")
@@ -32,7 +32,7 @@ public class ApiHomeController {
         return new ResponseEntity(historyRepository.findAll(), HttpStatus.OK);
     }
 
-    private List<Category> getCategories() {
-        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
+    private List<Category> getAllCategories() {
+        return categoryRepository.findAllByDeletedFalse().orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 }

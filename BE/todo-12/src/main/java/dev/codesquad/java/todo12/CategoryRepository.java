@@ -20,5 +20,5 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
     Optional<Category> findByIdDeletedFalse(Long id);
 
     @Query("Select * from category where category.deleted = false")
-    Optional<List<Category>> findCategoriesByIdDeletedFalse();
+    Optional<List<Category>> findAllByDeletedFalse();
 }
