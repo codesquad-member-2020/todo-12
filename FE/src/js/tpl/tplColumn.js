@@ -9,7 +9,7 @@ export function tplColumn(id) {
                   </div>
                   <div>
                     <button type="button" class="plus-btn">
-                      <i class="fas fa-plus js-btn-showing-creation"></i>
+                      <i class="fas fa-plus btn-showing-creation" data-type="btn-showing-creation"></i>
                     </button>
                     <button type="button" class="close-btn">
                       <i class="fas fa-times"></i>
@@ -20,11 +20,11 @@ export function tplColumn(id) {
                 <!-- add Card -->
                 <form class="add__todo" method="post" >
                  <div class="input-box">
-                      <textarea name="content" class="js-card-creation-input" maxlength="500" aria-label="추가할 내용을 입력하세요" placeholder="Enter a note"></textarea>
+                      <textarea name="content" class ="card-creation-input" data-type="card-creation-input" maxlength="500" aria-label="추가할 내용을 입력하세요" placeholder="Enter a note"></textarea>
                    </div>
                   <div class="add__btn">
-                     <button type="button" class="btn__green js-add-card-btn" disabled='disabled'>Add</button>
-                     <button type="button" class="btn__cancel js-cancel-card-btn">Cancel</button>
+                     <button type="button" class="btn__green add-card-btn" data-type="add-card-btn" disabled='disabled'>Add</button>
+                     <button type="button" class="btn__cancel" data-type="cancel-card-btn">Cancel</button>
                   </div>
                 </form>
                 <!-- //add Card -->

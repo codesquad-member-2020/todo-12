@@ -88,6 +88,7 @@ export class CardMovement {
 
   fetchDataMovement(cardId, columnId, cardIndex, previousColumnId) {
     const movementUrl = `http://15.165.163.174/api/card/${cardId}/move/${columnId}/${cardIndex}`;
+
     fetchData(movementUrl, "PUT").then((cardData) => {
       this.model.setCardList(columnId, cardData, true);
       this.model.increaseCardLength(columnId);

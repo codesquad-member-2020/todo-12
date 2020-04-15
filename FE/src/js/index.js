@@ -4,6 +4,7 @@ import { _$, fetchGetData } from "./lib/util.js";
 import { ColumnView } from "./column/columnView.js";
 import { CardCreation } from "./column/cardCreation.js";
 import { CardMovement } from "./column/cardMovement.js";
+import { CardDeletion } from "./column/cardDeletion.js";
 import { Model } from "./column/model.js";
 // import { mock } from "./mock.js";
 
@@ -16,6 +17,7 @@ function init() {
   const columnView = new ColumnView();
   const model = new Model(columnView);
   const cardCreation = new CardCreation({ columnView, model });
+  const cardDeletion = new CardDeletion({ columnView, model });
   const cardMovement = new CardMovement({ model });
   // const card = new Card();
   // const card = new Card(cardView);
