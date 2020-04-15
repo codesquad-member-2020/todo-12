@@ -9,12 +9,24 @@
 import Foundation
 
 class NetworkConnection {
-    class func request(resource: String, errorHandler: @escaping () -> (), handlder: @escaping (Data) -> Void){
-        
-        let encodedString = resource.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+    
+    static let endPoint: String = "http://15.165.163.174/api"
+    
+    enum HTTPMethod: String {
+        case GET
+        case POST
+        case PUT
+        case DELETE
+    }
+    
+    class func request(httpMethod: HTTPMethod, errorHandler: @escaping () -> (), handlder: @escaping (Data) -> Void){
+        let encodedString = endPoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         guard let url = URL(string: encodedString) else {return}
+        var request = URLRequest(url: url)
         
-        let dataTask = URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
+        request.httpMethod = httpMethod.rawValue
+        
+        let dataTask = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             guard error == nil else {
                 errorHandler()
                 return

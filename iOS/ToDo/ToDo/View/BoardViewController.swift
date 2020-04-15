@@ -13,7 +13,6 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
-    private let endPoint = "http://15.165.163.174/api"
     private var model: [Category] = [Category]()
     
     override func viewDidLoad() {
@@ -48,7 +47,7 @@ class BoardViewController: UIViewController {
     }
     
     private func loadModel() {
-        NetworkConnection.request(resource: endPoint, errorHandler: alertErrorNoResponse) {
+        NetworkConnection.request(httpMethod: .GET, errorHandler: alertErrorNoResponse) {
             let decoder = JSONDecoder()
             do {
                 self.model = try decoder.decode([Category].self, from: $0)
