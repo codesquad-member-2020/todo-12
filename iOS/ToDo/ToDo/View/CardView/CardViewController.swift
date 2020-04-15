@@ -166,7 +166,13 @@ extension CardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { _, _, _ in
-            self.removeCard(indexPath: indexPath, delay: 0)
+            guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
+            NetworkConnection.request(httpMethod: .DELETE, quertString: "card/\(id)", httpBody: nil, errorHandler: {}) {
+                guard let result = String(data: $0, encoding: .utf8) else {return}
+                if result == "OK" {
+                    self.removeCard(indexPath: indexPath, delay: 0)
+                }
+            }
         })
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
@@ -194,7 +200,13 @@ extension CardViewController: UITableViewDelegate {
             }
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                self.removeCard(indexPath: indexPath, delay: 0.7)
+                guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
+                NetworkConnection.request(httpMethod: .DELETE, quertString: "card/\(id)", httpBody: nil, errorHandler: {}) {
+                    guard let result = String(data: $0, encoding: .utf8) else {return}
+                    if result == "OK" {
+                        self.removeCard(indexPath: indexPath, delay: 0.7)
+                    }
+                }
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
             
