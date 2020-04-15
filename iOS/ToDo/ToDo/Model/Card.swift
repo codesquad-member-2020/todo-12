@@ -10,7 +10,9 @@ import Foundation
 
 struct Card: Codable {
     var id: Int
+    var categoryKey: Int
     var title: String?
     var content: String
     var author: String?
+    var modifiedTime: Date?
 }

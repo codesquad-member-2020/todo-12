@@ -21,8 +21,6 @@ class EditCardViewController: UIViewController {
             self.model?.content = content
             self.model?.title = title
             guard let index = self.editedModelIndex, let card = self.model else {
-                let card = Card(id: 0, title: title, content: content, author: "iOS")
-                self.createHandler(card)
                 return
             }
             self.editHandler(index, card)

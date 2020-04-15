@@ -49,6 +49,7 @@ class BoardViewController: UIViewController {
     private func loadModel() {
         NetworkConnection.request(httpMethod: .GET, quertString: "", httpBody: nil, errorHandler: alertErrorJsoneDecode) {
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
             do {
                 self.model = try decoder.decode([Category].self, from: $0)
                 DispatchQueue.main.async {
