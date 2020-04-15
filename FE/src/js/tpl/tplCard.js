@@ -1,10 +1,10 @@
-export function tplCard({ id, content, author }) {
+export function tplCard(a) {
   const card = `
-            <li class="column__card flex" id="card-data-id-${id}">
+            <li class="column__card flex" draggable="true" data-card-id=${a.id}>
                 <div class="card__left flex">
                    <div class="card__contents">
                       <i class="far fa-calendar-check card__icon"></i>
-                      <span class="card__content">${content}</span>
+                      <span class="card__content">${a.content}</span>
                    </div>
                    <div class="card__btn">
                     <button type="button" class="close-btn">
@@ -13,7 +13,7 @@ export function tplCard({ id, content, author }) {
                   </div>
                 </div>
                 <div class="card__right">
-                  <span class="card__author">Added by <strong>${author}</strong></span>
+                  <span class="card__author">Added by <strong>${a.author}</strong></span>
                 </div>
             </li>
           `;

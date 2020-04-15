@@ -17,6 +17,11 @@ export function _c(target) {
   };
 }
 
+export function getChildIndex(child, parent) {
+  const children = [...parent.children];
+  return children.indexOf(child);
+}
+
 export function __$(element) {
   const target = _$(element);
   return {
@@ -59,7 +64,7 @@ export function __(target) {
 }
 
 export function filterNumber(str) {
-  return str.trim().replace(/[^0-9]/g, "");
+  return parseInt(str.trim().replace(/[^0-9]/g, ""));
 }
 
 export function fetchData(
@@ -69,7 +74,6 @@ export function fetchData(
   requestOption = {
     method: method,
     mode: "cors",
-    //바디에 원하는 값 설정법, string으로 보내야하는지 ,
     body: body,
     headers: {
       "Content-Type": "application/json",
