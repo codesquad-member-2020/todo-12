@@ -6,6 +6,7 @@ export class CardCreation {
     this.cancelCardBtn = "js-cancel-card-btn";
     this.addCardBtn = "js-add-card-btn";
     this.addCardForm = ".add__todo";
+    this.inputFocus = "input-active";
     this.model = model;
     this.columnView = columnView;
     this.columnView.subscribe(this.addEventHandler.bind(this));
@@ -37,16 +38,17 @@ export class CardCreation {
   onInputEvents(currentColumn) {
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
     __(cardCreationInput).on("blur", () =>
-      _c(cardCreationInput).remove("input-active")
+      _c(cardCreationInput).remove(this.inputFocus)
     );
-    _c(cardCreationInput).add("input-active"); //함수로 만들기
+
+    _c(cardCreationInput).add(this.inputFocus); //함수로 만들기
 
     __(cardCreationInput).on("input", () =>
-      this.onActivationAddCardBtn(cardCreationInput, currentColumn)
+      this.activateAddCardBtn(cardCreationInput, currentColumn)
     );
   }
 
-  onActivationAddCardBtn(cardCreationInput, currentColumn) {
+  activateAddCardBtn(cardCreationInput, currentColumn) {
     const addCardBtn = _$("." + this.addCardBtn, currentColumn);
 
     if (!cardCreationInput.value) return (addCardBtn.disabled = true);
@@ -62,25 +64,29 @@ export class CardCreation {
   }
 
   onAddCardBtn(currentColumn) {
-    // const columnId = currentColumn.dataset.id;
+    const creationUrl = `ttp://15.165.163.174:8080/card/${columnId}`;
+    const columnId = currentColumn.dataset.id;
 
-    const columnId = this.model.getColumnList(currentColumn).id;
+    // const columnId = this.model.getColumnList(currentColumn).id;
     const currentForm = _$(this.addCardForm, currentColumn);
-    const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
     const value = currentForm.content.value;
     const jsonBody = { content: value };
 
-    fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((data) => {
-      this.model.setCardList(columnId, data);
-      this.model.increaseCardLength(columnId);
-      _$("." + this.addCardBtn).disabled = "disabled";
-    });
+    fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((cardData) =>
+      addCardData(columnId, cardData)
+    );
     cardCreationInput.value = "";
 
     //모델에게 ('add'와 컨텐츠와 컬럼정보를 넘겨준다 -아이디)객체로
 
     //모델은 액션에게 전달  받은 아이디로
+  }
+
+  addCardData(columnId, cardData) {
+    this.model.setCardList(columnId, cardData);
+    this.model.increaseCardLength(columnId);
+    _$("." + this.addCardBtn).disabled = "disabled";
   }
 }
