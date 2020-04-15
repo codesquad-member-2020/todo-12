@@ -13,7 +13,7 @@ class BoardViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
-    private let endPoint = "http://13.124.5.39/api"
+    private let endPoint = "http://15.165.163.174/api"
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -18,10 +18,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         let indexPath = IndexPath(row: cardTabelView.numberOfRows(inSection: 0), section: 0)
         
-        editView.createHandler = {
-            self.dataSource.category?.append(card: $0)
-            self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
-        }
+        //        editView.createHandler = {
+        //            self.dataSource.category?.append(card: $0)
+        //            self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        //        }
         self.present(editView, animated: true)
     }
     
@@ -29,11 +29,7 @@ class CardViewController: UIViewController, UITableViewDelegate {
     private let delegate = CardTableViewDelegate()
     private let dragDelegate = TableViewDragDelegate()
     private let dropDelegate = TableViewDropDelegate()
-    private var category: Category? {
-        didSet {
-            dataSource.category = category
-        }
-    }
+    private var categoryManager: CategoryManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +42,6 @@ class CardViewController: UIViewController, UITableViewDelegate {
     func setupTableView() {
         cardTabelView.dataSource = dataSource
         cardTabelView.delegate = delegate
-        dataSource.handler = {
-            self.numOfCardsLabel.text = String(self.dataSource.category?.count ?? 0)
-        }
     }
     
     func setupTableViewDragAndDrop() {
@@ -63,45 +56,70 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                name: .distributeModel,
                                                object: self)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deleteRow(_:)),
-                                               name: .deleteIndexPath,
+                                               selector: #selector(removeCard(_:)),
+                                               name: .postWillRemoveIndex,
                                                object: delegate)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(startEditCard(_:)),
-                                               name: .startEditCard,
-                                               object: delegate)
+                                               selector: #selector(updateFromDeletion(_:)),
+                                               name: .postRemovedIndex,
+                                               object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(exchangeCellOnSametableView(_:)),
-                                               name: .exchangeCellOnSameTableView,
-                                               object: dropDelegate)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(exchangeCellOnDifferentTableView(_:)),
-                                               name: .exchangeCellOnDifferentTableView,
-                                               object: dropDelegate)
+                                               selector: #selector(updateNumOfCardsLabel),
+                                               name: .cardChanged,
+                                               object: nil)
+        //        NotificationCenter.default.addObserver(self,
+        //                                               selector: #selector(startEditCard(_:)),
+        //                                               name: .startEditCard,
+        //                                               object: delegate)
+        //        NotificationCenter.default.addObserver(self,
+        //                                               selector: #selector(exchangeCellOnSametableView(_:)),
+        //                                               name: .exchangeCellOnSameTableView,
+        //                                               object: dropDelegate)
+        //        NotificationCenter.default.addObserver(self,
+        //                                               selector: #selector(exchangeCellOnDifferentTableView(_:)),
+        //                                               name: .exchangeCellOnDifferentTableView,
+        //                                               object: dropDelegate)
+    }
+    
+    @objc func updateNumOfCardsLabel() {
+        guard let count = categoryManager?.count else {return}
+        DispatchQueue.main.async {
+            self.numOfCardsLabel.text = String(count)
+        }
+    }
+    
+    @objc func updateFromDeletion(_ notification: Notification) {
+        guard let id = notification.userInfo?["id"] as? Int else {return}
+        guard id == categoryManager?.id else {return}
+        guard let index = notification.userInfo?["index"] as? Int else {return}
+        let indexPath = IndexPath(row: index, section: 0)
+        cardTabelView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     @objc func receiveModel(_ notification: Notification) {
         guard let category = notification.userInfo?["category"] as? Category else {return}
-        self.category = category
+        self.categoryManager = CategoryManager(category: category)
+        dataSource.setCardManager(cardManager: categoryManager?.cardManager)
+        updateNumOfCardsLabel()
     }
     
-    @objc func deleteRow(_ notification: Notification) {
-        guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else {return}
-        cardTabelView.deleteRows(at: [indexPath], with: .automatic)
+    @objc func removeCard(_ notification: Notification) {
+        guard let index = notification.userInfo?["index"] as? Int else {return}
+        categoryManager?.removeCard(at: index)
     }
     
-    @objc func startEditCard(_ notification: Notification) {
-        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
-        guard let editIndex = notification.userInfo?["editIndex"] as? Int else {return}
-        
-        editView.model = self.dataSource.category?.cards[editIndex]
-        editView.editedModelIndex = editIndex
-        editView.editHandler = {
-            self.dataSource.category?.cards[$0] = $1
-            self.cardTabelView.reloadData()
-        }
-        self.present(editView, animated: true)
-    }
+    //    @objc func startEditCard(_ notification: Notification) {
+    //        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
+    //        guard let editIndex = notification.userInfo?["editIndex"] as? Int else {return}
+    //
+    //        editView.model = self.dataSource.category?.cards[editIndex]
+    //        editView.editedModelIndex = editIndex
+    //        editView.editHandler = {
+    //            self.dataSource.category?.cards[$0] = $1
+    //            self.cardTabelView.reloadData()
+    //        }
+    //        self.present(editView, animated: true)
+    //    }
     
     @objc func exchangeCellOnSametableView(_ notification: Notification) {
         guard let sourceIndexPath = notification.userInfo?["sourceIndexPath"] as? IndexPath, let destinationIndexPath = notification.userInfo?["destinationIndexPath"] as? IndexPath else {return}
