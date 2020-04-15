@@ -30,7 +30,7 @@ CREATE TABLE history  (
   id int primary key auto_increment,
   user_id varchar (32),
   action varchar (32),
-  title varchar (64),
+  card_info varchar (64),
   from_category varchar (64),
   to_category varchar (64)
 );
