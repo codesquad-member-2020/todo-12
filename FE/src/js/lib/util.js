@@ -17,6 +17,11 @@ export function _c(target) {
   };
 }
 
+export function getChildIndex(child, parent) {
+  const children = [...parent.children];
+  return children.indexOf(child);
+}
+
 export function __$(element) {
   const target = _$(element);
   return {

@@ -1,4 +1,4 @@
-import { _$, __, _c, __$, _a$, fetchData, filterNumber } from "../lib/util.js";
+import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
 export class CardCreation {
   constructor({ columnView, model }) {
     this.btnShowingAddForm = "js-btn-showing-creation";

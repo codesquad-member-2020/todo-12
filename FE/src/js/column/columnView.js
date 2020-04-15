@@ -49,7 +49,6 @@ export class ColumnView extends Observable {
 
   cardRender(cardContent, column) {
     const cardArea = _$(this.cardArea, column);
-    console.log(cardContent);
     const cardHtml = tplCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
   }
