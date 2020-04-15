@@ -65,6 +65,7 @@ public class Card {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+        this.modifiedTime = seoulTime();
     }
 
     @Override
