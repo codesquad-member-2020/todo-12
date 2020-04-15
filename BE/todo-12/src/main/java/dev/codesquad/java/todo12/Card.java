@@ -35,6 +35,7 @@ public class Card {
     public void moveCard(Long category, Integer categoryKey) {
         this.category = category;
         this.categoryKey = categoryKey;
+        this.modifiedTime = seoulTime();
     }
 
     public int getCategoryKey() {
