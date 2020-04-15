@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
+import static dev.codesquad.java.todo12.StaticApiUtils.*;
+
 @RestController
 @RequestMapping("/category")
 public class ApiCategoryController {
@@ -60,15 +62,15 @@ public class ApiCategoryController {
         Category category = getCategory(id);
         category.delete();
         categoryRepository.save(category);
-        return new ResponseEntity("OK", HttpStatus.OK);
+        return new ResponseEntity(OK, HttpStatus.OK);
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
     private List<Category> getCategories() {
-        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException("카테고리 없음"));
+        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException(EMPTY_CATEGORY));
     }
 
     private Kanban getKanban(Long id) {

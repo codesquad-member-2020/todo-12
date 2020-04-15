@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
+import static dev.codesquad.java.todo12.StaticApiUtils.*;
+
 @RestController
 @RequestMapping("/card")
 public class ApiCardController {
@@ -39,7 +41,7 @@ public class ApiCardController {
         category = getCategory(categoryId);
         card = category.getLastCard();
 
-        History history = new History("add", card.getTitle(), card.getContent(), null, category.getName());
+        History history = new History(ADD, card.getTitle(), card.getContent(), null, category.getName());
         historyRepository.save(history);
 
         return new ResponseEntity(card, HttpStatus.OK);
@@ -52,7 +54,7 @@ public class ApiCardController {
         cardRepository.save(card);
         card = getCard(id);
 
-        History history = new History("update", card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
+        History history = new History(UPDATE, card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
         historyRepository.save(history);
 
         return new ResponseEntity(card, HttpStatus.OK);
@@ -63,10 +65,10 @@ public class ApiCardController {
         Card card = getCard(id);
         cardRepository.delete(card);
 
-        History history = new History("remove", card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
+        History history = new History(REMOVE, card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
         historyRepository.save(history);
 
-        return new ResponseEntity("OK", HttpStatus.OK);
+        return new ResponseEntity(OK, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/move/{categoryId}/{categoryKey}")
@@ -94,18 +96,18 @@ public class ApiCardController {
         categoryRepository.save(toCategory);
         card = getCard(id);
 
-        History history = new History("move", card.getTitle(), card.getContent(), fromCategory.getName(), toCategory.getName());
+        History history = new History(MOVE, card.getTitle(), card.getContent(), fromCategory.getName(), toCategory.getName());
         historyRepository.save(history);
 
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
     private Card getCard(Long id) {
-        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException(NO_CARD));
     }
 
     private Category getCategory(Long id) {
-        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
     private void swapCardIfCategoryKeyChanged(Card card, Category category, Integer movedCategoryKey) {
@@ -120,7 +122,7 @@ public class ApiCardController {
     private void checkCategoryKeyValidation(Category category, Integer categoryKey) {
         List<Card> cards = category.getCards();
         if (categoryKey > cards.size() - 1) {
-            throw new DataNotFoundException("존재하지 않는 카테고리 키");
+            throw new DataNotFoundException(WRONG_CATEGORY_KEY);
         }
     }
 

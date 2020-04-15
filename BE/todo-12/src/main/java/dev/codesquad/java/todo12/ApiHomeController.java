@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static dev.codesquad.java.todo12.StaticApiUtils.*;
+
 @RestController
 public class ApiHomeController {
     private Logger logger = LoggerFactory.getLogger(ApiHomeController.class);
@@ -35,7 +37,7 @@ public class ApiHomeController {
     }
 
     private List<Category> getCategories() {
-        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException("카테고리 없음"));
+        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
     private Kanban getKanban() {
