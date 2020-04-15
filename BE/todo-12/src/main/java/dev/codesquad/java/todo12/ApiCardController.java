@@ -26,9 +26,12 @@ public class ApiCardController {
     @Autowired
     private HistoryRepository historyRepository;
 
+    @Autowired
+    private CardService cardService;
+
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
-        Card card = getCard(id);
+        Card card = cardService.viewCard(id);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
