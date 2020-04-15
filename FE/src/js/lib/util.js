@@ -17,6 +17,18 @@ export function _c(target) {
   };
 }
 
+export function _c$(element) {
+  const target = _$(element);
+  return {
+    add(className) {
+      target.classList.add(className);
+    },
+    remove(className) {
+      target.classList.remove(className);
+    },
+  };
+}
+
 export function getChildIndex(child, parent) {
   const children = [...parent.children];
   return children.indexOf(child);

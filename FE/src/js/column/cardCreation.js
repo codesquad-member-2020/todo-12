@@ -1,10 +1,10 @@
 import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
 export class CardCreation {
   constructor({ columnView, model }) {
-    this.btnShowingAddForm = "js-btn-showing-creation";
-    this.cardCreationInput = "js-card-creation-input";
-    this.cancelCardBtn = "js-cancel-card-btn";
-    this.addCardBtn = "js-add-card-btn";
+    this.btnShowingAddForm = "btn-showing-creation";
+    this.cardCreationInput = "card-creation-input";
+    this.cancelCardBtn = "cancel-card-btn";
+    this.addCardBtn = "add-card-btn";
     this.addCardForm = ".add__todo";
     this.inputFocus = "input-active";
     this.model = model;
@@ -13,18 +13,18 @@ export class CardCreation {
   }
 
   addEventHandler({ target, currentTarget }) {
-    const classList = target.classList;
-    switch (true) {
-      case classList.contains(this.btnShowingAddForm):
+    const eventTarget = target.dataset.type;
+    switch (eventTarget) {
+      case this.btnShowingAddForm:
         this.onBtnShowingAddForm(currentTarget);
         break;
-      case classList.contains(this.cardCreationInput):
+      case this.cardCreationInput:
         this.onInputEvents(currentTarget);
         break;
-      case classList.contains(this.cancelCardBtn):
+      case this.cancelCardBtn:
         this.onCancelCardBtn(currentTarget);
         break;
-      case classList.contains(this.addCardBtn):
+      case this.addCardBtn:
         this.onAddCardBtn(currentTarget);
     }
   }
@@ -51,7 +51,7 @@ export class CardCreation {
   activateAddCardBtn(cardCreationInput, currentColumn) {
     const addCardBtn = _$("." + this.addCardBtn, currentColumn);
 
-    if (!cardCreationInput.value) return (addCardBtn.disabled = true);
+    if (!cardCreationInput.value) return (addCardBtn.disabled = "disabled");
     addCardBtn.disabled = false;
   }
 
@@ -64,10 +64,10 @@ export class CardCreation {
   }
 
   onAddCardBtn(currentColumn) {
-    const creationUrl = `ttp://15.165.163.174:8080/card/${columnId}`;
-    const columnId = currentColumn.dataset.id;
+    // const columnId = currentColumn.dataset.id;
+    const columnId = this.model.getColumnList(currentColumn).id;
+    const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
 
-    // const columnId = this.model.getColumnList(currentColumn).id;
     const currentForm = _$(this.addCardForm, currentColumn);
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
@@ -75,7 +75,7 @@ export class CardCreation {
     const jsonBody = { content: value };
 
     fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((cardData) =>
-      addCardData(columnId, cardData)
+      this.addCardData(columnId, cardData, currentColumn)
     );
     cardCreationInput.value = "";
 
@@ -84,9 +84,11 @@ export class CardCreation {
     //모델은 액션에게 전달  받은 아이디로
   }
 
-  addCardData(columnId, cardData) {
+  addCardData(columnId, cardData, currentColumn) {
     this.model.setCardList(columnId, cardData);
     this.model.increaseCardLength(columnId);
-    _$("." + this.addCardBtn).disabled = "disabled";
+
+    const currentAddBtn = _$("." + this.addCardBtn, currentColumn);
+    currentAddBtn.disabled = "disabled";
   }
 }

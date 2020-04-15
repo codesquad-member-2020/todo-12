@@ -94,8 +94,17 @@ export class Model extends Observable {
       columnId: columnId,
       column: column,
     });
+  }
 
-    console.log(this.cardList);
+  deleteCard(id) {
+    const card = this.cardList.get(id).card;
+    this.view.deleteCard(card);
+
+    const columnId = this.cardList.get(id).columnId;
+    this.decreaseCardLength(columnId);
+
+    this.cardList.delete(id);
+    this.cardList.delete(card);
   }
 
   getCardListById(id) {

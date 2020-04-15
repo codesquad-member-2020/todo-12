@@ -1,22 +1,44 @@
 import { tplColumn, tplAddColumn } from "../tpl/tplColumn.js";
 import { tplCard } from "../tpl/tplCard.js";
 import { Observable } from "./observable.js";
-import { _$, __, _c, __$, _a$ } from "../lib/util.js";
+import { _$, __, _c, _c$, __$, _a$ } from "../lib/util.js";
 
 export class ColumnView extends Observable {
   constructor() {
     super();
     this.columnArea = _$("#todo");
     this.cardArea = ".column__cards";
+    this.card = ".column__card";
     this.column = ".todo__column";
-    // this.card = ".column__card";
-    // this.dataIdName = "#column-data-id";
-    this.cardSelectionFocus = true;
+    this.inputFocus = "input-active";
+    // this.cardSelectionFocus = "true"; // 인자로 넘기기
+    // this.previousFocus = null;
   }
 
   addEventHandler(column) {
-    __(column).on("click", (event) => this.notify(event));
+    __(column).on("click", (event) => {
+      this.notify(event);
+
+      // this.fucusCard(event);
+    });
   }
+
+  // fucusCard({ target }) {
+  //   if (!this.previousFocus) {
+  //     debugger;
+  //     _c(this.previousFocus).remove(this.inputFocus);
+  //   }
+  //   if (!this.cardSelectionFocus) return console.log(1);
+
+  //   if (target.dataset.focus !== this.cardSelectionFocus) return;
+  //   if (target.tagName === "LI") {
+  //     _c(target).add(this.inputFocus);
+  //     return (this.previousFocus = target);
+  //   }
+  //   const currentFocus = target.closest(this.card);
+  //   _c(currentFocus).add(this.inputFocus);
+  //   this.previousFocus = currentFocus;
+  // }
 
   columnRender(columnId) {
     const columnsHtml = tplColumn(columnId);
@@ -27,8 +49,6 @@ export class ColumnView extends Observable {
     const currentColumn = [...AllColumns].find(
       (column) => column.dataset.columnId === columnId
     );
-
-    // const currentColumn = _$(`${this.dataIdName}-${columnId}`);
 
     this.addEventHandler(currentColumn);
     return currentColumn;
@@ -51,6 +71,10 @@ export class ColumnView extends Observable {
     const cardArea = _$(this.cardArea, column);
     const cardHtml = tplCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
+  }
+
+  deleteCard(card) {
+    return card.remove();
   }
 
   numberOfCardRender(numberOfCard, column) {
