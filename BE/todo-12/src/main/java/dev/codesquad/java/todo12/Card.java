@@ -50,6 +50,10 @@ public class Card {
         return title;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public boolean IsIncreasedCategoryKey(Integer categoryKey) {
         return this.categoryKey < categoryKey;
     }

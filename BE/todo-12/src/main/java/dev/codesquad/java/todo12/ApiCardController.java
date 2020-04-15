@@ -38,6 +38,10 @@ public class ApiCardController {
         categoryRepository.save(category);
         category = getCategory(categoryId);
         card = category.getLastCard();
+
+        History history = new History("add", card.getTitle(), card.getContent(), null, category.getName());
+        historyRepository.save(history);
+
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -47,6 +51,10 @@ public class ApiCardController {
         card.update(cardInfo.get("title"), cardInfo.get("content"));
         cardRepository.save(card);
         card = getCard(id);
+
+        History history = new History("update", card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
+        historyRepository.save(history);
+
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
@@ -54,6 +62,10 @@ public class ApiCardController {
     public ResponseEntity delete(@PathVariable Long id) {
         Card card = getCard(id);
         cardRepository.delete(card);
+
+        History history = new History("remove", card.getTitle(), card.getContent(), null, getCategory(card.getCategoryId()).getName());
+        historyRepository.save(history);
+
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
@@ -81,6 +93,9 @@ public class ApiCardController {
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
         card = getCard(id);
+
+        History history = new History("move", card.getTitle(), card.getContent(), fromCategory.getName(), toCategory.getName());
+        historyRepository.save(history);
 
         return new ResponseEntity(card, HttpStatus.OK);
     }
