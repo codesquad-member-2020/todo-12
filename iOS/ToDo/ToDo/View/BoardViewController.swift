@@ -23,6 +23,28 @@ class BoardViewController: UIViewController {
                                                selector: #selector(moveToDone(_:)),
                                                name: .postMoveToDoneCard,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(exchangeCellOnDifferentTable(_:)),
+                                               name: .postWillExchangeIndexOnDifferentCategory,
+                                               object: nil)
+    }
+    
+    private func alertErrorJsoneDecode() {
+        let alert = UIAlertController(title: "문제가 생겼어요", message: "데이터를 해석하다가 문제가 생겼어요ㅠㅠ", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "넵...", style: .default)
+        alert.addAction(ok)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func alertErrorNoResponse() {
+        let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "서버가 응답하지 않아요ㅠㅠ", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "넵...", style: .default)
+        alert.addAction(ok)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
     
     private func loadModel() {
@@ -44,36 +66,30 @@ class BoardViewController: UIViewController {
         }
     }
     
-    private func alertErrorJsoneDecode() {
-        let alert = UIAlertController(title: "문제가 생겼어요", message: "데이터를 해석하다가 문제가 생겼어요ㅠㅠ", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "넵...", style: .default)
-        alert.addAction(ok)
-        DispatchQueue.main.async {
-        self.present(alert, animated: true)
-        }
-    }
-    
-    private func alertErrorNoResponse() {
-        let alert = UIAlertController(title: "서버에 문제가 생겼어요", message: "서버가 응답하지 않아요ㅠㅠ", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "넵...", style: .default)
-        alert.addAction(ok)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
-        }
-    }
-    
     private func setModel(viewController: CardViewController?, model: Category) {
-        NotificationCenter.default.post(name: .distributeModel, object: viewController,
-                                        userInfo: ["category" : model])
+        viewController?.setCategory(category: model)
         viewController?.cardTabelView.reloadData()
         viewController?.titleLabel.text = model.name
         viewController?.addCardButton.isEnabled = true
         
     }
     
+    @objc func exchangeCellOnDifferentTable(_ notification: Notification) {
+        guard let object = notification.userInfo?["object"] as? DragAndDropObject else {return}
+        let removeInfo = object.willRemove
+        let insertInfo = object.willInsert
+        
+        NotificationCenter.default.post(name: .postWillRemoveIndex,
+                                        object: nil,
+                                        userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.id])
+        
+        NotificationCenter.default.post(name: .cardInserted,
+                                        object: nil,
+                                        userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.id, "card" : insertInfo.card])
+    }
+    
     @objc func moveToDone(_ notification: Notification) {
         guard let card = notification.userInfo?["card"] as? Card else {return}
-//        guard let doneViewController = self.children.last as? CardViewController else {return}
         NotificationCenter.default.post(name: .cardInserted,
                                         object: nil,
                                         userInfo: ["card" : card, "id" : model[2].id])

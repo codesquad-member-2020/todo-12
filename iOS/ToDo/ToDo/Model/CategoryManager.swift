@@ -30,11 +30,23 @@ class CategoryManager {
     }
     
     func insertCard(card: Card, at index: Int = -1) {
-        guard index == -1 else {return}
+        guard index == -1 else {
+            cardManager.insert(card, at: index)
+            NotificationCenter.default.post(name: .postInsertedIndex,
+            object: nil,
+            userInfo: ["index" : index, "id" : id])
+            return}
         cardManager.append(card: card)
         NotificationCenter.default.post(name: .postInsertedIndex,
                                         object: nil,
                                         userInfo: ["index" : count - 1, "id" : id])
+    }
+    
+    func moveItem(at sourceIndex: Int, to destinationIndex: Int) {
+        guard sourceIndex != destinationIndex else {return}
+        let dragItem = card(at: sourceIndex)
+        removeCard(at: sourceIndex)
+        insertCard(card: dragItem, at: destinationIndex)
     }
     
     func updateCard(_ updadeElement: Card, at index: Int) {
