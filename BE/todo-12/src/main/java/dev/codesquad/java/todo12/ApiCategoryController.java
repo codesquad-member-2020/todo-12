@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static dev.codesquad.java.todo12.StaticApiUtils.*;
 
@@ -18,49 +17,35 @@ public class ApiCategoryController {
     private Logger logger = LoggerFactory.getLogger(ApiCategoryController.class);
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @GetMapping("")
     public ResponseEntity viewAll() {
-        return new ResponseEntity(getAllCategories(), HttpStatus.OK);
+        return new ResponseEntity(categoryService.viewAllCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
-        Category category = getCategory(id);
+        Category category = categoryService.viewCategory(id);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody HashMap<String, String> categoryInfo) {
-        Category category = new Category(categoryInfo.get("name"));
-        categoryRepository.save(category);
+        Category category = categoryService.createCategory(categoryInfo);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody HashMap<String, String> categoryInfo) {
-        Category category = getCategory(id);
-        category.update(categoryInfo.get("name"));
-        categoryRepository.save(category);
-        category = getCategory(id);
+        Category category = categoryService.updateCategory(id, categoryInfo);
         return new ResponseEntity(category, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-        Category category = getCategory(id);
-        category.delete();
-        categoryRepository.save(category);
+        categoryService.deleteCategory(id);
         return new ResponseEntity(OK, HttpStatus.OK);
-    }
-
-    private Category getCategory(Long id) {
-        return categoryRepository.findByIdDeletedFalse(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
-    }
-
-    private List<Category> getAllCategories() {
-        return categoryRepository.findAllByDeletedFalse().orElseThrow(() -> new DataNotFoundException(EMPTY_CATEGORY));
     }
 
     @ExceptionHandler
