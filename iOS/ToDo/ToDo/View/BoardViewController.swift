@@ -47,7 +47,7 @@ class BoardViewController: UIViewController {
     }
     
     private func loadModel() {
-        NetworkConnection.request(httpMethod: .GET, errorHandler: alertErrorNoResponse) {
+        NetworkConnection.request(httpMethod: .GET, quertString: "", httpBody: nil, errorHandler: alertErrorJsoneDecode) {
             let decoder = JSONDecoder()
             do {
                 self.model = try decoder.decode([Category].self, from: $0)
