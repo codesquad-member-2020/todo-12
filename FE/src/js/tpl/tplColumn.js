@@ -23,7 +23,7 @@ export function tplColumn(id) {
                       <textarea name="content" class ="card-creation-input" data-type="card-creation-input" maxlength="500" aria-label="추가할 내용을 입력하세요" placeholder="Enter a note"></textarea>
                    </div>
                   <div class="add__btn">
-                     <button type="button" class="btn__green add-card-btn" data-type="add-card-btn" disabled='disabled'>Add</button>
+                     <button type="button" class="btn__green add-card-btn" data-type="add-card-btn" disabled="disabled">Add</button>
                      <button type="button" class="btn__cancel" data-type="cancel-card-btn">Cancel</button>
                   </div>
                 </form>

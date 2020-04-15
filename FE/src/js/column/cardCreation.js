@@ -51,7 +51,7 @@ export class CardCreation {
   activateAddCardBtn(cardCreationInput, currentColumn) {
     const addCardBtn = _$("." + this.addCardBtn, currentColumn);
 
-    if (!cardCreationInput.value) return (addCardBtn.disabled = true);
+    if (!cardCreationInput.value) return (addCardBtn.disabled = "disabled");
     addCardBtn.disabled = false;
   }
 

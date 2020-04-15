@@ -9,9 +9,8 @@ export class CardDeletion {
 
   addEventHandler({ target }) {
     if (target.dataset.type !== this.closetBtn) return;
-    if (confirm("선택하신 카드를 삭제하시겠습니까?") === true) {
-      this.getCardInfo(target);
-    }
+    if (confirm("선택하신 카드를 삭제하시겠습니까?"))
+      return this.getCardInfo(target);
   }
 
   getCardInfo(target) {

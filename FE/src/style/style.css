@@ -24,11 +24,11 @@ h1 {
   padding: 1%;
 }
 #todo .todo__column {
+  margin-bottom: 15px;
   padding: 16px;
   height: 85vmin;
   overflow: auto;
-
-  width: 22%;
+  width: 365px;
   border-radius: 6px;
   border: 1px solid #e1e4e8;
   background-color: #eff1f3;
@@ -112,6 +112,7 @@ h1 {
 .flex {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 #wrap .input-active {
   border-color: #2188ff;
