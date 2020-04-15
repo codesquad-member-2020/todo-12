@@ -18,7 +18,26 @@ class CardViewController: UIViewController {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         
         editView.createHandler = {
-            self.categoryManager?.insertCard(card: $0)
+            guard let id = self.categoryManager?.id else {return}
+            let json = ["title" : $0, "content" : $1]
+            let encoder = JSONEncoder()
+            var body = Data()
+            do {
+                body = try encoder.encode(json)
+            } catch {
+                
+            }
+            
+            NetworkConnection.request(httpMethod: .POST, quertString: "card/\(id)", httpBody: body, errorHandler: {}) {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
+                do {
+                    let card = try decoder.decode(Card.self, from: $0)
+                    self.categoryManager?.insertCard(card: card)
+                } catch{
+                    
+                }
+            }
         }
         self.present(editView, animated: true)
     }
@@ -123,9 +142,11 @@ class CardViewController: UIViewController {
         guard id == categoryManager?.id else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         let indexPath = IndexPath(row: index, section: 0)
-        cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        DispatchQueue.main.async {
+            self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        }
     }
-
+    
     @objc func updateNumOfCardsLabel() {
         guard let count = categoryManager?.count else {return}
         DispatchQueue.main.async {
@@ -159,7 +180,7 @@ extension CardViewController: UITableViewDelegate {
                                                 userInfo: ["index" : indexPath.row])
                 self.removeCard(indexPath: indexPath, delay: 0.7)
             }
-
+            
             let edit = UIAction(title: "edit...") { _ in
                 guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
                 let index = indexPath.row
@@ -171,12 +192,12 @@ extension CardViewController: UITableViewDelegate {
                 }
                 self.present(editView, animated: true)
             }
-
+            
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
                 self.removeCard(indexPath: indexPath, delay: 0.7)
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
-
+            
             return menu
         }
         return configuration
@@ -190,7 +211,7 @@ extension CardViewController: UITableViewDelegate {
 }
 
 extension CardViewController: UITableViewDragDelegate {
-
+    
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let itemProvider = NSItemProvider()
         let dragItem = UIDragItem(itemProvider: itemProvider)
