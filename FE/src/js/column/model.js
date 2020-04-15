@@ -53,7 +53,7 @@ export class Model extends Observable {
     return this.columnList.get(id);
   }
 
-  getColumnListByElement(element) {
+  getColumnList(element) {
     return this.columnList.get(element);
   }
 
@@ -65,9 +65,6 @@ export class Model extends Observable {
 
     this.columnList.get(id).name = name;
     this.columnList.get(column).name = name;
-
-    // this.columnNameList.set(id, name);
-    // this.view.columnNameRender(name, this.columnList.get(id));
   }
 
   getColumnName(column) {
@@ -105,7 +102,7 @@ export class Model extends Observable {
     return this.cardList.get(id);
   }
 
-  getCardListByElement(element) {
+  getCardList(element) {
     return this.cardList.get(element);
   }
 
@@ -115,12 +112,6 @@ export class Model extends Observable {
     if (increase) this.cardLength[columnId]++;
 
     this.view.numberOfCardRender(this.cardLength[columnId], column);
-
-    // this.columnList.get(columnId).cardLength = cardLength;
-    // this.columnList.get(column).cardLength = cardLength;
-    // const column = this.columnList.get(columnId);
-
-    // const numberOfCard = _a$(this.cardArea, column).length;
   }
 
   decreaseCardLength(columnId, decrease = true) {

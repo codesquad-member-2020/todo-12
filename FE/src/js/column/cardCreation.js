@@ -62,8 +62,9 @@ export class CardCreation {
   }
 
   onAddCardBtn(currentColumn) {
-    const columnId = currentColumn.dataset.id;
-    // const columnId = this.model.currentColumn.dataset.id;
+    // const columnId = currentColumn.dataset.id;
+
+    const columnId = this.model.getColumnList(currentColumn).id;
     const currentForm = _$(this.addCardForm, currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
@@ -73,7 +74,8 @@ export class CardCreation {
 
     fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((data) => {
       this.model.setCardList(columnId, data);
-      this.model.setCardLength(columnId);
+      this.model.increaseCardLength(columnId);
+      _$("." + this.addCardBtn).disabled = "disabled";
     });
     cardCreationInput.value = "";
 

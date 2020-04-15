@@ -54,7 +54,7 @@ export class CardMovement {
   }
 
   getPreviousCardInfo(draggable) {
-    const cardList = this.model.getCardListByElement(draggable);
+    const cardList = this.model.getCardList(draggable);
 
     const previousColumnId = cardList.columnId;
     const previousCardIndex = cardList.card.categoryKey;
