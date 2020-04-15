@@ -20,10 +20,18 @@ public class ApiHomeController {
     @Autowired
     private KanbanRepository kanbanRepository;
 
+    @Autowired
+    private HistoryRepository historyRepository;
+
     @GetMapping("/")
     public ResponseEntity home() {
         return new ResponseEntity(getCategories(), HttpStatus.OK);
         //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity history() {
+        return new ResponseEntity(historyRepository.findAll(), HttpStatus.OK);
     }
 
     private List<Category> getCategories() {
