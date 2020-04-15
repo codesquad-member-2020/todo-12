@@ -20,15 +20,11 @@ public class ApiHomeController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private KanbanRepository kanbanRepository;
-
-    @Autowired
     private HistoryRepository historyRepository;
 
     @GetMapping("/")
     public ResponseEntity home() {
         return new ResponseEntity(getCategories(), HttpStatus.OK);
-        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
     }
 
     @GetMapping("/history")
@@ -38,9 +34,5 @@ public class ApiHomeController {
 
     private List<Category> getCategories() {
         return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
-    }
-
-    private Kanban getKanban() {
-        return kanbanRepository.findById(1L).orElseThrow(() -> new DataNotFoundException("해당 칸반 없음"));
     }
 }
