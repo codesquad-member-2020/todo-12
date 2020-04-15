@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class ApiHomeController {
@@ -17,40 +18,19 @@ public class ApiHomeController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private CardRepository cardRepository;
+    private KanbanRepository kanbanRepository;
 
     @GetMapping("/")
     public ResponseEntity home() {
-        return new ResponseEntity(categoryRepository.findCategoriesByIdDeletedFalse(), HttpStatus.OK);
-        //return new ResponseEntity(categoryRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity(getCategories(), HttpStatus.OK);
+        //return new ResponseEntity(getKanban(1L), HttpStatus.OK);
     }
 
-    // for test
-//    @GetMapping("/add/{categoryId}")
-//    public ResponseEntity addTest(@PathVariable Long categoryId){
-//        Card card = new Card("새거", "택배언제와");
-//        Category category = getCategory(categoryId);
-//        category.addCard(card);
-//        categoryRepository.save(category);
-//
-//        category = getCategory(categoryId);
-//        card = category.getLastCard();
-//
-//        return new ResponseEntity(card, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/delete/{id}")
-//    public ResponseEntity deleteTest(@PathVariable Long id) {
-//        Card card = getCard(id);
-//        cardRepository.delete(card);
-//        return new ResponseEntity(card, HttpStatus.OK);
-//    }
-
-    private Card getCard(Long id) {
-        return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카드 없음"));
+    private List<Category> getCategories() {
+        return categoryRepository.findCategoriesByIdDeletedFalse().orElseThrow(() -> new DataNotFoundException("카테고리 없음"));
     }
 
-    private Category getCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("해당 카테고리 없음"));
+    private Kanban getKanban() {
+        return kanbanRepository.findById(1L).orElseThrow(() -> new DataNotFoundException("해당 칸반 없음"));
     }
 }

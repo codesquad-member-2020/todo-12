@@ -57,6 +57,7 @@ public class ApiCardController {
     @PutMapping("/{id}/move/{categoryId}/{categoryKey}")
     public ResponseEntity move(@PathVariable Long id, @PathVariable Long categoryId, @PathVariable Integer categoryKey) {
         Card card = getCard(id);
+        Long fromCategoryId = card.getCategoryId();
         card.moveCard(categoryId, categoryKey);
         cardRepository.save(card);
 
@@ -64,6 +65,10 @@ public class ApiCardController {
         // categoryKey 동일한 경우 id 순서에 따라 정렬된다.
         Category toCategory = getCategory(categoryId);
         categoryRepository.save(toCategory);
+
+        // 이동 되기 전 카테고리의 카드 리스트도 업데이트 한다.
+        Category fromCategory = getCategory(fromCategoryId);
+        categoryRepository.save(fromCategory);
 
         // 변경된 categoryKey 정보 가져오기
         // 카드리스트가 categoryRepository.save() 후 정렬되어 categoryKey 값이 id에 따라 변경된다.
@@ -73,6 +78,7 @@ public class ApiCardController {
         swapCardIfCategoryKeyChanged(card, toCategory, movedCard.getCategoryKey());
         categoryRepository.save(toCategory);
         card = getCard(id);
+
         return new ResponseEntity(card, HttpStatus.OK);
     }
 

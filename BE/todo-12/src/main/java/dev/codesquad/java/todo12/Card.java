@@ -41,6 +41,11 @@ public class Card {
         return categoryKey;
     }
 
+    @JsonIgnore
+    public Long getCategoryId() {
+        return category;
+    }
+
     public boolean IsIncreasedCategoryKey(Integer categoryKey) {
         return this.categoryKey < categoryKey;
     }

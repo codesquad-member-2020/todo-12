@@ -15,6 +15,7 @@ public class Category {
     private Long id;
     private String name;
     private List<Card> cards = new ArrayList<>();
+    @JsonIgnore
     private boolean deleted;
 
     public Category(String name) {
