@@ -36,7 +36,7 @@ class CardTableViewDelegate: NSObject, UITableViewDelegate {
             }
 
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-//                self.deleteModel(dataSource: dataSource, indexPath: indexPath, delay: 0.7)
+                self.postWillRemoveIndex(indexPath: indexPath, delay: 0.7)
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
 
