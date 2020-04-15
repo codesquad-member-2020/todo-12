@@ -79,10 +79,10 @@ class CardViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(updateFromInsertion(_:)),
                                                name: .postInsertedIndex,
                                                object: nil)
-        //        NotificationCenter.default.addObserver(self,
-        //                                               selector: #selector(startEditCard(_:)),
-        //                                               name: .startEditCard,
-        //                                               object: delegate)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(postWillEditIndex(_:)),
+                                               name: .postWillEditIndex,
+                                               object: delegate)
         //        NotificationCenter.default.addObserver(self,
         //                                               selector: #selector(exchangeCellOnSametableView(_:)),
         //                                               name: .exchangeCellOnSameTableView,
@@ -143,18 +143,18 @@ class CardViewController: UIViewController, UITableViewDelegate {
         categoryManager?.removeCard(at: index)
     }
     
-    //    @objc func startEditCard(_ notification: Notification) {
-    //        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
-    //        guard let editIndex = notification.userInfo?["editIndex"] as? Int else {return}
-    //
-    //        editView.model = self.dataSource.category?.cards[editIndex]
-    //        editView.editedModelIndex = editIndex
-    //        editView.editHandler = {
-    //            self.dataSource.category?.cards[$0] = $1
-    //            self.cardTabelView.reloadData()
-    //        }
-    //        self.present(editView, animated: true)
-    //    }
+    @objc func postWillEditIndex(_ notification: Notification) {
+        guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
+        guard let index = notification.userInfo?["index"] as? Int else {return}
+        
+        editView.model = categoryManager?.card(at: index)
+        editView.editedModelIndex = index
+        editView.editHandler = {
+            self.categoryManager?.updateCard($1, at: $0)
+            self.cardTabelView.reloadData()
+        }
+        self.present(editView, animated: true)
+    }
     
     @objc func exchangeCellOnSametableView(_ notification: Notification) {
         guard let sourceIndexPath = notification.userInfo?["sourceIndexPath"] as? IndexPath, let destinationIndexPath = notification.userInfo?["destinationIndexPath"] as? IndexPath else {return}

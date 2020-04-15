@@ -37,6 +37,10 @@ class CategoryManager {
                                         userInfo: ["index" : count - 1, "id" : id])
     }
     
+    func updateCard(_ updadeElement: Card, at index: Int) {
+        cardManager.update(updadeElement, at: index)
+    }
+    
     func card(at index: Int) -> Card{
         return cardManager.card(at: index)
     }

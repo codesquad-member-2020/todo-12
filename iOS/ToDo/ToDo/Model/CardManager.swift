@@ -50,6 +50,10 @@ class CardManager {
     func remove(at index: Int) {
         cards.remove(at: index)
     }
+    
+    func update(_ updateElement: Card, at index: Int) {
+        cards[index] = updateElement
+    }
 }
 
 extension Notification.Name {
