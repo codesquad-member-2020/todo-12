@@ -8,31 +8,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import static dev.codesquad.java.todo12.StaticApiUtils.*;
-
 @RestController
 public class ApiHomeController {
     private Logger logger = LoggerFactory.getLogger(ApiHomeController.class);
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @Autowired
     private HistoryRepository historyRepository;
 
     @GetMapping("/")
     public ResponseEntity home() {
-        return new ResponseEntity(getAllCategories(), HttpStatus.OK);
+        return new ResponseEntity(categoryService.viewAllCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/history")
     public ResponseEntity history() {
         return new ResponseEntity(historyRepository.findAll(), HttpStatus.OK);
-    }
-
-    private List<Category> getAllCategories() {
-        return categoryRepository.findAllByDeletedFalse().orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 }
