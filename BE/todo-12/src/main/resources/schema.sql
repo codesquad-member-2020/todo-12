@@ -32,7 +32,8 @@ CREATE TABLE history  (
   action varchar (32),
   card_info varchar (64),
   from_category varchar (64),
-  to_category varchar (64)
+  to_category varchar (64),
+  modified_time datetime
 );
 
 CREATE TABLE user  (

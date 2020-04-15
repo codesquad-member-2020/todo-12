@@ -46,6 +46,10 @@ public class Card {
         return category;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public boolean IsIncreasedCategoryKey(Integer categoryKey) {
         return this.categoryKey < categoryKey;
     }
