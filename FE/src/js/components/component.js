@@ -1,3 +1,5 @@
+import { __, _c } from "../lib/util.js";
+
 export class Component {
   constructor() {}
   init() {}
@@ -10,5 +12,9 @@ export class Component {
 
     if (!input.value) return (target.disabled = "disabled");
     target.disabled = false;
+  }
+  addInputFocusEvents(input, selector) {
+    __(input).on("blur", () => _c(input).remove(selector));
+    _c(input).add(selector);
   }
 }

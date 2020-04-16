@@ -5,8 +5,6 @@ import { templateEditModal } from "../template/templateEditModal.js";
 export class EditCard extends Component {
   constructor({ model }) {
     super();
-    // this.controller = controller;
-    // this.controller.dblclickNotify(this.addEventHandler.bind(this));
     this.model = model;
     this.closeBtn = "edit-close-btn";
     this.wrap = "#wrap";
@@ -14,6 +12,7 @@ export class EditCard extends Component {
     this.selectorModal = "#popup__todo"; //이름 수정하기
     this.selectorTextarea = "popup__input"; //이름 수정하기
     this.selectorSaveBtn = "edit-save-btn";
+    this.selectorInputFocus = "input-active";
     this.inputFocus = true;
   }
 
@@ -58,7 +57,18 @@ export class EditCard extends Component {
         break;
       case this.selectorSaveBtn:
         this.onSaveBtn();
+        break;
+      case this.selectorTextarea:
+        this.onInputFocus();
+        break;
+      default:
+        return;
     }
+  }
+
+  onInputFocus() {
+    console.log(this.textarea);
+    super.addInputFocusEvents(this.textarea, this.selectorInputFocus);
   }
 
   onCloseBtn() {

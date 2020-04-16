@@ -25,7 +25,7 @@ export class CardCreation extends Component {
         this.onBtnShowingAddForm(currentColumn);
         break;
       case this.cardCreationInput:
-        this.onInputFocusEvents(currentColumn);
+        this.onInputFocus(currentColumn);
         break;
       case this.cancelCardBtn:
         this.onCancelCardBtn(currentColumn);
@@ -51,13 +51,9 @@ export class CardCreation extends Component {
     super.activateBtn(addCardBtn, target);
   }
 
-  onInputFocusEvents(currentColumn) {
+  onInputFocus(currentColumn) {
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
-
-    __(cardCreationInput).on("blur", () =>
-      _c(cardCreationInput).remove(this.inputFocus)
-    );
-    _c(cardCreationInput).add(this.inputFocus); //함수로 만들기
+    super.addInputFocusEvents(cardCreationInput, this.inputFocus);
   }
 
   onCancelCardBtn(currentColumn) {
