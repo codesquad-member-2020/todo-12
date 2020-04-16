@@ -3,6 +3,10 @@
 @import "menu.css";
 @import "addInput.css";
 
+#wrap {
+  overflow: hidden;
+}
+
 #header {
   align-items: center;
   justify-content: space-between;
@@ -14,7 +18,7 @@
   font-weight: bold;
   font-size: 18px;
 }
-#header .header__menu-btn,
+#header .history-btn,
 h1 {
   color: #fff;
   font-weight: bold;
@@ -24,7 +28,7 @@ h1 {
   padding: 1%;
 }
 #todo .todo__column {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   padding: 16px;
   height: 85vmin;
   overflow: auto;

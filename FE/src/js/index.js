@@ -1,11 +1,12 @@
 import { templateHeader } from "./template/templateHeader.js";
-import { _$, fetchGetData } from "./lib/util.js";
+import { _$ } from "./lib/util.js";
 import { Controller } from "./todo/controller.js";
 import { View } from "./todo/view.js";
 import { CardCreation } from "./components/cardCreation.js";
 import { CardMovement } from "./components/cardMovement.js";
 import { CardDeletion } from "./components/cardDeletion.js";
 import { EditCard } from "./components/editCard.js";
+import { History } from "./components/history.js";
 import { Model } from "./todo/model.js";
 // import { mock } from "./mock.js";
 
@@ -21,13 +22,12 @@ function init() {
   const cardDeletion = new CardDeletion({ model });
   const cardMovement = new CardMovement({ model });
   const editCard = new EditCard({ model });
+  const history = new History({ model });
   const controller = new Controller({
     view,
     model,
-    components: [cardCreation, cardDeletion, cardMovement, editCard],
+    components: [cardCreation, cardDeletion, cardMovement, editCard, history],
   });
-  // const card = new Card();
-  // const card = new Card(cardView);
   controller.fetchInitialData();
 }
 

@@ -33,7 +33,6 @@ export class View {
   //   _c(currentFocus).add(this.inputFocus);
   //   this.previousFocus = currentFocus;
   // }
-
   columnRender(columnId) {
     const columnsHtml = templateColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);

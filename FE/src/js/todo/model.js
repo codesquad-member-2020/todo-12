@@ -112,13 +112,7 @@ export class Model {
     return this.cardLength[columnId];
   }
 
-  // setTimeModified(create, modified) {
-  //   this._timeModified = timeForToday(create, modified);
-
-  //   return this.notyfi();
-  // }
-
-  // getTimeModified() {
-  //   return this._timeModified;
-  // }
+  setHistory(history) {
+    this.historyList = history;
+  }
 }

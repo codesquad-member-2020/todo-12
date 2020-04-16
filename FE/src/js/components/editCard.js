@@ -78,7 +78,7 @@ export class EditCard extends Component {
   onSaveBtn() {
     const body = { content: this.inputValue };
     const { cardId, columnId } = this.getCardInfo();
-    const editUrl = `http://15.165.163.174:8080/card/${cardId}`;
+    const editUrl = `http://15.165.163.174/api/card/${cardId}`;
 
     fetchData(editUrl, "PUT", JSON.stringify(body)).then((cardData) =>
       this.updateCardData(columnId, cardData)

@@ -1,12 +1,9 @@
 #activity-menu {
   position: absolute;
+  display: none;
   top: 0;
-  /* right: -360px; */
   width: 360px;
   height: 100vh;
-  display: none;
-  animation-name: slidein;
-  animation-duration: 0.2s;
   background-color: #fff;
   box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
   border: 1px solid #dee3eb;
@@ -14,21 +11,28 @@
   overflow: auto;
 }
 
+.slide-out {
+  animation: slideout 0.3s ease;
+}
+.slide-in {
+  animation: slidein 0.3s ease;
+}
+
 @keyframes slidein {
   0% {
-    transform: translateX(400px);
+    right: -360px;
   }
   100% {
-    transform: translateX(0);
+    right: 0;
   }
 }
 
 @keyframes slideout {
   0% {
-    transform: translateX(0);
+    right: 0;
   }
   100% {
-    transform: translateX(400px);
+    right: -360px;
   }
 }
 

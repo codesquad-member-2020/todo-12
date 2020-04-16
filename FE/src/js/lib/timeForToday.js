@@ -1,7 +1,6 @@
-export function timeForToday(create, modified) {
-  const today = new Date(modified);
-  const timeValue = new Date(create);
-
+export function timeForToday(modified) {
+  const today = new Date();
+  const timeValue = new Date(modified.toString());
   const betweenTime = Math.floor(
     (today.getTime() - timeValue.getTime()) / 1000 / 60
   );
