@@ -42,23 +42,20 @@ public class AccessService {
     @Transactional
     public boolean isValidToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             throw new InvalidTokenException(e.getMessage());
         }
     }
 
-//    @Transactional
-//    public String getUserId() {
-//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-//        String token = request.getHeader(AUTHORIZATION);
-//
-//        logger.info(">>>>>> {}", token);
-//
-//        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-//
-//    }
+    @Transactional
+    public String getUserId() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader(AUTHORIZATION);
+        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+        return claims.getBody().getSubject();
+    }
 
     private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));

@@ -20,6 +20,9 @@ public class ApiCardController {
     private CardService cardService;
 
     @Autowired
+    private AccessService accessService;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @GetMapping("/{id}")
