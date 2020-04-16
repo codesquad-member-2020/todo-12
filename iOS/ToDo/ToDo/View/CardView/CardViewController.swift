@@ -18,7 +18,7 @@ class CardViewController: UIViewController {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         
         editView.createHandler = {
-            guard let id = self.categoryManager?.id else {return}
+            guard let id = self.categoryManager?.categoryId else {return}
             let json = ["title" : $0, "content" : $1]
             let encoder = JSONEncoder()
             var body = Data()
@@ -105,7 +105,7 @@ class CardViewController: UIViewController {
     
     @objc func insertCard(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let card = notification.userInfo?["card"] as? Card else {return}
         guard let index = notification.userInfo?["index"] as? Int else {
             categoryManager?.insertCard(card: card)
@@ -124,14 +124,14 @@ class CardViewController: UIViewController {
     
     @objc func removeCard(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         categoryManager?.removeCard(at: index)
     }
     
     @objc func updateFromDeletion(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         let indexPath = IndexPath(row: index, section: 0)
         cardTabelView.deleteRows(at: [indexPath], with: .automatic)
@@ -139,7 +139,7 @@ class CardViewController: UIViewController {
     
     @objc func updateFromInsertion(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         let indexPath = IndexPath(row: index, section: 0)
         DispatchQueue.main.async {
@@ -227,7 +227,7 @@ extension CardViewController: UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let itemProvider = NSItemProvider()
         let dragItem = UIDragItem(itemProvider: itemProvider)
-        guard let id = categoryManager?.id else {return []}
+        guard let id = categoryManager?.categoryId else {return []}
         guard let card = categoryManager?.card(at: indexPath.row) else {return []}
         dragItem.localObject = CardInfo(indexPath: indexPath, id: id, card: card)
         return [dragItem]
@@ -247,10 +247,32 @@ extension CardViewController: UITableViewDropDelegate {
         
         for item in coordinator.items {
             if let sourceItemPath = item.sourceIndexPath {
-                categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                guard let cardId = categoryManager?.card(at: sourceItemPath.row).id else {return}
+                guard let categoryId = categoryManager?.categoryId else {return}
+                
+                DispatchQueue.main.async {
+                    self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                }
+                NetworkConnection.request(httpMethod: .PUT, quertString: "card/\(cardId)/move/\(categoryId)/\(destinationIndexPath.row)", httpBody: nil, errorHandler: {}) {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
+                    do {
+                        let card = try decoder.decode(Card.self, from: $0)
+                        guard destinationIndexPath.row == card.categoryKey else {
+                            DispatchQueue.main.async {
+                                self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                            }
+                            return}
+                    } catch {
+                        DispatchQueue.main.async {
+                            self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                        }
+                    }
+                }
+
             }
             else if let dragObject = item.dragItem.localObject as? CardInfo {
-                guard let id = categoryManager?.id else {return}
+                guard let id = categoryManager?.categoryId else {return}
                 let object: DragAndDropObject = (willRemove: dragObject, willInsert: CardInfo(indexPath: destinationIndexPath, id: id, card: dragObject.card))
                 NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
                                                 object: nil,
