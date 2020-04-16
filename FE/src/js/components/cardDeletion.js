@@ -3,8 +3,6 @@ import { Component } from "./component.js";
 export class CardDeletion extends Component {
   constructor({ model }) {
     super();
-    // this.controller = controller;
-    // this.controller.clickUnsubscribe(this.addEventHandler.bind(this));
     this.model = model;
     this.closetBtn = "card-delete-btn";
     this.card = ".column__card";

@@ -12,8 +12,7 @@ export class CardCreation extends Component {
     this.inputFocus = "input-active";
     this.column = ".todo__column";
     this.model = model;
-    // this.controller = controller;
-    // this.controller.clickUnsubscribe(this.addEventHandler.bind(this));
+    // this.inputFocus =
   }
 
   addClickHandler({ target }) {
@@ -25,6 +24,7 @@ export class CardCreation extends Component {
         this.onBtnShowingAddForm(currentColumn);
         break;
       case this.cardCreationInput:
+        // if(!this.inputFocus) return;
         this.onInputFocus(currentColumn);
         break;
       case this.cancelCardBtn:
@@ -65,7 +65,6 @@ export class CardCreation extends Component {
   }
 
   onAddCardBtn(currentColumn) {
-    // const columnId = currentColumn.dataset.id;
     const columnId = this.model.getColumnId(currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
 
@@ -79,10 +78,6 @@ export class CardCreation extends Component {
       this.addCardData(columnId, cardData, currentColumn)
     );
     cardCreationInput.value = "";
-
-    //모델에게 ('add'와 컨텐츠와 컬럼정보를 넘겨준다 -아이디)객체로
-
-    //모델은 액션에게 전달  받은 아이디로
   }
 
   addCardData(columnId, cardData, currentColumn) {

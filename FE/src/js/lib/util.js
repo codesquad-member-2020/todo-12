@@ -1,3 +1,5 @@
+import { a } from "../index.js";
+
 export function _$(selector, target = document) {
   return target.querySelector(selector);
 }
@@ -79,16 +81,22 @@ export function filterNumber(str) {
   return parseInt(str.trim().replace(/[^0-9]/g, ""));
 }
 
+function getToken() {
+  return (tokenHeader = localStorage.get("tokenHeader"));
+}
+
 export function fetchData(
   url,
   method,
   body,
+  token,
   requestOption = {
     method: method,
     mode: "cors",
     body: body,
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
   }
 ) {
@@ -104,7 +112,11 @@ export function fetchData(
 }
 
 export function fetchGetData(url) {
-  return fetch(url)
+  return fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);

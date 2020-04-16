@@ -1,8 +1,6 @@
 import { Observable } from "./observable.js";
 import { _$, __, fetchGetData } from "../lib/util.js";
 
-import { mock } from "./mock.js";
-
 export class Controller extends Observable {
   constructor({ model, view, components }) {
     super();
@@ -10,11 +8,12 @@ export class Controller extends Observable {
     this.model = model;
     this.view = view;
     this.components = [...components];
+    this.cardFocus = true;
+    this.card = ".column__card";
   }
 
   fetchInitialData() {
     fetchGetData(this.initialUrl).then((initialData) => this.init(initialData));
-    // this.init(mock.categories);
   }
 
   init(initialData) {
@@ -35,9 +34,10 @@ export class Controller extends Observable {
   }
 
   addEventHandler() {
-    __(document).on("click", (event) =>
-      this.components.forEach((component) => component.addClickHandler(event))
-    );
+    __(document).on("click", (event) => {
+      this.components.forEach((component) => component.addClickHandler(event));
+      if (this.cardFocus) this.view.onFocus(event);
+    });
     __(document).on("dblclick", (event) =>
       this.components.forEach((component) =>
         component.addDblclickHandler(event)
@@ -46,25 +46,5 @@ export class Controller extends Observable {
     __(document).on("input", () =>
       this.components.forEach((component) => component.addInputHandler(event))
     );
-
-    __(document).on("focus", () => console.log(1));
-
-    // this.fucusCard(event);
   }
-
-  // fucusCard({ target }) {
-  //   if (!this.previousFocus) {
-  //     _c(this.previousFocus).remove(this.inputFocus);
-  //   }
-  //   if (!this.cardSelectionFocus) return console.log(1);
-
-  //   if (target.dataset.focus !== this.cardSelectionFocus) return;
-  //   if (target.tagName === "LI") {
-  //     _c(target).add(this.inputFocus);
-  //     return (this.previousFocus = target);
-  //   }
-  //   const currentFocus = target.closest(this.card);
-  //   _c(currentFocus).add(this.inputFocus);
-  //   this.previousFocus = currentFocus;
-  // }
 }
