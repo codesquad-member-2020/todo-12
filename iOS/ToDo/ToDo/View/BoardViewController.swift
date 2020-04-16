@@ -43,7 +43,7 @@ class BoardViewController: UIViewController {
     }
     
     private func loadModel() {
-        NetworkConnection.loadModel{
+        NetworkConnection.loadCategoryModel{
             self.model = $0
             DispatchQueue.main.async {
                 for (index, child) in self.children.enumerated() {

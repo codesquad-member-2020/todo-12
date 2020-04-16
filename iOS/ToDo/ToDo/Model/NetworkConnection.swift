@@ -112,12 +112,25 @@ class NetworkConnection {
         }
     }
     
-    class func loadModel(failureHandler: @escaping () -> () = {}, successHandler: @escaping ([Category]) -> ()) {
+    class func loadCategoryModel(failureHandler: @escaping () -> () = {}, successHandler: @escaping ([Category]) -> ()) {
         request(httpMethod: .GET, queryString: "", httpBody: nil, errorHandler: {}) {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
             do {
                 let model = try decoder.decode([Category].self, from: $0)
+                successHandler(model)
+            } catch {
+                failureHandler()
+            }
+        }
+    }
+    
+    class func loadHistroyModel(failureHandler: @escaping () -> () = {}, successHandler: @escaping ([History]) -> ()) {
+        request(httpMethod: .GET, queryString: "history", httpBody: nil, errorHandler: {}) {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
+            do {
+                let model = try decoder.decode([History].self, from: $0)
                 successHandler(model)
             } catch {
                 failureHandler()
