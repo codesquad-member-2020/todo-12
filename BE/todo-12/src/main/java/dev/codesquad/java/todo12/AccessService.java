@@ -37,7 +37,7 @@ public class AccessService {
     private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));
         if (!user.isPasswordEquals(userInfo.get("password"))) {
-            throw new DataNotFoundException(WRONG_PASSWORD);
+            throw new UnauthorizedException(WRONG_PASSWORD);
         }
         return user;
     }
