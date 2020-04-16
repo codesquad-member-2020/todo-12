@@ -20,7 +20,7 @@ class HistoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         NetworkConnection.loadHistroyModel {
-            self.historys = $0
+            self.historys = $0.sorted {$0.id > $1.id}
         }
         
         super.viewDidLoad()
