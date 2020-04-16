@@ -12,34 +12,37 @@ import io.jsonwebtoken.Jwts;
 import java.util.Date;
 import java.util.HashMap;
 
+import static dev.codesquad.java.todo12.StaticApiUtils.*;
+
 @Service
 public class AccessService {
     private Logger logger = LoggerFactory.getLogger(AccessService.class);
+    private static final String SECRET_KEY = "secret";
 
     @Autowired
     private UserRepository userRepository;
 
     @Transactional
     public String buildToken(HashMap<String, String> userInfo) {
-        User user = validateUser(userInfo);
+        User user = validatedUser(userInfo);
         return Jwts.builder()
-                .claim("group", "todo12")
+                .claim(TOKEN_IDENTIFIER_NAME, TOKEN_IDENTIFIER_VALUE)
                 .setSubject(user.getUserId())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    private User validateUser(HashMap<String, String> userInfo) {
+    private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));
         if (!user.isPasswordEquals(userInfo.get("password"))) {
-            throw new DataNotFoundException("INCORRECT PASSWORD");
+            throw new DataNotFoundException(WRONG_PASSWORD);
         }
         return user;
     }
 
     private User getUser(String userId) {
-        return userRepository.findByUserId(userId).orElseThrow(() -> new DataNotFoundException("존재하지 않는 userID 입니다."));
+        return userRepository.findByUserId(userId).orElseThrow(() -> new DataNotFoundException(NO_USER));
     }
 }
