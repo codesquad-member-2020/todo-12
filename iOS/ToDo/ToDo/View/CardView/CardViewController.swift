@@ -162,7 +162,7 @@ extension CardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let moveToDone = UIAction(title: "move to done") { _ in
+            let moveToDone = UIAction(title: "move to done", image: UIImage(systemName: "paperplane")) { _ in
                 guard let id = self.categoryManager?.categoryId else {return}
                 guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
                 let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card), willInsert: nil)
@@ -173,7 +173,7 @@ extension CardViewController: UITableViewDelegate {
                 }
             }
             
-            let edit = UIAction(title: "edit...") { _ in
+            let edit = UIAction(title: "edit...", image: UIImage(systemName: "pencil")) { _ in
                 guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
                 let index = indexPath.row
                 editView.model = self.categoryManager?.card(at: index)
@@ -196,7 +196,7 @@ extension CardViewController: UITableViewDelegate {
                 self.present(editView, animated: true)
             }
             
-            let delete = UIAction(title: "delete", attributes: .destructive) { _ in
+            let delete = UIAction(title: "delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
                 NetworkConnection.delete(cardId: id) {
                     DispatchQueue.main.async {
