@@ -22,7 +22,15 @@ class HistoryTableViewController: UITableViewController {
         NetworkConnection.loadHistroyModel {
             self.historys = $0.sorted {$0.id > $1.id}
         }
-        
+        let a = OperationQueue()
+        a.addOperation {
+            while true {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                sleep(1)
+            }
+        }
         super.viewDidLoad()
     }
     
