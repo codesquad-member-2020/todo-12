@@ -2,5 +2,5 @@ package dev.codesquad.java.todo12;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface KanbanRepository extends CrudRepository<Kanban, Long> {
+public interface HistoryRepository extends CrudRepository<History, Long> {
 }

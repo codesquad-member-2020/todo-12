@@ -26,10 +26,10 @@
 
 ## Project References
 
+- [배포 업데이트 로그](https://github.com/codesquad-member-2020/todo-12/wiki/배포-업데이트)
+
 - [API document](https://documenter.getpostman.com/view/10828534/SzYbzdNz?version=latest)
 
 - [요구사항 기능서](https://docs.google.com/spreadsheets/d/1eD8tuBxiQHYOtk7LWXB2ekjnvItjdt4UWi5ZC3x2kgk/edit?usp=sharing)
-
-- [배포 업데이트](https://github.com/codesquad-member-2020/todo-12/wiki/배포-업데이트)
 
   

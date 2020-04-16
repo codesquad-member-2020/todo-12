@@ -35,6 +35,7 @@ public class Card {
     public void moveCard(Long category, Integer categoryKey) {
         this.category = category;
         this.categoryKey = categoryKey;
+        this.modifiedTime = seoulTime();
     }
 
     public int getCategoryKey() {
@@ -44,6 +45,14 @@ public class Card {
     @JsonIgnore
     public Long getCategoryId() {
         return category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public boolean IsIncreasedCategoryKey(Integer categoryKey) {
@@ -57,6 +66,7 @@ public class Card {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+        this.modifiedTime = seoulTime();
     }
 
     @Override
