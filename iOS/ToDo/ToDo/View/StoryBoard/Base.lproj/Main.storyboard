@@ -85,7 +85,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="b4E-X1-KFP">
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Menu" id="WoA-48-2iK">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <segue destination="7RZ-sv-t65" kind="popoverPresentation" popoverAnchorBarButtonItem="WoA-48-2iK" id="DJ4-BG-SDq">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -120,7 +120,7 @@
                                             <constraint firstAttribute="width" secondItem="0GI-jL-tVR" secondAttribute="height" multiplier="1:1" id="Sbd-Qc-ZKD"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="데이터를 불러오는 중..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFS-Bn-Qeb">
