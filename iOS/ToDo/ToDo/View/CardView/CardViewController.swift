@@ -183,8 +183,19 @@ extension CardViewController: UITableViewDelegate {
                 editView.model = self.categoryManager?.card(at: index)
                 editView.editedModelIndex = index
                 editView.editHandler = {
-                    self.categoryManager?.updateCard($1, at: $0)
-                    self.cardTabelView.reloadData()
+                    let json = ["title" : $1.title ,"content" : $1.content]
+                    let encoder = JSONEncoder()
+                    let data = try! encoder.encode(json)
+                    let index = $0
+                    NetworkConnection.request(httpMethod: .PUT, quertString: "card/\($1.id)", httpBody: data, errorHandler: {}) {
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
+                        let card = try! decoder.decode(Card.self, from: $0)
+                        DispatchQueue.main.async {
+                            self.categoryManager?.updateCard(card, at: index)
+                            self.cardTabelView.reloadData()
+                        }
+                    }
                 }
                 self.present(editView, animated: true)
             }
