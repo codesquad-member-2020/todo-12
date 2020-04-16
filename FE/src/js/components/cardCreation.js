@@ -1,6 +1,9 @@
-import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
-export class CardCreation {
-  constructor({ controller, model }) {
+import { _$, __, _c, _a$, fetchData } from "../lib/util.js";
+import { Component } from "./component.js";
+
+export class CardCreation extends Component {
+  constructor({ model }) {
+    super();
     this.btnShowingAddForm = "btn-showing-creation";
     this.cardCreationInput = "card-creation-input";
     this.cancelCardBtn = "cancel-card-btn";
@@ -8,11 +11,11 @@ export class CardCreation {
     this.addCardForm = ".add__todo";
     this.inputFocus = "input-active";
     this.model = model;
-    this.controller = controller;
-    this.controller.eventSubscribe(this.addEventHandler.bind(this));
+    // this.controller = controller;
+    // this.controller.clickUnsubscribe(this.addEventHandler.bind(this));
   }
 
-  addEventHandler({ target, currentTarget }) {
+  addClickHandler({ target, currentTarget }) {
     const eventTarget = target.dataset.type;
     switch (eventTarget) {
       case this.btnShowingAddForm:
@@ -65,6 +68,7 @@ export class CardCreation {
 
   onAddCardBtn(currentColumn) {
     // const columnId = currentColumn.dataset.id;
+    debugger;
     const columnId = this.model.getColumnId(currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
 

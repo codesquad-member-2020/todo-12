@@ -1,13 +1,16 @@
-export class CardDeletion {
-  constructor({ controller, model }) {
-    this.controller = controller;
-    this.controller.eventSubscribe(this.addEventHandler.bind(this));
+import { Component } from "./component.js";
+
+export class CardDeletion extends Component {
+  constructor({ model }) {
+    super();
+    // this.controller = controller;
+    // this.controller.clickUnsubscribe(this.addEventHandler.bind(this));
     this.model = model;
     this.closetBtn = "card-delete-btn";
     this.card = ".column__card";
   }
 
-  addEventHandler({ target }) {
+  addClickHandler({ target }) {
     if (target.dataset.type !== this.closetBtn) return;
     if (confirm("선택하신 카드를 삭제하시겠습니까?"))
       return this.getCardInfo(target);

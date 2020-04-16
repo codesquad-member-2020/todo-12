@@ -1,18 +1,21 @@
-import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
+import { _$, __, _c, _a$, fetchData } from "../lib/util.js";
+import { Component } from "./component.js";
+
 //카드 이동시 애니매에션 추가하기
 
-export class CardMovement {
-  constructor({ controller, model }) {
+export class CardMovement extends Component {
+  constructor({ model }) {
+    super();
     this.dragArea = ".column__cards";
     this.card = ".column__card";
     this.dragging = "dragging";
     this.column = ".todo__column";
     this.model = model;
-    this.controller = controller;
-    this.controller.renderFinishedSubscribe(this.addEventHandler.bind(this));
+    // this.controller = controller;
+    // this.controller.renderFinishedSubscribe(this.addEventHandler.bind(this));
   }
 
-  addEventHandler() {
+  onEvent() {
     const cards = _a$(this.card);
     const dragArea = _a$(this.dragArea);
 

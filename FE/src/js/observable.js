@@ -1,18 +1,30 @@
 export class Observable {
   constructor() {
-    this._eventObservers = [];
+    this._clickObservers = [];
+    this._dblclickObservers = [];
     this._renderFinishedObservers = [];
   }
-  eventSubscribe(...observer) {
-    this._eventObservers.push(...observer);
+  clickSubscribe(...observer) {
+    this._clickObservers.push(...observer);
   }
-  eventUnsubscribe(observer) {
-    this._eventObservers = [...this._eventObservers].filter(
+  clickUnsubscribe(observer) {
+    this._clickObservers = [...this._clickObservers].filter(
       (subscriber) => subscriber !== observer
     );
   }
-  eventNotify(...data) {
-    this._eventObservers.forEach((observer) => observer(...data));
+  clickNotify(...data) {
+    this._clickObservers.forEach((observer) => observer(...data));
+  }
+  dblclickSubscribe(...observer) {
+    this._dblclickObservers.push(...observer);
+  }
+  dblclickUnsubscribe(observer) {
+    this._dblclickObservers = [...this._dblclickObservers].filter(
+      (subscriber) => subscriber !== observer
+    );
+  }
+  dblclickNotify(...data) {
+    this._dblclickObservers.forEach((observer) => observer(...data));
   }
 
   renderFinishedSubscribe(...observer) {
