@@ -166,9 +166,11 @@ extension CardViewController: UITableViewDelegate {
                 guard let id = self.categoryManager?.categoryId else {return}
                 guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
                 let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card), willInsert: nil)
-                NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
-                                                object: nil,
-                                                userInfo: ["object" : object])
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
+                    NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
+                                                    object: nil,
+                                                    userInfo: ["object" : object])
+                }
             }
             
             let edit = UIAction(title: "edit...") { _ in
@@ -258,7 +260,6 @@ extension CardViewController: UITableViewDropDelegate {
                 NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
                                                 object: nil,
                                                 userInfo: ["object" : object])
-                
             }
         }
     }
