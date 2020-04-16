@@ -3,6 +3,7 @@ package dev.codesquad.java.todo12.Controller;
 import dev.codesquad.java.todo12.*;
 import dev.codesquad.java.todo12.Repository.CategoryRepository;
 import dev.codesquad.java.todo12.Repository.KanbanRepository;
+import dev.codesquad.java.todo12.exception.DataNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

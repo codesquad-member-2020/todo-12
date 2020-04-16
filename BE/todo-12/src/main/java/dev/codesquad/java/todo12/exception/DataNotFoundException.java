@@ -1,4 +1,4 @@
-package dev.codesquad.java.todo12;
+package dev.codesquad.java.todo12.exception;
 
 public class DataNotFoundException extends RuntimeException{
     private final int ERROR_CODE;

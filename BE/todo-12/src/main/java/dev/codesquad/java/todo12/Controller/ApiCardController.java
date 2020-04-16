@@ -6,6 +6,7 @@ import dev.codesquad.java.todo12.Repository.CardRepository;
 import dev.codesquad.java.todo12.Repository.CategoryRepository;
 import dev.codesquad.java.todo12.Repository.KanbanRepository;
 import dev.codesquad.java.todo12.Repository.LogRepository;
+import dev.codesquad.java.todo12.exception.DataNotFoundException;
 import dev.codesquad.java.todo12.service.CardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/card")

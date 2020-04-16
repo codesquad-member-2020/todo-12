@@ -5,13 +5,12 @@ import dev.codesquad.java.todo12.JWT.JwtUtil;
 import dev.codesquad.java.todo12.Repository.CardRepository;
 import dev.codesquad.java.todo12.Repository.CategoryRepository;
 import dev.codesquad.java.todo12.Repository.LogRepository;
+import dev.codesquad.java.todo12.exception.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
