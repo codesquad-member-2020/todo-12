@@ -20,7 +20,7 @@ public class ApiCardController {
     private CardService cardService;
 
     @Autowired
-    private AccessService accessService;
+    private TokenService tokenService;
 
     @Autowired
     private CategoryRepository categoryRepository;

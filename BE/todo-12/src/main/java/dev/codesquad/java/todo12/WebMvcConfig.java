@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
-    public AccessInterceptor userInterceptor() {
-        return new AccessInterceptor();
+    public TokenInterceptor userInterceptor() {
+        return new TokenInterceptor();
     }
 
     @Override

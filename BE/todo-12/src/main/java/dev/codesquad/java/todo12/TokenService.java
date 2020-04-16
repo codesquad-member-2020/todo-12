@@ -20,8 +20,8 @@ import java.util.HashMap;
 import static dev.codesquad.java.todo12.StaticApiUtils.*;
 
 @Service
-public class AccessService {
-    private Logger logger = LoggerFactory.getLogger(AccessService.class);
+public class TokenService {
+    private Logger logger = LoggerFactory.getLogger(TokenService.class);
     private static final String SECRET_KEY = "secret";
 
     @Autowired

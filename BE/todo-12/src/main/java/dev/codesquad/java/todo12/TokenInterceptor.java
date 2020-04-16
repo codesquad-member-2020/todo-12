@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import static dev.codesquad.java.todo12.StaticApiUtils.*;
 
-public class AccessInterceptor extends HandlerInterceptorAdapter {
-    private Logger logger = LoggerFactory.getLogger(AccessInterceptor.class);
+public class TokenInterceptor extends HandlerInterceptorAdapter {
+    private Logger logger = LoggerFactory.getLogger(TokenInterceptor.class);
 
     @Autowired
-    private AccessService accessService;
+    private TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         final String token = request.getHeader(AUTHORIZATION);
         logger.info("token >> {}", token);
-        if (!accessService.isValidToken(token)) {
+        if (!tokenService.isValidToken(token)) {
             return false;
         }
         return true;

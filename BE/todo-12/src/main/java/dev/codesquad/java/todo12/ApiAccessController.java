@@ -11,11 +11,11 @@ import java.util.HashMap;
 public class ApiAccessController {
 
     @Autowired
-    private AccessService accessService;
+    private TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity createToken(@RequestBody HashMap<String, String> userInfo) {
-        String token = accessService.buildToken(userInfo);
+        String token = tokenService.buildToken(userInfo);
         return new ResponseEntity(token, HttpStatus.OK);
     }
 
