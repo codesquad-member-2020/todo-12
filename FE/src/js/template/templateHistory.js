@@ -1,5 +1,5 @@
-export function templateHistory() {
-  const history = `
+export function templateHistoryMenu() {
+  const historyMenu = `
     <!-- menu -->
     <div id="activity-menu">
       <h2 class="blind">활동 메뉴</h2>
@@ -10,7 +10,7 @@ export function templateHistory() {
         </div>
         <div class="activity-menuu__column">
           <button type="button" class="close-btn">
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" data-type="history-close-btn"></i>
           </button>
         </div>
       </div>
@@ -21,20 +21,26 @@ export function templateHistory() {
       </div>
       </div>
       <ul class="activity-menu__list">
-        <li class="activity-menu__activity">
-          <div class="activity__action">
-            <span class="action__author"><strong>ellin</strong></span> 
-            <span>meved</span>
-            <span class="action__todo"><strong>공부하기</strong></span>
-            <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
-          </div>
-          <div>
-            <span class="activity__time">1 minute ago</span>
-          </div>
-        </li>
       </ul>
     </div>
     <!-- //menu -->
     `;
+  return historyMenu;
+}
+
+export function templateHistory() {
+  const history = `
+  <li class="activity-menu__activity">
+  <div class="activity__action">
+    <span class="action__author"><strong>ellin</strong></span> 
+    <span>meved</span>
+    <span class="action__todo"><strong>공부하기</strong></span>
+    <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
+  </div>
+  <div>
+    <span class="activity__time">1 minute ago</span>
+  </div>
+</li>
+  `;
   return history;
 }

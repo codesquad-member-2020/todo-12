@@ -112,6 +112,12 @@ export class Model {
     return this.cardLength[columnId];
   }
 
+  setHistory(history) {
+    this.historyList = history;
+    // this.view.historyRender(history)
+    console.log(this.historyList);
+  }
+
   // setTimeModified(create, modified) {
   //   this._timeModified = timeForToday(create, modified);
 
