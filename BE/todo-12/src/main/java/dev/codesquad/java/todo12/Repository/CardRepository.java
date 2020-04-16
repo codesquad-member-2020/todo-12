@@ -1,5 +1,6 @@
-package dev.codesquad.java.todo12;
+package dev.codesquad.java.todo12.Repository;
 
+import dev.codesquad.java.todo12.Card;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 

@@ -22,6 +22,10 @@ public class Category {
         this.deleted = false;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         return cards;
     }

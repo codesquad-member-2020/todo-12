@@ -14,11 +14,15 @@ public class Kanban {
     private Long id;
     private List<Category> categories = new ArrayList<>();
 
+//    private List<Log> History = new ArrayList<>();
+
     public Kanban() {}
 
     public void addCategory(Category category) {
         categories.add(category);
     }
+
+//    public void addLog(Log log) { History.add(log); }
 
     @JsonIgnore
     public Category getLastCategory() {
@@ -32,4 +36,10 @@ public class Kanban {
                 ", categories=" + categories +
                 '}';
     }
+
+//    public List<Log> getHistory() { return History; }
+
+//    public void setHistory(List<Log> history) { History = history; }
+
+
 }

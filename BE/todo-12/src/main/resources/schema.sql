@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS card;
 DROP TABLE IF EXISTS history;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS log;
 
 CREATE TABLE kanban  (
   id int primary key auto_increment
@@ -27,14 +28,16 @@ CREATE TABLE card  (
 );
 
 --on delete cascade on update cascade
-
-CREATE TABLE history  (
+CREATE TABLE log  (
   id int primary key auto_increment,
-  user_id varchar (64),
+  author varchar (64),
   action varchar (64) not null,
-  title varchar (64),
+  title varchar (64) not null,
   from_category varchar (64),
-  to_category varchar (64)
+  to_category varchar (64),
+  time datetime
+--   kanban int references kanban(id),
+--   kanban_key int
 );
 
 CREATE TABLE user  (
