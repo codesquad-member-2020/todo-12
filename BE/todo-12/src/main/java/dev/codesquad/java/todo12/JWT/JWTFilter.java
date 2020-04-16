@@ -23,7 +23,7 @@ public class JWTFilter extends OncePerRequestFilter {
     private UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
         String username = null;
         String jwt = null;
@@ -37,8 +37,8 @@ public class JWTFilter extends OncePerRequestFilter {
                         .getBody();
                 request.setAttribute("claims", claims);
             }
-            chain.doFilter(request, response);
         }
+            chain.doFilter(request, response);
     }
 }
 

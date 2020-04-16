@@ -1,23 +1,33 @@
 package dev.codesquad.java.todo12;
 
+import ch.qos.logback.core.status.Status;
+import org.springframework.http.HttpStatus;
+
 public class ApiResponseMessage {
-    private String status;
-    private Object data;
+    private org.springframework.http.HttpStatus statusCode;
+    private boolean status;
+    private String jwt;
 
-    public ApiResponseMessage(String status) {
+    public ApiResponseMessage(org.springframework.http.HttpStatus statusCode, boolean status) {
+        this.statusCode = statusCode;
         this.status = status;
     }
 
-    public ApiResponseMessage(String status, Object data) {
+    public ApiResponseMessage(org.springframework.http.HttpStatus statusCode, boolean status, String jwt) {
+        this.statusCode = statusCode;
         this.status = status;
-        this.data = data;
+        this.jwt = jwt;
     }
 
-    public String getStatus() {
+    public HttpStatus getStatusCode() {
+        return statusCode;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
-    public Object getData() {
-        return data;
+    public String getJwt() {
+        return jwt;
     }
 }
