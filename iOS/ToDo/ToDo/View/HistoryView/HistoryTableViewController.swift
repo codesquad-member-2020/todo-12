@@ -42,6 +42,7 @@ class HistoryTableViewController: UITableViewController {
             default:
                 break
             }
+            cell.timeLabel.text = Calendar.calculateDay.getHourMinuteString(date: history.modifiedTime)
         }
         return cell
     }
