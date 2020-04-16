@@ -32,13 +32,13 @@ class HistoryTableViewController: UITableViewController {
         DispatchQueue.main.async {
             switch history.action {
             case "moved":
-                cell.contentLabel.text = self.moved(history: history)
+                cell.contentLabel.attributedText = self.moved(history: history)
                 break
             case "added":
-                cell.contentLabel.text = self.added(history: history)
+                cell.contentLabel.attributedText = self.added(history: history)
                 break
             case "deleted":
-                cell.contentLabel.text = self.deleted(history: history)
+                cell.contentLabel.attributedText = self.deleted(history: history)
             default:
                 break
             }
@@ -50,18 +50,38 @@ class HistoryTableViewController: UITableViewController {
         return historys?.count ?? 0
     }
     
-    func moved(history: History) -> String {
+    func moved(history: History) -> NSMutableAttributedString {
         let moved = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.fromCategory ?? "") to \(history.toCategory)"
-        return moved
+        let attributedString = NSMutableAttributedString(string: moved)
+        attributedString.setupStyle(fontSize: 20, color: .blue, originText: moved, targetText: "@" + history.userId)
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.cardTitle ?? "제목 없음")
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.fromCategory ?? "")
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.toCategory)
+        return attributedString
     }
     
-    func added(history: History) -> String {
+    func added(history: History) -> NSMutableAttributedString {
         let added = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") to \(history.toCategory)"
-        return added
+        let attributedString = NSMutableAttributedString(string: added)
+        attributedString.setupStyle(fontSize: 20, color: .blue, originText: added, targetText: "@" + history.userId)
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: added, targetText: history.cardTitle ?? "제목 없음")
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: added, targetText: history.toCategory)
+        return attributedString
     }
     
-    func deleted(history: History) -> String {
-        let deleted = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") fromo \(history.fromCategory ?? "")"
-        return deleted
+    func deleted(history: History) -> NSMutableAttributedString {
+        let deleted = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.fromCategory!)"
+        let attributedString = NSMutableAttributedString(string: deleted)
+        attributedString.setupStyle(fontSize: 20, color: .blue, originText: deleted, targetText: "@" + history.userId)
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.cardTitle ?? "제목 없음")
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.fromCategory!)
+        return attributedString
+    }
+}
+
+extension NSMutableAttributedString {
+    func setupStyle(fontSize: CGFloat, color: UIColor, originText: String, targetText: String) {
+        let font = UIFont.boldSystemFont(ofSize: fontSize)
+        self.addAttributes([NSAttributedString.Key(rawValue: kCTFontAttributeName as String) : font, .foregroundColor : color], range: (originText as NSString).range(of: targetText))
     }
 }
