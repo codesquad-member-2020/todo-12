@@ -81,11 +81,11 @@ class BoardViewController: UIViewController {
         
         NotificationCenter.default.post(name: .postWillRemoveIndex,
                                         object: nil,
-                                        userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.id])
+                                        userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
         
         NotificationCenter.default.post(name: .cardInserted,
                                         object: nil,
-                                        userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.id, "card" : insertInfo.card])
+                                        userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.categoryId, "card" : insertInfo.card])
     }
     
     @objc func moveToDone(_ notification: Notification) {
