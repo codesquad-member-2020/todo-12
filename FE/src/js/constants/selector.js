@@ -5,11 +5,11 @@ export const cardCreation = {
     cancelCardBtn: "cancel-card-btn",
     addCardBtn: "add-card-btn",
     addCardForm: ".add__todo",
-    inputFocus: "input-active",
+    borderFocus: "border-focus",
     column: ".todo__column",
   },
   option: {
-    inputFocus: true,
+    borderFocus: true,
   },
-  fetchUrl: `http://15.165.163.174:8080/card/${columnId}`,
+  fetchUrl: `http://15.165.163.174:8080/card/{columnId}`,
 };

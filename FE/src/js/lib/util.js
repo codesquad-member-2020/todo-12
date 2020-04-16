@@ -93,7 +93,7 @@ export function fetchData(
   requestOption = {
     method: method,
     mode: "cors",
-    body: body,
+    body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
       Authorization: token,

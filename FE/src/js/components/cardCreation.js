@@ -9,7 +9,7 @@ export class CardCreation extends Component {
     this.cancelCardBtn = "cancel-card-btn";
     this.addCardBtn = "add-card-btn";
     this.addCardForm = ".add__todo";
-    this.inputFocus = "input-active";
+    this.borderFocus = "border-focus";
     this.column = ".todo__column";
     this.model = model;
     // this.inputFocus =
@@ -53,7 +53,7 @@ export class CardCreation extends Component {
 
   onInputFocus(currentColumn) {
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
-    super.addInputFocusEvents(cardCreationInput, this.inputFocus);
+    super.addInputFocusEvents(cardCreationInput, this.borderFocus);
   }
 
   onCancelCardBtn(currentColumn) {
@@ -67,14 +67,12 @@ export class CardCreation extends Component {
   onAddCardBtn(currentColumn) {
     const columnId = this.model.getColumnId(currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
-
-    const currentForm = _$(this.addCardForm, currentColumn);
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
-    const value = currentForm.content.value;
-    const jsonBody = { content: value };
+    const inputValue = cardCreationInput.value;
+    const jsonBody = { content: inputValue };
 
-    fetchData(creationUrl, "POST", JSON.stringify(jsonBody)).then((cardData) =>
+    fetchData(creationUrl, "POST", jsonBody).then((cardData) =>
       this.addCardData(columnId, cardData, currentColumn)
     );
     cardCreationInput.value = "";

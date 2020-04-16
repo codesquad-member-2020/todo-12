@@ -1,15 +1,12 @@
-import { Observable } from "./observable.js";
-import { _$, __, fetchGetData } from "../lib/util.js";
+import { __, fetchGetData } from "../lib/util.js";
 
-export class Controller extends Observable {
+export class Controller {
   constructor({ model, view, components }) {
-    super();
     this.initialUrl = "http://15.165.163.174:8080";
     this.model = model;
     this.view = view;
     this.components = [...components];
     this.cardFocus = true;
-    this.card = ".column__card";
   }
 
   fetchInitialData() {
@@ -34,17 +31,24 @@ export class Controller extends Observable {
   }
 
   addEventHandler() {
-    __(document).on("click", (event) => {
-      this.components.forEach((component) => component.addClickHandler(event));
-      if (this.cardFocus) this.view.onFocus(event);
-    });
-    __(document).on("dblclick", (event) =>
-      this.components.forEach((component) =>
-        component.addDblclickHandler(event)
-      )
-    );
-    __(document).on("input", () =>
-      this.components.forEach((component) => component.addInputHandler(event))
-    );
+    __(document).on("click", (event) => this.onClick(event));
+
+    __(document).on("dblclick", (event) => this.onDblclick(event));
+
+    __(document).on("input", (event) => this.onInput(event));
+  }
+
+  onClick(event) {
+    this.components.forEach((component) => component.addClickHandler(event));
+
+    if (this.cardFocus) this.view.onFocus(event);
+  }
+
+  onDblclick(event) {
+    this.components.forEach((component) => component.addDblclickHandler(event));
+  }
+
+  onInput(event) {
+    this.components.forEach((component) => component.addInputHandler(event));
   }
 }

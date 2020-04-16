@@ -11,8 +11,9 @@ export class View {
     this.cardArea = ".column__cards";
     this.card = ".column__card";
     this.column = ".todo__column";
-    this.inputFocus = "input-active";
+    this.inputFocus = "border-focus";
     this.cardContent = ".card__content";
+
     // this.cardSelectionFocus = "true"; // 인자로 넘기기
     // this.previousFocus = null;
   }
@@ -65,14 +66,15 @@ export class View {
 
   onFocus({ target }) {
     if (this.focusCard) this.onFocusOut(this.focusCard);
+
     const currentCard = target.closest(this.card);
     if (!currentCard) return;
 
-    _c(currentCard).add("input-active");
+    _c(currentCard).add(this.inputFocus);
     this.focusCard = currentCard;
   }
 
   onFocusOut(card) {
-    _c(card).remove("input-active");
+    _c(card).remove(this.inputFocus);
   }
 }

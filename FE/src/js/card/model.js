@@ -6,7 +6,6 @@ export class Model {
     this.columnList = new Map();
     this.cardList = new Map();
     this.cardLength = {};
-    this.cardArea = ".column__card";
     this.card = ".column__card";
   }
 
@@ -114,5 +113,9 @@ export class Model {
 
   setHistory(history) {
     this.historyList = history;
+  }
+
+  getHistory() {
+    return this.historyList;
   }
 }
