@@ -83,10 +83,6 @@ class CardViewController: UIViewController {
                                                name: .cardInserted,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(postMoveToDoneCard(_:)),
-                                               name: .postWillMoveToDoneIndex,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateFromInsertion(_:)),
                                                name: .postInsertedIndex,
                                                object: nil)
@@ -112,14 +108,6 @@ class CardViewController: UIViewController {
             return
         }
         categoryManager?.insertCard(card: card, at: index)
-    }
-    
-    @objc func postMoveToDoneCard(_ notification: Notification) {
-        guard let index = notification.userInfo?["index"] as? Int else {return}
-        guard let card = categoryManager?.card(at: index) else {return}
-        NotificationCenter.default.post(name: .postMoveToDoneCard,
-                                        object: nil,
-                                        userInfo: ["card" : card])
     }
     
     @objc func removeCard(_ notification: Notification) {
@@ -160,7 +148,7 @@ struct CardInfo {
     var categoryId: Int
     var card: Card
 }
-typealias DragAndDropObject = (willRemove: CardInfo, willInsert: CardInfo)
+typealias DragAndDropObject = (willRemove: CardInfo, willInsert: CardInfo?)
 
 extension CardViewController: UITableViewDelegate {
     
@@ -181,10 +169,14 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let moveToDone = UIAction(title: "move to done") { _ in
-                NotificationCenter.default.post(name: .postWillMoveToDoneIndex,
-                                                object: self,
-                                                userInfo: ["index" : indexPath.row])
-                self.removeCard(indexPath: indexPath, delay: 0.7)
+                guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
+                guard let id = self.categoryManager?.categoryId else {return}
+                let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card) , willInsert: nil)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
+                        NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
+                                                        object: nil,
+                                                        userInfo: ["object" : object])
+                }
             }
             
             let edit = UIAction(title: "edit...") { _ in
@@ -299,8 +291,6 @@ extension CardViewController: UITableViewDropDelegate {
 }
 
 extension Notification.Name {
-    static let postMoveToDoneCard = Notification.Name("postMoveToDoneCard")
     static let postWillExchangeIndexOnDifferentCategory = Notification.Name("postWillExchangeIndexOnDifferentCategory")
-    static let postWillMoveToDoneIndex = Notification.Name("postWillMoveToDoneIndex")
     static let postWillRemoveIndex = Notification.Name("postWillRemoveIndex")
 }
