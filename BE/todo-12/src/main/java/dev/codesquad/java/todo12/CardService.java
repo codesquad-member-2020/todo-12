@@ -89,6 +89,23 @@ public class CardService {
         return card;
     }
 
+    @Transactional
+    public Card moveCardToLast(Long id, Long categoryId) {
+        Card card = getCard(id);
+        Long fromCategoryId = card.getCategoryId();
+
+        Category fromCategory = getCategory(fromCategoryId);
+        fromCategory.deleteCard(card.getCategoryKey());
+        categoryRepository.save(fromCategory);
+
+        Category toCategory = getCategory(categoryId);
+        toCategory.addCard(card);
+        categoryRepository.save(toCategory);
+
+        card = getCard(id);
+        return card;
+    }
+
     private Card getCard(Long id) {
         return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException(NO_CARD));
     }

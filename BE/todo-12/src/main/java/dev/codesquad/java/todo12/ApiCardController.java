@@ -19,9 +19,6 @@ public class ApiCardController {
     @Autowired
     private CardService cardService;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     @GetMapping("/{id}")
     public ResponseEntity view(@PathVariable Long id) {
         Card card = cardService.viewCard(id);
@@ -53,10 +50,8 @@ public class ApiCardController {
     }
 
     @PutMapping("/{id}/move/{categoryId}")
-    public ResponseEntity moveToCategory(@PathVariable Long id, @PathVariable Long categoryId) {
-        Category category = categoryRepository.findById(categoryId).get();
-        Integer cardSize =  category.getCards().size();
-        Card card = cardService.moveCard(id, categoryId, cardSize);
+    public ResponseEntity moveToLast(@PathVariable Long id, @PathVariable Long categoryId) {
+        Card card = cardService.moveCardToLast(id, categoryId);
         return new ResponseEntity(card, HttpStatus.OK);
     }
 

@@ -44,12 +44,12 @@ public class Category {
         Collections.swap(cards, categoryKey + 1, categoryKey);
     }
 
-    public void addCard(int index, Card card) {
-        cards.add(index, card);
-    }
-
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void deleteCard(int categoryKey) {
+        cards.remove(categoryKey);
     }
 
     public void delete() {
