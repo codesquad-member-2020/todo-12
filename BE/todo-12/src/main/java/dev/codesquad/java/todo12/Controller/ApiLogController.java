@@ -18,23 +18,6 @@ public class ApiLogController {
     private LogRepository logRepository;
 
     @GetMapping("/activity")
-    public ResponseEntity seeAllActivities() {
-        for (Log log : logRepository.findAll()) {
-            System.out.println(log);
-        }
-        return new ResponseEntity(logRepository.findAllByAuthorName("todo12"),HttpStatus.OK);
-    }
-
-    @GetMapping("/activity2")
-    public List<Log> seeAllActivities2() {
-        for (Log log : logRepository.findAll()) {
-            System.out.println(log);
-        }
-        List<Log> logs = (List<Log>) logRepository.findAll();
-        return logs;
-    }
-
-    @GetMapping("/activity3")
     public Log seeAllActivities3() {
 
         List<Log> logs = logRepository.findAllByAuthorName("todo12");
