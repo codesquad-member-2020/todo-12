@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -46,6 +49,17 @@ public class AccessService {
             return false;
         }
     }
+
+//    @Transactional
+//    public String getUserId() {
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+//        String token = request.getHeader(AUTHORIZATION);
+//
+//        logger.info(">>>>>> {}", token);
+//
+//        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+//
+//    }
 
     private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));

@@ -21,12 +21,8 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         final String token = request.getHeader(AUTHORIZATION);
         logger.info("token >> {}", token);
         if (!accessService.isValidToken(token)) {
-            return false;
+            throw new InvalidTokenException("잘나옴?");
         }
         return true;
     }
-
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-//    }
 }

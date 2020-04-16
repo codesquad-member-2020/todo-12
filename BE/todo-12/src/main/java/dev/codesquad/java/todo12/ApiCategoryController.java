@@ -53,4 +53,16 @@ public class ApiCategoryController {
     private String catchDataNotFoundException(DataNotFoundException e) {
         return e.getMessage();
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    private String catchUnauthorizedException(UnauthorizedException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private String catchInvalidTokenException(InvalidTokenException e) {
+        return e.getMessage();
+    }
 }
