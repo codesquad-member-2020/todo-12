@@ -16,9 +16,19 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String userId, String password) {
-        this.id = id;
-        this.userId = userId;
-        this.password = password;
+    public String getUserId() {
+        return userId;
+    }
+
+    public boolean isPasswordEquals(String password) {
+        return password.equals(this.password);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                '}';
     }
 }

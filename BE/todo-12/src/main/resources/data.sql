@@ -13,3 +13,6 @@ insert into card(title, content, author, category, category_key) values ('7번�
 
 insert into card(title, content, author, category, category_key) values ('8번제목', '8번내용', '8번저자', 3, 0);
 insert into card(title, content, author, category, category_key) values ('9번제목', '9번내용', '9번저자', 3, 1);
+
+insert into user(user_id, password) values ('todo12', 'todo12');
+
