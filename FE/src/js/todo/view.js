@@ -1,26 +1,20 @@
-import { tplColumn, tplAddColumn } from "../tpl/tplColumn.js";
-import { tplCard } from "../tpl/tplCard.js";
-import { Observable } from "./observable.js";
+import {
+  templateColumn,
+  templateAddColumn,
+} from "../template/templateColumn.js";
+import { templateCard } from "../template/templateCard.js";
 import { _$, __, _c, _c$, __$, _a$ } from "../lib/util.js";
 
-export class ColumnView extends Observable {
+export class View {
   constructor() {
-    super();
     this.columnArea = _$("#todo");
     this.cardArea = ".column__cards";
     this.card = ".column__card";
     this.column = ".todo__column";
     this.inputFocus = "input-active";
+    this.cardContent = ".card__content";
     // this.cardSelectionFocus = "true"; // 인자로 넘기기
     // this.previousFocus = null;
-  }
-
-  addEventHandler(column) {
-    __(column).on("click", (event) => {
-      this.notify(event);
-
-      // this.fucusCard(event);
-    });
   }
 
   // fucusCard({ target }) {
@@ -41,7 +35,7 @@ export class ColumnView extends Observable {
   // }
 
   columnRender(columnId) {
-    const columnsHtml = tplColumn(columnId);
+    const columnsHtml = templateColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
 
     const AllColumns = _a$(this.column);
@@ -50,13 +44,13 @@ export class ColumnView extends Observable {
       (column) => column.dataset.columnId === columnId
     );
 
-    this.addEventHandler(currentColumn);
+    // this.addEventHandler(currentColumn);
     return currentColumn;
   }
 
   addColumnRender() {
-    if (!tplAddColumn) return;
-    const addColumn = tplAddColumn();
+    if (!templateAddColumn) return;
+    const addColumn = templateAddColumn();
 
     this.columnArea.insertAdjacentHTML("beforeend", addColumn);
   }
@@ -69,8 +63,13 @@ export class ColumnView extends Observable {
 
   cardRender(cardContent, column) {
     const cardArea = _$(this.cardArea, column);
-    const cardHtml = tplCard(cardContent);
+    const cardHtml = templateCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
+  }
+
+  updateCard(cardContent, card) {
+    const cardContentAret = _$(this.cardContent, card);
+    cardContentAret.textContent = cardContent;
   }
 
   deleteCard(card) {

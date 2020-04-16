@@ -1,4 +1,4 @@
-export function tplColumn(id) {
+export function templateColumn(id) {
   const column = `
               <section class="todo__column" data-column-id=${id}>
                 <h2 class="column__title blind"></h2>
@@ -40,7 +40,7 @@ export function tplColumn(id) {
   return column;
 }
 
-export function tplAddColumn() {
+export function templateAddColumn() {
   const addColumn = `
   <section id="todo__add-column" class="todo__column flex">
   <div class="add-column__btn">
