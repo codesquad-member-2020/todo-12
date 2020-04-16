@@ -37,7 +37,7 @@ class HistoryTableViewController: UITableViewController {
             case "added":
                 cell.contentLabel.attributedText = self.added(history: history)
                 break
-            case "deleted":
+            case "removed":
                 cell.contentLabel.attributedText = self.deleted(history: history)
             default:
                 break
@@ -70,11 +70,11 @@ class HistoryTableViewController: UITableViewController {
     }
     
     func deleted(history: History) -> NSMutableAttributedString {
-        let deleted = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.fromCategory!)"
+        let deleted = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.toCategory)"
         let attributedString = NSMutableAttributedString(string: deleted)
         attributedString.setupStyle(fontSize: 20, color: .blue, originText: deleted, targetText: "@" + history.userId)
         attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.cardTitle ?? "제목 없음")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.fromCategory!)
+        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.toCategory)
         return attributedString
     }
 }
