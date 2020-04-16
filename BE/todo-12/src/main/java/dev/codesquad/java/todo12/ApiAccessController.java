@@ -19,6 +19,12 @@ public class ApiAccessController {
         return new ResponseEntity(token, HttpStatus.OK);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity jwtTest() {
+        String str = "정상 접속 확인";
+        return new ResponseEntity(str, HttpStatus.OK);
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private String catchDataNotFoundException(DataNotFoundException e) {
