@@ -17,6 +17,7 @@ class BoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadModel()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(exchangeCellOnDifferentTable(_:)),
                                                name: .postWillExchangeIndexOnDifferentCategory,
