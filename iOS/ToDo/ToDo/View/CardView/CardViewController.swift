@@ -18,7 +18,7 @@ class CardViewController: UIViewController {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         
         editView.createHandler = {
-            guard let id = self.categoryManager?.categoryId else {return}
+            guard let cardId = self.categoryManager?.categoryId else {return}
             let json = ["title" : $0, "content" : $1]
             let encoder = JSONEncoder()
             var body = Data()
@@ -28,14 +28,9 @@ class CardViewController: UIViewController {
                 
             }
             
-            NetworkConnection.request(httpMethod: .POST, quertString: "card/\(id)", httpBody: body, errorHandler: {}) {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
-                do {
-                    let card = try decoder.decode(Card.self, from: $0)
+            NetworkConnection.create(cardId: cardId, body: body) {card in
+                DispatchQueue.main.async {
                     self.categoryManager?.insertCard(card: card)
-                } catch{
-                    
                 }
             }
         }
@@ -155,9 +150,8 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { _, _, _ in
             guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
-            NetworkConnection.request(httpMethod: .DELETE, quertString: "card/\(id)", httpBody: nil, errorHandler: {}) {
-                guard let result = String(data: $0, encoding: .utf8) else {return}
-                if result == "OK" {
+            NetworkConnection.delete(cardId: id) {
+                DispatchQueue.main.async {
                     self.removeCard(indexPath: indexPath, delay: 0)
                 }
             }
@@ -182,19 +176,19 @@ extension CardViewController: UITableViewDelegate {
                 let index = indexPath.row
                 editView.model = self.categoryManager?.card(at: index)
                 editView.editedModelIndex = index
-                editView.editHandler = {
-                    let json = ["title" : $1.title ,"content" : $1.content]
+                editView.editHandler = { index, card in
+                    let json = ["title" : card.title ,"content" : card.content]
                     let encoder = JSONEncoder()
-                    let data = try! encoder.encode(json)
-                    let index = $0
-                    NetworkConnection.request(httpMethod: .PUT, quertString: "card/\($1.id)", httpBody: data, errorHandler: {}) {
-                        let decoder = JSONDecoder()
-                        decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
-                        let card = try! decoder.decode(Card.self, from: $0)
-                        DispatchQueue.main.async {
-                            self.categoryManager?.updateCard(card, at: index)
-                            self.cardTabelView.reloadData()
+                    do {
+                        let data = try encoder.encode(json)
+                        NetworkConnection.edit(card: card, data: data) { card in
+                            DispatchQueue.main.async {
+                                self.categoryManager?.updateCard(card, at: index)
+                                self.cardTabelView.reloadData()
+                            }
                         }
+                    } catch {
+                        
                     }
                 }
                 self.present(editView, animated: true)
@@ -202,9 +196,8 @@ extension CardViewController: UITableViewDelegate {
             
             let delete = UIAction(title: "delete", attributes: .destructive) { _ in
                 guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
-                NetworkConnection.request(httpMethod: .DELETE, quertString: "card/\(id)", httpBody: nil, errorHandler: {}) {
-                    guard let result = String(data: $0, encoding: .utf8) else {return}
-                    if result == "OK" {
+                NetworkConnection.delete(cardId: id) {
+                    DispatchQueue.main.async {
                         self.removeCard(indexPath: indexPath, delay: 0.7)
                     }
                 }
@@ -254,26 +247,14 @@ extension CardViewController: UITableViewDropDelegate {
                 DispatchQueue.main.async {
                     self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
                 }
-                NetworkConnection.request(httpMethod: .PUT, quertString: "card/\(cardId)/move/\(categoryId)/\(destinationIndexPath.row)", httpBody: nil, errorHandler: {}) {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
-                    do {
-                        let card = try decoder.decode(Card.self, from: $0)
-                        guard destinationIndexPath.row == card.categoryKey else {
-                            DispatchQueue.main.async {
-                                self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
-                            }
-                            return}
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
-                        }
+                NetworkConnection.move(cardId: cardId, categoryId: categoryId, destinationIndex: destinationIndexPath.row, failureHandler: {
+                    DispatchQueue.main.async {
+                        self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
                     }
-                }
-                
-            }
-            else if let dragObject = item.dragItem.localObject as? CardInfo {
-                let object: DragAndDropObject = (willRemove: dragObject, willInsert: CardInfo(indexPath: destinationIndexPath, categoryId: categoryId, card: dragObject.card))
+                })
+            }else if let dragObject = item.dragItem.localObject as? CardInfo {
+                let willInsertObject = CardInfo(indexPath: destinationIndexPath, categoryId: categoryId, card: dragObject.card)
+                let object: DragAndDropObject = (willRemove: dragObject, willInsert: willInsertObject)
                 NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
                                                 object: nil,
                                                 userInfo: ["object" : object])
