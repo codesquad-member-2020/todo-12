@@ -40,6 +40,9 @@ dependencies {
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	// https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
 
+	compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.5'
+	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
+
 
 
 }
