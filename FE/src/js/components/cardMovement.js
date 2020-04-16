@@ -14,11 +14,14 @@ export class CardMovement extends Component {
     // this.controller = controller;
     // this.controller.renderFinishedSubscribe(this.addEventHandler.bind(this));
   }
-
-  onEvent() {
+  init() {
     const cards = _a$(this.card);
     const dragArea = _a$(this.dragArea);
 
+    this.onEvent(cards, dragArea);
+  }
+
+  onEvent(cards, dragArea) {
     cards.forEach((draggable) => {
       __(draggable).on("dragstart", () => _c(draggable).add(this.dragging));
 
@@ -92,8 +95,7 @@ export class CardMovement extends Component {
     const movementUrl = `http://15.165.163.174/api/card/${cardId}/move/${columnId}/${cardIndex}`;
 
     fetchData(movementUrl, "PUT").then((cardData) => {
-      debugger;
-      this.model.setCardList(columnId, cardData, true);
+      this.model.setCardList(columnId, cardData, "move");
       this.model.increaseCardLength(columnId);
       this.model.decreaseCardLength(previousColumnId);
     });

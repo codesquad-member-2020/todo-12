@@ -1,4 +1,4 @@
-import { _$, __, _c, __$, _a$, fetchGetData } from "./lib/util.js";
+import { _$, __, _c, __$, _a$, fetchGetData } from "../lib/util.js";
 
 export class Model {
   constructor({ view }) {
@@ -46,15 +46,17 @@ export class Model {
     return this.columnList.get(column).name;
   }
 
-  setCardList(columnId, cardContent, movement) {
+  setCardList(columnId, cardContent, option) {
     const column = this.columnList.get(columnId).column;
 
     const cardId = cardContent.id.toString();
 
-    if (!movement) this.view.cardRender(cardContent, column);
+    if (!option) this.view.cardRender(cardContent, column);
 
     const AllCards = _a$(this.card);
     const card = [...AllCards].find((card) => card.dataset.cardId === cardId);
+
+    if (option === "update") this.view.updateCard(cardContent.content, card);
 
     this.cardList.set(card, {
       id: cardId,

@@ -1,5 +1,5 @@
 import { Observable } from "./observable.js";
-import { _$, __, fetchGetData } from "./lib/util.js";
+import { _$, __, fetchGetData } from "../lib/util.js";
 
 import { mock } from "./mock.js";
 
@@ -27,23 +27,27 @@ export class Controller extends Observable {
       cards.forEach((card) => this.model.setCardList(strId, card));
       this.model.cardLength[strId] = cards.length;
       this.model.increaseCardLength(strId, false);
-      this.addEventHandler(strId);
     });
 
     this.view.addColumnRender();
-    this.components.forEach((component) => component.onEvent(event));
+    this.components.forEach((component) => component.init());
+    this.addEventHandler();
   }
 
-  addEventHandler(id) {
-    const column = this.model.getColumn(id);
-    __(column).on("click", (event) =>
+  addEventHandler() {
+    __(document).on("click", (event) =>
       this.components.forEach((component) => component.addClickHandler(event))
     );
-    __(column).on("dblclick", (event) =>
+    __(document).on("dblclick", (event) =>
       this.components.forEach((component) =>
         component.addDblclickHandler(event)
       )
-    ); //이벤트를 설치
+    );
+    __(document).on("input", () =>
+      this.components.forEach((component) => component.addInputHandler(event))
+    );
+
+    __(document).on("focus", () => console.log(1));
 
     // this.fucusCard(event);
   }

@@ -1,9 +1,9 @@
 import {
   templateColumn,
   templateAddColumn,
-} from "./template/templateColumn.js";
-import { templateCard } from "./template/templateCard.js";
-import { _$, __, _c, _c$, __$, _a$ } from "./lib/util.js";
+} from "../template/templateColumn.js";
+import { templateCard } from "../template/templateCard.js";
+import { _$, __, _c, _c$, __$, _a$ } from "../lib/util.js";
 
 export class View {
   constructor() {
@@ -12,6 +12,7 @@ export class View {
     this.card = ".column__card";
     this.column = ".todo__column";
     this.inputFocus = "input-active";
+    this.cardContent = ".card__content";
     // this.cardSelectionFocus = "true"; // 인자로 넘기기
     // this.previousFocus = null;
   }
@@ -64,6 +65,11 @@ export class View {
     const cardArea = _$(this.cardArea, column);
     const cardHtml = templateCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
+  }
+
+  updateCard(cardContent, card) {
+    const cardContentAret = _$(this.cardContent, card);
+    cardContentAret.textContent = cardContent;
   }
 
   deleteCard(card) {

@@ -10,25 +10,30 @@ export class CardCreation extends Component {
     this.addCardBtn = "add-card-btn";
     this.addCardForm = ".add__todo";
     this.inputFocus = "input-active";
+    this.column = ".todo__column";
     this.model = model;
     // this.controller = controller;
     // this.controller.clickUnsubscribe(this.addEventHandler.bind(this));
   }
 
-  addClickHandler({ target, currentTarget }) {
+  addClickHandler({ target }) {
+    const currentColumn = target.closest(this.column);
+
     const eventTarget = target.dataset.type;
     switch (eventTarget) {
       case this.btnShowingAddForm:
-        this.onBtnShowingAddForm(currentTarget);
+        this.onBtnShowingAddForm(currentColumn);
         break;
       case this.cardCreationInput:
-        this.onInputEvents(currentTarget);
+        this.onInputFocusEvents(currentColumn);
         break;
       case this.cancelCardBtn:
-        this.onCancelCardBtn(currentTarget);
+        this.onCancelCardBtn(currentColumn);
         break;
       case this.addCardBtn:
-        this.onAddCardBtn(currentTarget);
+        this.onAddCardBtn(currentColumn);
+      default:
+        return;
     }
   }
 
@@ -38,24 +43,21 @@ export class CardCreation extends Component {
     __(currentAddForm).toggle();
   }
 
-  onInputEvents(currentColumn) {
+  addInputHandler({ target }) {
+    if (target.dataset.type !== this.cardCreationInput) return;
+    const currentColumn = target.closest(this.column);
+
+    const addCardBtn = _$("." + this.addCardBtn, currentColumn);
+    super.activateBtn(addCardBtn, target);
+  }
+
+  onInputFocusEvents(currentColumn) {
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
+
     __(cardCreationInput).on("blur", () =>
       _c(cardCreationInput).remove(this.inputFocus)
     );
-
     _c(cardCreationInput).add(this.inputFocus); //함수로 만들기
-
-    __(cardCreationInput).on("input", () =>
-      this.activateAddCardBtn(cardCreationInput, currentColumn)
-    );
-  }
-
-  activateAddCardBtn(cardCreationInput, currentColumn) {
-    const addCardBtn = _$("." + this.addCardBtn, currentColumn);
-
-    if (!cardCreationInput.value) return (addCardBtn.disabled = "disabled");
-    addCardBtn.disabled = false;
   }
 
   onCancelCardBtn(currentColumn) {
@@ -68,7 +70,6 @@ export class CardCreation extends Component {
 
   onAddCardBtn(currentColumn) {
     // const columnId = currentColumn.dataset.id;
-    debugger;
     const columnId = this.model.getColumnId(currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
 

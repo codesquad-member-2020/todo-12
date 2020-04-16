@@ -1,12 +1,12 @@
 import { templateHeader } from "./template/templateHeader.js";
 import { _$, fetchGetData } from "./lib/util.js";
-import { Controller } from "./controller.js";
-import { View } from "./view.js";
+import { Controller } from "./todo/controller.js";
+import { View } from "./todo/view.js";
 import { CardCreation } from "./components/cardCreation.js";
 import { CardMovement } from "./components/cardMovement.js";
 import { CardDeletion } from "./components/cardDeletion.js";
 import { EditCard } from "./components/editCard.js";
-import { Model } from "./model.js";
+import { Model } from "./todo/model.js";
 // import { mock } from "./mock.js";
 
 // import css from "../style/style.css";
