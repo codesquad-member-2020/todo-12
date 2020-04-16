@@ -11,8 +11,6 @@ export class CardMovement extends Component {
     this.dragging = "dragging";
     this.column = ".todo__column";
     this.model = model;
-    // this.controller = controller;
-    // this.controller.renderFinishedSubscribe(this.addEventHandler.bind(this));
   }
   init() {
     const cards = _a$(this.card);
