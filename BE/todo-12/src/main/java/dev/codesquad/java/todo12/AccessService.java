@@ -1,5 +1,7 @@
 package dev.codesquad.java.todo12;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +36,16 @@ public class AccessService {
                 .compact();
     }
 
-//    @Transactional
-//    public boolean isValidToken(String token) {
-//        Jws<claims> claims = Jwts.parser()
-//                .setSigningKey(SECRET_KEY)
-//                .parseClaimsJws(token);
-//    }
+    @Transactional
+    public boolean isValidToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            logger.info("token error >> {}", e.getMessage());
+            return false;
+        }
+    }
 
     private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));
