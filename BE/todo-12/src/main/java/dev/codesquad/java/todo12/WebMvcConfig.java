@@ -6,10 +6,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-//@EnableWebMvc
-//@ComponentScan(
-//        basePackages = { "next.controller" }
-//)
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
@@ -21,6 +17,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login");
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/card/**")
+//                .excludePathPatterns("/category/**")
+                .excludePathPatterns("/");
     }
 }
