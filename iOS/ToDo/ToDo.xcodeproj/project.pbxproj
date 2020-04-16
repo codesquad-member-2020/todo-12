@@ -150,11 +150,37 @@
 		A5D92886243B4027008A75EF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A5E451FA243F349D0067B917 /* StoryBoard */,
+				A5DD05242448C65000AC5B3A /* BoardView */,
 				A5E451F5243F34470067B917 /* CardView */,
-				A5D92861243AF8DC008A75EF /* BoardViewController.swift */,
+				A5DD05232448C62B00AC5B3A /* EditView */,
+				A5DD05222448C62000AC5B3A /* HistoryView */,
+				A5E451FA243F349D0067B917 /* StoryBoard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A5DD05222448C62000AC5B3A /* HistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
+			);
+			path = HistoryView;
+			sourceTree = "<group>";
+		};
+		A5DD05232448C62B00AC5B3A /* EditView */ = {
+			isa = PBXGroup;
+			children = (
+				A53B1D08243DF39000A22F9C /* EditCardViewController.swift */,
+			);
+			path = EditView;
+			sourceTree = "<group>";
+		};
+		A5DD05242448C65000AC5B3A /* BoardView */ = {
+			isa = PBXGroup;
+			children = (
+				A5D92861243AF8DC008A75EF /* BoardViewController.swift */,
+			);
+			path = BoardView;
 			sourceTree = "<group>";
 		};
 		A5E451F5243F34470067B917 /* CardView */ = {
@@ -163,8 +189,6 @@
 				A5E451F9243F34910067B917 /* Cell */,
 				A5E451F8243F34880067B917 /* DataSource */,
 				A5D9288B243B64A2008A75EF /* CardViewController.swift */,
-				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
-				A53B1D08243DF39000A22F9C /* EditCardViewController.swift */,
 			);
 			path = CardView;
 			sourceTree = "<group>";
