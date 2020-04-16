@@ -24,6 +24,9 @@ public class CardService {
     @Autowired
     private HistoryRepository historyRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Transactional
     public Card viewCard(Long id) {
         return getCard(id);
@@ -98,8 +101,12 @@ public class CardService {
         return categoryRepository.findNameById(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
+    private String getUserId() {
+        return tokenService.getUserId();
+    }
+
     private void logHistory(String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
-        History history = new History(action, cardTitle, cardContent, fromCategory, toCategory);
+        History history = new History(getUserId(), action, cardTitle, cardContent, fromCategory, toCategory);
         historyRepository.save(history);
     }
 

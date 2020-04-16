@@ -22,8 +22,8 @@ public class History {
 
     public History() {}
 
-    public History(String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
-        this.userId = "todo12";
+    public History(String userId, String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
+        this.userId = userId;
         this.action = action;
         this.cardTitle = cardTitle;
         this.cardContent = cardContent;
