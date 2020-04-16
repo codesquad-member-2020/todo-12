@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 //@EnableWebMvc
@@ -14,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
-    public UserInterceptor userInterceptor() {
-        return new UserInterceptor();
+    public AccessInterceptor userInterceptor() {
+        return new AccessInterceptor();
     }
 
     @Override

@@ -34,6 +34,13 @@ public class AccessService {
                 .compact();
     }
 
+//    @Transactional
+//    public boolean isValidToken(String token) {
+//        Jws<claims> claims = Jwts.parser()
+//                .setSigningKey(SECRET_KEY)
+//                .parseClaimsJws(token);
+//    }
+
     private User validatedUser(HashMap<String, String> userInfo) {
         User user = getUser(userInfo.get("userId"));
         if (!user.isPasswordEquals(userInfo.get("password"))) {

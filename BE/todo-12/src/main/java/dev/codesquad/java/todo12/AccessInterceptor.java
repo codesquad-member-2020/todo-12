@@ -7,11 +7,14 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserInterceptor extends HandlerInterceptorAdapter {
-    private Logger logger = LoggerFactory.getLogger(UserInterceptor.class);
+import static dev.codesquad.java.todo12.StaticApiUtils.*;
+
+public class AccessInterceptor extends HandlerInterceptorAdapter {
+    private Logger logger = LoggerFactory.getLogger(AccessInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        logger.info("token : {}", request.getHeader(AUTHORIZATION));
         logger.info("잘 나오나요?");
         return true;
     }

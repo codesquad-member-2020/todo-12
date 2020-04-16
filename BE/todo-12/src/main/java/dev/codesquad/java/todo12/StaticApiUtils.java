@@ -20,4 +20,5 @@ public class StaticApiUtils {
     public static final int EXPIRATION_TIME = 1000 * 60 * 60 * 10;
     public static final String TOKEN_IDENTIFIER_NAME = "group";
     public static final String TOKEN_IDENTIFIER_VALUE = "codesquad-todo12";
+    public static final String AUTHORIZATION = "Authorization";
 }
