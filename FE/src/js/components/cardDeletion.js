@@ -1,7 +1,7 @@
 export class CardDeletion {
-  constructor({ columnView, model }) {
-    this.columnView = columnView;
-    this.columnView.subscribe(this.addEventHandler.bind(this));
+  constructor({ controller, model }) {
+    this.controller = controller;
+    this.controller.eventSubscribe(this.addEventHandler.bind(this));
     this.model = model;
     this.closetBtn = "card-delete-btn";
     this.card = ".column__card";
@@ -15,6 +15,7 @@ export class CardDeletion {
 
   getCardInfo(target) {
     const currentCard = target.closest(this.card);
+    debugger;
     const currentCardId = this.model.getCardList(currentCard).id;
     this.deleteData(currentCardId);
   }

@@ -1,36 +1,13 @@
-import { _$, __, _c, __$, _a$, fetchGetData } from "../lib/util.js";
-import { Observable } from "./observable.js";
+import { _$, __, _c, __$, _a$, fetchGetData } from "./lib/util.js";
 
-export class Model extends Observable {
-  constructor(view) {
-    super();
+export class Model {
+  constructor({ view }) {
     this.view = view;
-    this.initialUrl = "http://15.165.163.174:8080";
     this.columnList = new Map();
     this.cardList = new Map();
     this.cardLength = {};
     this.cardArea = ".column__card";
     this.card = ".column__card";
-  }
-
-  fetchinitialData() {
-    fetchGetData(this.initialUrl).then((initialData) => this.init(initialData));
-  }
-
-  init(initialData) {
-    initialData.forEach((columnData) => {
-      const { id, name, cards } = columnData;
-      let strId = id.toString();
-
-      this.setColumnList(strId);
-      this.setColumnName(strId, name);
-      this.cardLength[strId] = cards.length;
-      cards.forEach((card) => this.setCardList(strId, card));
-      this.increaseCardLength(strId, false);
-    });
-
-    this.view.addColumnRender();
-    this.notify();
   }
 
   setColumnList(id) {
@@ -39,22 +16,20 @@ export class Model extends Observable {
     this.columnList.set(column, {
       id: id,
       name: null,
-      cardLength: null,
     });
 
     this.columnList.set(id, {
       column: column,
       name: null,
-      cardLength: null,
     });
   }
 
-  getColumnListById(id) {
-    return this.columnList.get(id);
+  getColumn(id) {
+    return this.columnList.get(id).column;
   }
 
-  getColumnList(element) {
-    return this.columnList.get(element);
+  getColumnId(element) {
+    return this.columnList.get(element).id;
   }
 
   setColumnName(id, name) {
@@ -83,14 +58,14 @@ export class Model extends Observable {
 
     this.cardList.set(card, {
       id: cardId,
-      card: cardContent,
+      cardData: cardContent,
       columnId: columnId,
       column: column,
     });
 
     this.cardList.set(cardId, {
       card: card,
-      cardContent: cardContent,
+      cardData: cardContent,
       columnId: columnId,
       column: column,
     });

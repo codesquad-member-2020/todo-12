@@ -2,13 +2,14 @@ import { _$, __, _c, __$, _a$, fetchData } from "../lib/util.js";
 //카드 이동시 애니매에션 추가하기
 
 export class CardMovement {
-  constructor({ model }) {
+  constructor({ controller, model }) {
     this.dragArea = ".column__cards";
     this.card = ".column__card";
     this.dragging = "dragging";
     this.column = ".todo__column";
     this.model = model;
-    this.model.subscribe(this.addEventHandler.bind(this));
+    this.controller = controller;
+    this.controller.renderFinishedSubscribe(this.addEventHandler.bind(this));
   }
 
   addEventHandler() {
@@ -44,7 +45,6 @@ export class CardMovement {
       previousCardIndex === currentCardIndex;
 
     if (sameLocation) return;
-
     this.fetchDataMovement(
       cardId,
       currentColumnId,
@@ -55,9 +55,8 @@ export class CardMovement {
 
   getPreviousCardInfo(draggable) {
     const cardList = this.model.getCardList(draggable);
-
     const previousColumnId = cardList.columnId;
-    const previousCardIndex = cardList.card.categoryKey;
+    const previousCardIndex = cardList.cardData.categoryKey;
     const cardId = cardList.id;
 
     return { previousColumnId, previousCardIndex, cardId };
@@ -90,6 +89,7 @@ export class CardMovement {
     const movementUrl = `http://15.165.163.174/api/card/${cardId}/move/${columnId}/${cardIndex}`;
 
     fetchData(movementUrl, "PUT").then((cardData) => {
+      debugger;
       this.model.setCardList(columnId, cardData, true);
       this.model.increaseCardLength(columnId);
       this.model.decreaseCardLength(previousColumnId);

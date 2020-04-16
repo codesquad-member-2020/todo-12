@@ -1,4 +1,4 @@
-export function tplHeader() {
+export function templateHeader() {
   const header = `
       <header id="header" class="flex">
           <h1>TODO 서비스</h1>

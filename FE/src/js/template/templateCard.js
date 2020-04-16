@@ -1,4 +1,4 @@
-export function tplCard(a) {
+export function templateCard(a) {
   const card = `
             <li class="column__card flex" data-focus='true' draggable="true" data-card-id=${a.id}>
                 <div class="card__left flex" data-focus='true' >
