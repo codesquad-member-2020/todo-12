@@ -14,6 +14,7 @@
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
 		A53B1D14243EFA2900A22F9C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D13243EFA2900A22F9C /* Category.swift */; };
 		A53B1D16243EFABE00A22F9C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D15243EFABE00A22F9C /* Card.swift */; };
+		A59A6ED7244777530024645D /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A6ED6244777520024645D /* DateExtension.swift */; };
 		A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9285D243AF8DC008A75EF /* AppDelegate.swift */; };
 		A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */; };
 		A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92861243AF8DC008A75EF /* BoardViewController.swift */; };
@@ -45,6 +46,7 @@
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
 		A53B1D13243EFA2900A22F9C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A53B1D15243EFABE00A22F9C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		A59A6ED6244777520024645D /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		A5D9285A243AF8DC008A75EF /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D9285D243AF8DC008A75EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5D9285F243AF8DC008A75EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				A53B1D15243EFABE00A22F9C /* Card.swift */,
 				A51D3A9424462A85003CBA21 /* CardManager.swift */,
 				A51D3A9624462B0F003CBA21 /* CategoryManager.swift */,
+				A59A6ED6244777520024645D /* DateExtension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D92862243AF8DC008A75EF /* BoardViewController.swift in Sources */,
+				A59A6ED7244777530024645D /* DateExtension.swift in Sources */,
 				A51D3A9724462B0F003CBA21 /* CategoryManager.swift in Sources */,
 				A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */,
 				A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */,

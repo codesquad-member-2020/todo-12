@@ -21,8 +21,7 @@ class EditCardViewController: UIViewController {
             self.model?.content = content
             self.model?.title = title
             guard let index = self.editedModelIndex, let card = self.model else {
-                let card = Card(id: 0, title: title, content: content, author: "iOS")
-                self.createHandler(card)
+                self.createHandler(title, content)
                 return
             }
             self.editHandler(index, card)
@@ -36,8 +35,8 @@ class EditCardViewController: UIViewController {
     
     public var model: Card?
     public var editedModelIndex: Int?
-    public var editHandler: (Int, Card) -> () = {_,_  in}
-    public var createHandler: (Card) -> () = {_ in}
+    public var editHandler: (Int, Card) -> () = {_, _  in}
+    public var createHandler: (String?, String) -> () = {_, _ in}
     
     private let contentsTextViewDelegate = ContentsTextViewDelegate()
     

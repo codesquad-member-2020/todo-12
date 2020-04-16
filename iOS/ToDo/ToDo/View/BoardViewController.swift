@@ -19,10 +19,6 @@ class BoardViewController: UIViewController {
         super.viewDidLoad()
         loadModel()
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(moveToDone(_:)),
-                                               name: .postMoveToDoneCard,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(exchangeCellOnDifferentTable(_:)),
                                                name: .postWillExchangeIndexOnDifferentCategory,
                                                object: nil)
@@ -47,20 +43,15 @@ class BoardViewController: UIViewController {
     }
     
     private func loadModel() {
-        NetworkConnection.request(httpMethod: .GET, errorHandler: alertErrorNoResponse) {
-            let decoder = JSONDecoder()
-            do {
-                self.model = try decoder.decode([Category].self, from: $0)
-                DispatchQueue.main.async {
-                    for (index, child) in self.children.enumerated() {
-                        guard let viewController = child as? CardViewController else {return}
-                        self.setModel(viewController: viewController, model: self.model[index])
-                    }
-                    self.activityIndicator.isHidden = true
-                    self.menuButton.isEnabled = true
+        NetworkConnection.loadModel{
+            self.model = $0
+            DispatchQueue.main.async {
+                for (index, child) in self.children.enumerated() {
+                    guard let viewController = child as? CardViewController else {return}
+                    self.setModel(viewController: viewController, model: self.model[index])
                 }
-            } catch {
-                self.alertErrorJsoneDecode()
+                self.activityIndicator.isHidden = true
+                self.menuButton.isEnabled = true
             }
         }
     }
@@ -76,22 +67,34 @@ class BoardViewController: UIViewController {
     @objc func exchangeCellOnDifferentTable(_ notification: Notification) {
         guard let object = notification.userInfo?["object"] as? DragAndDropObject else {return}
         let removeInfo = object.willRemove
-        let insertInfo = object.willInsert
+        let cardId = removeInfo.card.id
+        guard let insertInfo = object.willInsert else {
+            NetworkConnection.move(cardId: cardId, categoryId: 3, destinationIndex: nil, successHandler: {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .postWillRemoveIndex,
+                                                    object: nil,
+                                                    userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
+                    NotificationCenter.default.post(name: .cardInserted,
+                                                    object: nil,
+                                                    userInfo: ["card" : removeInfo.card, "id" : self.model[2].id])
+                }
+            })
+            return
+        }
         
-        NotificationCenter.default.post(name: .postWillRemoveIndex,
-                                        object: nil,
-                                        userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.id])
-        
-        NotificationCenter.default.post(name: .cardInserted,
-                                        object: nil,
-                                        userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.id, "card" : insertInfo.card])
-    }
-    
-    @objc func moveToDone(_ notification: Notification) {
-        guard let card = notification.userInfo?["card"] as? Card else {return}
-        NotificationCenter.default.post(name: .cardInserted,
-                                        object: nil,
-                                        userInfo: ["card" : card, "id" : model[2].id])
+        let categoryId = insertInfo.categoryId
+        let destinationIndex = insertInfo.indexPath.row
+        NetworkConnection.move(cardId: cardId, categoryId: categoryId, destinationIndex: destinationIndex, successHandler: {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .postWillRemoveIndex,
+                                                object: nil,
+                                                userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
+                
+                NotificationCenter.default.post(name: .cardInserted,
+                                                object: nil,
+                                                userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.categoryId, "card" : insertInfo.card])
+            }
+        })
     }
 }
 

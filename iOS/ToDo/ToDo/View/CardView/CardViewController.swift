@@ -18,7 +18,21 @@ class CardViewController: UIViewController {
         guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
         
         editView.createHandler = {
-            self.categoryManager?.insertCard(card: $0)
+            guard let cardId = self.categoryManager?.categoryId else {return}
+            let json = ["title" : $0, "content" : $1]
+            let encoder = JSONEncoder()
+            var body = Data()
+            do {
+                body = try encoder.encode(json)
+            } catch {
+                
+            }
+            
+            NetworkConnection.create(cardId: cardId, body: body) {card in
+                DispatchQueue.main.async {
+                    self.categoryManager?.insertCard(card: card)
+                }
+            }
         }
         self.present(editView, animated: true)
     }
@@ -64,10 +78,6 @@ class CardViewController: UIViewController {
                                                name: .cardInserted,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(postMoveToDoneCard(_:)),
-                                               name: .postWillMoveToDoneIndex,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateFromInsertion(_:)),
                                                name: .postInsertedIndex,
                                                object: nil)
@@ -86,7 +96,7 @@ class CardViewController: UIViewController {
     
     @objc func insertCard(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let card = notification.userInfo?["card"] as? Card else {return}
         guard let index = notification.userInfo?["index"] as? Int else {
             categoryManager?.insertCard(card: card)
@@ -95,24 +105,16 @@ class CardViewController: UIViewController {
         categoryManager?.insertCard(card: card, at: index)
     }
     
-    @objc func postMoveToDoneCard(_ notification: Notification) {
-        guard let index = notification.userInfo?["index"] as? Int else {return}
-        guard let card = categoryManager?.card(at: index) else {return}
-        NotificationCenter.default.post(name: .postMoveToDoneCard,
-                                        object: nil,
-                                        userInfo: ["card" : card])
-    }
-    
     @objc func removeCard(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         categoryManager?.removeCard(at: index)
     }
     
     @objc func updateFromDeletion(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         let indexPath = IndexPath(row: index, section: 0)
         cardTabelView.deleteRows(at: [indexPath], with: .automatic)
@@ -120,12 +122,14 @@ class CardViewController: UIViewController {
     
     @objc func updateFromInsertion(_ notification: Notification) {
         guard let id = notification.userInfo?["id"] as? Int else {return}
-        guard id == categoryManager?.id else {return}
+        guard id == categoryManager?.categoryId else {return}
         guard let index = notification.userInfo?["index"] as? Int else {return}
         let indexPath = IndexPath(row: index, section: 0)
-        cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        DispatchQueue.main.async {
+            self.cardTabelView.insertRows(at: [indexPath], with: .automatic)
+        }
     }
-
+    
     @objc func updateNumOfCardsLabel() {
         guard let count = categoryManager?.count else {return}
         DispatchQueue.main.async {
@@ -136,16 +140,21 @@ class CardViewController: UIViewController {
 
 struct CardInfo {
     var indexPath: IndexPath
-    var id: Int
+    var categoryId: Int
     var card: Card
 }
-typealias DragAndDropObject = (willRemove: CardInfo, willInsert: CardInfo)
+typealias DragAndDropObject = (willRemove: CardInfo, willInsert: CardInfo?)
 
 extension CardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title:  "삭제", handler: { _, _, _ in
-            self.removeCard(indexPath: indexPath, delay: 0)
+            guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
+            NetworkConnection.delete(cardId: id) {
+                DispatchQueue.main.async {
+                    self.removeCard(indexPath: indexPath, delay: 0)
+                }
+            }
         })
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
@@ -153,30 +162,51 @@ extension CardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let moveToDone = UIAction(title: "move to done") { _ in
-                NotificationCenter.default.post(name: .postWillMoveToDoneIndex,
-                                                object: self,
-                                                userInfo: ["index" : indexPath.row])
-                self.removeCard(indexPath: indexPath, delay: 0.7)
+            let moveToDone = UIAction(title: "move to done", image: UIImage(systemName: "paperplane")) { _ in
+                guard self.categoryManager?.categoryId != 3 else {return}
+                guard let id = self.categoryManager?.categoryId else {return}
+                guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
+                let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card), willInsert: nil)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
+                    NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
+                                                    object: nil,
+                                                    userInfo: ["object" : object])
+                }
             }
-
-            let edit = UIAction(title: "edit...") { _ in
+            
+            let edit = UIAction(title: "edit...", image: UIImage(systemName: "pencil")) { _ in
                 guard let editView = self.storyboard?.instantiateViewController(identifier: "editViewController") as? EditCardViewController else {return}
                 let index = indexPath.row
                 editView.model = self.categoryManager?.card(at: index)
                 editView.editedModelIndex = index
-                editView.editHandler = {
-                    self.categoryManager?.updateCard($1, at: $0)
-                    self.cardTabelView.reloadData()
+                editView.editHandler = { index, card in
+                    let json = ["title" : card.title ,"content" : card.content]
+                    let encoder = JSONEncoder()
+                    do {
+                        let data = try encoder.encode(json)
+                        NetworkConnection.edit(card: card, data: data) { card in
+                            DispatchQueue.main.async {
+                                self.categoryManager?.updateCard(card, at: index)
+                                self.cardTabelView.reloadData()
+                            }
+                        }
+                    } catch {
+                        
+                    }
                 }
                 self.present(editView, animated: true)
             }
-
-            let delete = UIAction(title: "delete", attributes: .destructive) { _ in
-                self.removeCard(indexPath: indexPath, delay: 0.7)
+            
+            let delete = UIAction(title: "delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                guard let id = self.categoryManager?.card(at: indexPath.row).id else {return}
+                NetworkConnection.delete(cardId: id) {
+                    DispatchQueue.main.async {
+                        self.removeCard(indexPath: indexPath, delay: 0.7)
+                    }
+                }
             }
             let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
-
+            
             return menu
         }
         return configuration
@@ -190,13 +220,13 @@ extension CardViewController: UITableViewDelegate {
 }
 
 extension CardViewController: UITableViewDragDelegate {
-
+    
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let itemProvider = NSItemProvider()
         let dragItem = UIDragItem(itemProvider: itemProvider)
-        guard let id = categoryManager?.id else {return []}
+        guard let id = categoryManager?.categoryId else {return []}
         guard let card = categoryManager?.card(at: indexPath.row) else {return []}
-        dragItem.localObject = CardInfo(indexPath: indexPath, id: id, card: card)
+        dragItem.localObject = CardInfo(indexPath: indexPath, categoryId: id, card: card)
         return [dragItem]
     }
 }
@@ -213,12 +243,21 @@ extension CardViewController: UITableViewDropDelegate {
         }
         
         for item in coordinator.items {
+            guard let categoryId = categoryManager?.categoryId else {return}
             if let sourceItemPath = item.sourceIndexPath {
-                categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
-            }
-            else if let dragObject = item.dragItem.localObject as? CardInfo {
-                guard let id = categoryManager?.id else {return}
-                let object: DragAndDropObject = (willRemove: dragObject, willInsert: CardInfo(indexPath: destinationIndexPath, id: id, card: dragObject.card))
+                guard let cardId = categoryManager?.card(at: sourceItemPath.row).id else {return}
+                
+                DispatchQueue.main.async {
+                    self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                }
+                NetworkConnection.move(cardId: cardId, categoryId: categoryId, destinationIndex: destinationIndexPath.row, failureHandler: {
+                    DispatchQueue.main.async {
+                        self.categoryManager?.moveItem(at: sourceItemPath.row, to: destinationIndexPath.row)
+                    }
+                })
+            }else if let dragObject = item.dragItem.localObject as? CardInfo {
+                let willInsertObject = CardInfo(indexPath: destinationIndexPath, categoryId: categoryId, card: dragObject.card)
+                let object: DragAndDropObject = (willRemove: dragObject, willInsert: willInsertObject)
                 NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
                                                 object: nil,
                                                 userInfo: ["object" : object])
@@ -232,8 +271,6 @@ extension CardViewController: UITableViewDropDelegate {
 }
 
 extension Notification.Name {
-    static let postMoveToDoneCard = Notification.Name("postMoveToDoneCard")
     static let postWillExchangeIndexOnDifferentCategory = Notification.Name("postWillExchangeIndexOnDifferentCategory")
-    static let postWillMoveToDoneIndex = Notification.Name("postWillMoveToDoneIndex")
     static let postWillRemoveIndex = Notification.Name("postWillRemoveIndex")
 }
