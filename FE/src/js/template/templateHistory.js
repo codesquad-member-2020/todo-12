@@ -28,19 +28,49 @@ export function templateHistoryMenu() {
   return historyMenu;
 }
 
-export function templateHistory() {
-  const history = `
+export function templateHistoryFromTo({
+  userId,
+  action,
+  cardContent,
+  fromCategory,
+  toCategory,
+  modifiedTime,
+}) {
+  const actionFromTo = `
   <li class="activity-menu__activity">
-  <div class="activity__action">
-    <span class="action__author"><strong>ellin</strong></span> 
-    <span>meved</span>
-    <span class="action__todo"><strong>공부하기</strong></span>
-    <span>form <strong>To do</strong> to<strong> 하는중<strong></span>
-  </div>
-  <div>
-    <span class="activity__time">1 minute ago</span>
-  </div>
-</li>
+    <div class="activity__action">
+       <span class="action__author"><strong>@${userId}</strong></span> 
+        <span>${action}</span>
+        <span class="action__todo"><strong>${cardContent}</strong></span>
+        <span>form <strong>${fromCategory}</strong> to <strong>${toCategory}<strong></span>
+    </div>
+    <div>
+        <span class="activity__time">${modifiedTime}</span>
+    </div>
+  </li>
   `;
-  return history;
+  return actionFromTo;
+}
+
+export function templateHistoryTo({
+  userId,
+  action,
+  cardContent,
+  toCategory,
+  modifiedTime,
+}) {
+  const actionTo = `
+  <li class="activity-menu__activity">
+    <div class="activity__action">
+      <span class="action__author"><strong>@${userId}</strong></span> 
+         <span>${action}</span>
+         <span class="action__todo"><strong>${cardContent}</strong></span>
+         <span>to <strong>${toCategory}<strong></span>
+      </div>
+      <div>
+          <span class="activity__time">${modifiedTime}</span>
+      </div>
+    </li>
+  `;
+  return actionTo;
 }

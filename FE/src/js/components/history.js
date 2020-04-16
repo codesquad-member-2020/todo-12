@@ -1,8 +1,10 @@
 import { _$, __, _c, fetchGetData } from "../lib/util.js";
+import { timeForToday } from "../lib/timeForToday.js";
 import { Component } from "./component.js";
 import {
-  templateHistory,
   templateHistoryMenu,
+  templateHistoryFromTo,
+  templateHistoryTo,
 } from "../template/templateHistory.js";
 
 export class History extends Component {
@@ -15,14 +17,13 @@ export class History extends Component {
     this.historyCloseBtn = "history-close-btn";
     this.slideIn = "slide-in";
     this.slideOut = "slide-out";
-    this.historyArea = "activity-menu__list";
-    // this.author = "action__author";
+    this.historyArea = ".activity-menu__list";
   }
   init() {
-    this.render();
+    this.historyMenuRender();
   }
 
-  render() {
+  historyMenuRender() {
     const historyHtml = templateHistoryMenu();
     const historyArea = _$(this.wrap);
     historyArea.insertAdjacentHTML("beforeend", historyHtml);
@@ -74,18 +75,33 @@ export class History extends Component {
     const historyUrl = `http://15.165.163.174/api//history`;
 
     fetchGetData(historyUrl).then((historyData) => {
-      //   this.historyRender(historyData);
       this.model.setHistory(historyData);
+      this.historyRender(historyData);
     });
   }
+
+  getHistoryHtml(historyInfo) {
+    if (!historyInfo.fromCategory) {
+      delete historyInfo.fromCategory;
+      return templateHistoryTo(historyInfo);
+    }
+
+    return templateHistoryFromTo(historyInfo);
+  }
+
   historyRender(historyData) {
-    historyData.forEach((history) => {
-      let userId = history.userId;
-      let action = history.action;
-      let cardContent = history.cardContent;
-      let fromContetn = history.fromCategory;
-      let toContetn = history.toCategory;
-      let modifiedTime = history.modifiedTime;
-    });
+    const reversedHistory = historyData.reverse();
+
+    const historyHtmlList = reversedHistory.reduce(
+      (historyList, historyInfo) => {
+        let historyHtml = null;
+        historyInfo.modifiedTime = timeForToday(historyInfo.modifiedTime);
+        historyHtml = this.getHistoryHtml(historyInfo);
+        return (historyList += historyHtml);
+      },
+      ""
+    );
+
+    _$(this.historyArea).innerHTML = historyHtmlList;
   }
 }

@@ -114,17 +114,5 @@ export class Model {
 
   setHistory(history) {
     this.historyList = history;
-    // this.view.historyRender(history)
-    console.log(this.historyList);
   }
-
-  // setTimeModified(create, modified) {
-  //   this._timeModified = timeForToday(create, modified);
-
-  //   return this.notyfi();
-  // }
-
-  // getTimeModified() {
-  //   return this._timeModified;
-  // }
 }
