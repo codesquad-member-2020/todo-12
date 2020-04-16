@@ -45,8 +45,7 @@ public class AccessService {
             Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            logger.info("token error >> {}", e.getMessage());
-            return false;
+            throw new InvalidTokenException(e.getMessage());
         }
     }
 
