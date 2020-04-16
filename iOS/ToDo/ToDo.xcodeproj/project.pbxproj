@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50623062448882000B7F40F /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50623052448882000B7F40F /* History.swift */; };
 		A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D3A9424462A85003CBA21 /* CardManager.swift */; };
 		A51D3A9724462B0F003CBA21 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D3A9624462B0F003CBA21 /* CategoryManager.swift */; };
 		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50623052448882000B7F40F /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		A51D3A9424462A85003CBA21 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		A51D3A9624462B0F003CBA21 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				A51D3A9424462A85003CBA21 /* CardManager.swift */,
 				A51D3A9624462B0F003CBA21 /* CategoryManager.swift */,
 				A59A6ED6244777520024645D /* DateExtension.swift */,
+				A50623052448882000B7F40F /* History.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
 				A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */,
+				A50623062448882000B7F40F /* History.swift in Sources */,
 				A53B1D16243EFABE00A22F9C /* Card.swift in Sources */,
 				A53B1D14243EFA2900A22F9C /* Category.swift in Sources */,
 				A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */,
