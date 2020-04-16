@@ -73,20 +73,39 @@ class BoardViewController: UIViewController {
     @objc func exchangeCellOnDifferentTable(_ notification: Notification) {
         guard let object = notification.userInfo?["object"] as? DragAndDropObject else {return}
         let removeInfo = object.willRemove
-        let optionalInsertInfo = object.willInsert
         
-        NotificationCenter.default.post(name: .postWillRemoveIndex,
-                                        object: nil,
-                                        userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
-        guard let insertInfo = optionalInsertInfo else {
-            NotificationCenter.default.post(name: .cardInserted,
-                                            object: nil,
-                                            userInfo: ["card" : removeInfo.card, "id" : model[2].id])
+        guard let insertInfo = object.willInsert else {
+            NetworkConnection.request(httpMethod: .PUT, quertString: "card/\(removeInfo.card.id)/move/\(3)/", httpBody: nil, errorHandler: {}) { _ in
+                DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .postWillRemoveIndex,
+                                                object: nil,
+                                                userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
+                NotificationCenter.default.post(name: .cardInserted,
+                                                object: nil,
+                                                userInfo: ["card" : removeInfo.card, "id" : self.model[2].id])
+                }
+            }
             return
         }
-        NotificationCenter.default.post(name: .cardInserted,
-                                        object: nil,
-                                        userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.categoryId, "card" : insertInfo.card])
+        
+        NetworkConnection.request(httpMethod: .PUT, quertString: "card/\(removeInfo.card.id)/move/\(insertInfo.categoryId)/\(insertInfo.indexPath.row)", httpBody: nil, errorHandler: {}) {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
+            do {
+                let card = try decoder.decode(Card.self, from: $0)
+                guard insertInfo.indexPath.row == card.categoryKey else {return}
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .postWillRemoveIndex,
+                                                    object: nil,
+                                                    userInfo: ["index" : removeInfo.indexPath.row, "id" : removeInfo.categoryId])
+                    
+                    NotificationCenter.default.post(name: .cardInserted,
+                                                    object: nil,
+                                                    userInfo: ["index" : insertInfo.indexPath.row, "id" : insertInfo.categoryId, "card" : insertInfo.card])
+                }
+            } catch {
+            }
+        }
     }
 }
 

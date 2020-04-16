@@ -169,14 +169,12 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let moveToDone = UIAction(title: "move to done") { _ in
-                guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
                 guard let id = self.categoryManager?.categoryId else {return}
-                let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card) , willInsert: nil)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7){
-                        NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
-                                                        object: nil,
-                                                        userInfo: ["object" : object])
-                }
+                guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
+                let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card), willInsert: nil)
+                NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
+                                                object: nil,
+                                                userInfo: ["object" : object])
             }
             
             let edit = UIAction(title: "edit...") { _ in
@@ -264,23 +262,11 @@ extension CardViewController: UITableViewDropDelegate {
                 
             }
             else if let dragObject = item.dragItem.localObject as? CardInfo {
-                let cardId = dragObject.card.id
-                
                 let object: DragAndDropObject = (willRemove: dragObject, willInsert: CardInfo(indexPath: destinationIndexPath, categoryId: categoryId, card: dragObject.card))
-                NetworkConnection.request(httpMethod: .PUT, quertString: "card/\(cardId)/move/\(categoryId)/\(destinationIndexPath.row)", httpBody: nil, errorHandler: {}) {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .formatted(DateFormatter.dateConverter)
-                    do {
-                        let card = try decoder.decode(Card.self, from: $0)
-                        guard destinationIndexPath.row == card.categoryKey else {return}
-                        DispatchQueue.main.async {
-                            NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
-                                                            object: nil,
-                                                            userInfo: ["object" : object])
-                        }
-                    } catch {
-                    }
-                }
+                NotificationCenter.default.post(name: .postWillExchangeIndexOnDifferentCategory,
+                                                object: nil,
+                                                userInfo: ["object" : object])
+                
             }
         }
     }
