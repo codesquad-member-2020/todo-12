@@ -30,7 +30,7 @@ class NetworkConnection {
         case DELETE
     }
     
-    class func request(httpMethod: HTTPMethod, queryString: String, httpBody: Data?, errorHandler: @escaping () -> (), handlder: @escaping (Data) -> Void){
+    class func request(httpMethod: HTTPMethod, queryString: String, httpBody: Data?, errorHandler: @escaping () -> (), failureHandler: @escaping (HTTPURLResponse) -> () = {_ in} , handlder: @escaping (Data) -> Void){
         let encodedString = (endPoint + queryString).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         guard let url = URL(string: encodedString) else {return}
         var request = URLRequest(url: url)
@@ -50,9 +50,11 @@ class NetworkConnection {
                 return
             }
             
-            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-            
-            handlder(data)
+            guard let data = data else {return}
+            guard let response = response as? HTTPURLResponse, response.statusCode != 200 else {
+                handlder(data)
+                return}
+            failureHandler(response)
         }
         
         dataTask.resume()
@@ -144,8 +146,8 @@ class NetworkConnection {
         }
     }
     
-    class func requestToken(body: Data, successHandler: @escaping () -> ()) {
-        request(httpMethod: .POST, queryString: "login", httpBody: body, errorHandler: {}) {
+    class func requestToken(body: Data,failureHandler: @escaping (HTTPURLResponse) -> () , successHandler: @escaping () -> ()) {
+        request(httpMethod: .POST, queryString: "login", httpBody: body, errorHandler: {}, failureHandler: failureHandler) {
             guard let token = String(data: $0, encoding: .utf8) else {
                 return
             }

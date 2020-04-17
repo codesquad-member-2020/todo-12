@@ -19,17 +19,23 @@ class LoginViewController: UIViewController {
         let encoder = JSONEncoder()
         do {
             let body = try encoder.encode(loginInfo)
-            NetworkConnection.requestToken(body: body) {
+            NetworkConnection.requestToken(body: body, failureHandler: {
+                print($0.statusCode)
+            }) {
                 NotificationCenter.default.post(name: .postLoginSuccess,
                                                 object: nil)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
             }
-            dismiss(animated: true)
         } catch {
             
         }
     }
     
     @IBAction func cancel(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .postLoginCanceled,
+                                        object: nil)
         dismiss(animated: true)
     }
     
@@ -41,4 +47,5 @@ class LoginViewController: UIViewController {
 
 extension Notification.Name {
     static let postLoginSuccess = Notification.Name("postLoginSuccess")
+    static let postLoginCanceled = Notification.Name("postLoginCanceled")
 }

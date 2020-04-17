@@ -21,6 +21,10 @@ class BoardViewController: UIViewController {
                                                selector: #selector(loginSuccess),
                                                name: .postLoginSuccess,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+        selector: #selector(loginCanceled),
+        name: .postLoginCanceled,
+        object: nil)
         guard let editView = self.storyboard?.instantiateViewController(identifier: "login") as? LoginViewController else {return}
         self.present(editView, animated: true)
         
@@ -30,18 +34,23 @@ class BoardViewController: UIViewController {
         let alert = UIAlertController(title: "로그인 성공", message: "환영합니다!", preferredStyle: .alert)
         let ok = UIAlertAction(title: "넵ㅎ", style: .default)
         alert.addAction(ok)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
-        }
+        
+        self.present(alert, animated: true)
+        
     }
     
     @objc func loginSuccess() {
-        loginSuccessAlert()
         loadModel()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(exchangeCellOnDifferentTable(_:)),
                                                name: .postWillExchangeIndexOnDifferentCategory,
                                                object: nil)
+    }
+    
+    @objc func loginCanceled() {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
     }
     
     private func alertErrorJsoneDecode() {
