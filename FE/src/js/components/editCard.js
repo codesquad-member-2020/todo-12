@@ -12,7 +12,7 @@ export class EditCard extends Component {
     this.selectorModal = "#popup__todo"; //이름 수정하기
     this.selectorTextarea = "popup__input"; //이름 수정하기
     this.selectorSaveBtn = "edit-save-btn";
-    this.selectorInputFocus = "input-active";
+    this.selectorInputFocus = "border-focus";
     this.inputFocus = true;
   }
 

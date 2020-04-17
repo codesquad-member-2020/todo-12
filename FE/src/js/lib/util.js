@@ -1,3 +1,4 @@
+
 export function _$(selector, target = document) {
   return target.querySelector(selector);
 }
@@ -79,20 +80,21 @@ export function filterNumber(str) {
   return parseInt(str.trim().replace(/[^0-9]/g, ""));
 }
 
+
 export function fetchData(
   url,
   method,
-  body,
-  requestOption = {
+  body
+) {
+  return fetch(url, {
     method: method,
     mode: "cors",
-    body: body,
+    body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
-    },
-  }
-) {
-  return fetch(url, requestOption)
+      Authorization: sessionStorage.getItem('token')
+    }
+  })
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);
@@ -103,8 +105,18 @@ export function fetchData(
     .catch((err) => console.error(err));
 }
 
-export function fetchGetData(url) {
-  return fetch(url)
+export function fetchGetData(
+  url,
+  token
+) {
+  return fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: sessionStorage.getItem('token'),
+    }
+  })
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);

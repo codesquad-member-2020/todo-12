@@ -11,28 +11,13 @@ export class View {
     this.cardArea = ".column__cards";
     this.card = ".column__card";
     this.column = ".todo__column";
-    this.inputFocus = "input-active";
+    this.inputFocus = "border-focus";
     this.cardContent = ".card__content";
+
     // this.cardSelectionFocus = "true"; // 인자로 넘기기
     // this.previousFocus = null;
   }
 
-  // fucusCard({ target }) {
-  //   if (!this.previousFocus) {
-  //     debugger;
-  //     _c(this.previousFocus).remove(this.inputFocus);
-  //   }
-  //   if (!this.cardSelectionFocus) return console.log(1);
-
-  //   if (target.dataset.focus !== this.cardSelectionFocus) return;
-  //   if (target.tagName === "LI") {
-  //     _c(target).add(this.inputFocus);
-  //     return (this.previousFocus = target);
-  //   }
-  //   const currentFocus = target.closest(this.card);
-  //   _c(currentFocus).add(this.inputFocus);
-  //   this.previousFocus = currentFocus;
-  // }
   columnRender(columnId) {
     const columnsHtml = templateColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
@@ -43,7 +28,6 @@ export class View {
       (column) => column.dataset.columnId === columnId
     );
 
-    // this.addEventHandler(currentColumn);
     return currentColumn;
   }
 
@@ -78,5 +62,19 @@ export class View {
   numberOfCardRender(numberOfCard, column) {
     const countArea = _$(".column__card-count", column);
     return (countArea.innerText = numberOfCard);
+  }
+
+  onFocus({ target }) {
+    if (this.focusCard) this.onFocusOut(this.focusCard);
+
+    const currentCard = target.closest(this.card);
+    if (!currentCard) return;
+
+    _c(currentCard).add(this.inputFocus);
+    this.focusCard = currentCard;
+  }
+
+  onFocusOut(card) {
+    _c(card).remove(this.inputFocus);
   }
 }

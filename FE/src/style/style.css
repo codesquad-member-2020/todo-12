@@ -28,16 +28,18 @@ h1 {
   padding: 1%;
 }
 #todo .todo__column {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
   padding: 16px;
   height: 85vmin;
-  overflow: auto;
   width: 365px;
   border-radius: 6px;
   border: 1px solid #e1e4e8;
   background-color: #eff1f3;
   font-weight: 600;
   font-size: 14px;
+  overflow: auto;
   box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
 }
 #todo #todo__add-column {
@@ -60,7 +62,7 @@ h1 {
 }
 
 #todo .column__cards {
-  height: 93%;
+  flex: 1;
 }
 
 #todo .column__card {
@@ -89,6 +91,7 @@ h1 {
   margin-right: 20px;
   word-break: break-all;
 }
+
 #todo .column__card:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
@@ -118,13 +121,22 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
 }
-#wrap .input-active {
+#wrap .border-focus {
   border-color: #2188ff;
   outline: none;
   box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075),
     0 0 0 0.2em rgba(3, 102, 214, 0.3);
   border-radius: 6px;
 }
+
+#wrap .border-focus.column__card:hover {
+  border-color: #2188ff;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075),
+    0 0 0 0.2em rgba(3, 102, 214, 0.3);
+  border-radius: 6px;
+}
+
 #wrap .plus-btn,
 #wrap .close-btn {
   padding: 0 4px;
