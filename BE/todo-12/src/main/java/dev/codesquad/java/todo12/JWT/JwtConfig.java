@@ -19,9 +19,7 @@ public class JwtConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor())
-                .addPathPatterns("/card/**")
-                .addPathPatterns("/category/**")
-                .excludePathPatterns("/login");
+                .excludePathPatterns("/**");
     }
 }
 
