@@ -10,7 +10,7 @@ import UIKit
 
 class HistoryTableViewController: UITableViewController {
     
-    var historys: [History]? {
+    private var historyManager: HistoryManager? {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -18,12 +18,14 @@ class HistoryTableViewController: UITableViewController {
         }
     }
     
+    private let operationQueue = OperationQueue()
+    
     override func viewDidLoad() {
         NetworkConnection.loadHistroyModel {
-            self.historys = $0.sorted {$0.id > $1.id}
+            self.historyManager = HistoryManager(historys: $0.sorted {$0.id > $1.id})
         }
-        let a = OperationQueue()
-        a.addOperation {
+        
+        operationQueue.addOperation {
             while true {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -31,77 +33,21 @@ class HistoryTableViewController: UITableViewController {
                 sleep(1)
             }
         }
+        
         super.viewDidLoad()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell") as? HistoryCell else {return UITableViewCell()}
-        guard let history = historys?[indexPath.row] else {return UITableViewCell()}
+        guard let history = historyManager?.history(at: indexPath.row) else {return UITableViewCell()}
         DispatchQueue.main.async {
-            switch history.action {
-            case "moved":
-                cell.contentLabel.attributedText = self.moved(history: history)
-                break
-            case "added":
-                cell.contentLabel.attributedText = self.added(history: history)
-                break
-            case "removed":
-                cell.contentLabel.attributedText = self.deleted(history: history)
-            case "updated":
-                cell.contentLabel.attributedText = self.updated(history: history)
-            default:
-                break
-            }
+            cell.contentLabel.attributedText = self.historyManager?.action(history: history)
             cell.timeLabel.text = Calendar.current.leftTime(date: history.modifiedTime)
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return historys?.count ?? 0
-    }
-    
-    func moved(history: History) -> NSMutableAttributedString {
-        let moved = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.fromCategory ?? "") to \(history.toCategory)"
-        let attributedString = NSMutableAttributedString(string: moved)
-        attributedString.setupStyle(fontSize: 20, color: .blue, originText: moved, targetText: "@" + history.userId)
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.cardTitle ?? "제목 없음")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.fromCategory ?? "")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: moved, targetText: history.toCategory)
-        return attributedString
-    }
-    
-    func added(history: History) -> NSMutableAttributedString {
-        let added = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") to \(history.toCategory)"
-        let attributedString = NSMutableAttributedString(string: added)
-        attributedString.setupStyle(fontSize: 20, color: .blue, originText: added, targetText: "@" + history.userId)
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: added, targetText: history.cardTitle ?? "제목 없음")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: added, targetText: history.toCategory)
-        return attributedString
-    }
-    
-    func deleted(history: History) -> NSMutableAttributedString {
-        let deleted = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") from \(history.toCategory)"
-        let attributedString = NSMutableAttributedString(string: deleted)
-        attributedString.setupStyle(fontSize: 20, color: .blue, originText: deleted, targetText: "@" + history.userId)
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.cardTitle ?? "제목 없음")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: deleted, targetText: history.toCategory)
-        return attributedString
-    }
-    
-    func updated(history: History) -> NSMutableAttributedString {
-        let updated = "@\(history.userId) \(history.action) \(history.cardTitle ?? "제목 없음") in \(history.toCategory)"
-        let attributedString = NSMutableAttributedString(string: updated)
-        attributedString.setupStyle(fontSize: 20, color: .blue, originText: updated, targetText: "@" + history.userId)
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: updated, targetText: history.cardTitle ?? "제목 없음")
-        attributedString.setupStyle(fontSize: 20, color: .systemOrange, originText: updated, targetText: history.toCategory)
-        return attributedString
-    }
-}
-
-extension NSMutableAttributedString {
-    func setupStyle(fontSize: CGFloat, color: UIColor, originText: String, targetText: String) {
-        let font = UIFont.boldSystemFont(ofSize: fontSize)
-        self.addAttributes([NSAttributedString.Key(rawValue: kCTFontAttributeName as String) : font, .foregroundColor : color], range: (originText as NSString).range(of: targetText))
+        return historyManager?.count ?? 0
     }
 }
