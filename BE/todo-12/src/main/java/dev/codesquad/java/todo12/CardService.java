@@ -24,6 +24,9 @@ public class CardService {
     @Autowired
     private HistoryRepository historyRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Transactional
     public Card viewCard(Long id) {
         return getCard(id);
@@ -32,7 +35,7 @@ public class CardService {
     @Transactional
     public Card createCard(Long categoryId, HashMap<String, String> cardInfo) {
         Category category = getCategory(categoryId);
-        Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
+        Card card = new Card(cardInfo.get("title"), cardInfo.get("content"), getUserId());
         category.addCard(card);
         categoryRepository.save(category);
         category = getCategory(categoryId);
@@ -86,6 +89,23 @@ public class CardService {
         return card;
     }
 
+    @Transactional
+    public Card moveCardToLast(Long id, Long categoryId) {
+        Card card = getCard(id);
+        Long fromCategoryId = card.getCategoryId();
+
+        Category fromCategory = getCategory(fromCategoryId);
+        fromCategory.deleteCard(card.getCategoryKey());
+        categoryRepository.save(fromCategory);
+
+        Category toCategory = getCategory(categoryId);
+        toCategory.addCard(card);
+        categoryRepository.save(toCategory);
+
+        card = getCard(id);
+        return card;
+    }
+
     private Card getCard(Long id) {
         return cardRepository.findById(id).orElseThrow(() -> new DataNotFoundException(NO_CARD));
     }
@@ -98,8 +118,12 @@ public class CardService {
         return categoryRepository.findNameById(id).orElseThrow(() -> new DataNotFoundException(NO_CATEGORY));
     }
 
+    private String getUserId() {
+        return tokenService.getUserId();
+    }
+
     private void logHistory(String action, String cardTitle, String cardContent, String fromCategory, String toCategory) {
-        History history = new History(action, cardTitle, cardContent, fromCategory, toCategory);
+        History history = new History(getUserId(), action, cardTitle, cardContent, fromCategory, toCategory);
         historyRepository.save(history);
     }
 

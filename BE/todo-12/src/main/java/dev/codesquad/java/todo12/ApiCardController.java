@@ -49,9 +49,9 @@ public class ApiCardController {
         return new ResponseEntity(card, HttpStatus.OK);
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private String catchDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
+    @PutMapping("/{id}/move/{categoryId}")
+    public ResponseEntity moveToLast(@PathVariable Long id, @PathVariable Long categoryId) {
+        Card card = cardService.moveCardToLast(id, categoryId);
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 }

@@ -47,10 +47,4 @@ public class ApiCategoryController {
         categoryService.deleteCategory(id);
         return new ResponseEntity(OK, HttpStatus.OK);
     }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private String catchDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
-    }
 }
