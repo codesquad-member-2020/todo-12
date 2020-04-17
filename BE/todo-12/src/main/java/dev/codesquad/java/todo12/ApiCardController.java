@@ -54,22 +54,4 @@ public class ApiCardController {
         Card card = cardService.moveCardToLast(id, categoryId);
         return new ResponseEntity(card, HttpStatus.OK);
     }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private String catchDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    private String catchUnauthorizedException(UnauthorizedException e) {
-        return e.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private String catchInvalidTokenException(InvalidTokenException e) {
-        return e.getMessage();
-    }
 }

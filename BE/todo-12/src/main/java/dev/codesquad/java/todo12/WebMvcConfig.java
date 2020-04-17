@@ -7,6 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+    private static final String[] EXCLUDE_PATHS = {
+            "/login/**",
+            "/",
+            "/card/**",
+            "/category/**",
+            "/history"
+    };
 
     @Bean
     public TokenInterceptor userInterceptor() {
@@ -17,10 +24,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/")
-                .excludePathPatterns("/card/**")
-                .excludePathPatterns("/category/**")
-                .excludePathPatterns("/history");
+                .excludePathPatterns(EXCLUDE_PATHS);
     }
 }

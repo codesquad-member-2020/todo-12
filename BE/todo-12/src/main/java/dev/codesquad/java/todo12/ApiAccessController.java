@@ -24,22 +24,4 @@ public class ApiAccessController {
         String str = "정상 접속 확인";
         return new ResponseEntity(str, HttpStatus.OK);
     }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private String catchDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    private String catchUnauthorizedException(UnauthorizedException e) {
-        return e.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private String catchInvalidTokenException(InvalidTokenException e) {
-        return e.getMessage();
-    }
 }
