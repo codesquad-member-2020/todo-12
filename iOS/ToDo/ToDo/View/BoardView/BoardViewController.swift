@@ -17,11 +17,13 @@ class BoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadModel()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(exchangeCellOnDifferentTable(_:)),
-                                               name: .postWillExchangeIndexOnDifferentCategory,
-                                               object: nil)
+        guard let editView = self.storyboard?.instantiateViewController(identifier: "login") as? LoginViewController else {return}
+        self.present(editView, animated: true)
+//        loadModel()
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(exchangeCellOnDifferentTable(_:)),
+//                                               name: .postWillExchangeIndexOnDifferentCategory,
+//                                               object: nil)
     }
     
     private func alertErrorJsoneDecode() {
