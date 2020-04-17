@@ -11,6 +11,7 @@ import Foundation
 class NetworkConnection {
     
     static let endPoint: String = "http://15.165.163.174/api/"
+    static var token: String!
     
     enum HTTPHeaderField {
         static let TYPE = "Content-Type"
@@ -135,6 +136,16 @@ class NetworkConnection {
             } catch {
                 failureHandler()
             }
+        }
+    }
+    
+    class func requestToken(body: Data, successHandler: @escaping () -> ()) {
+        request(httpMethod: .POST, queryString: "login", httpBody: body, errorHandler: {}) {
+            guard let token = String(data: $0, encoding: .utf8) else {
+                return
+            }
+            self.token = token
+            successHandler()
         }
     }
 }

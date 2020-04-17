@@ -17,13 +17,31 @@ class BoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(loginSuccess),
+                                               name: .postLoginSuccess,
+                                               object: nil)
         guard let editView = self.storyboard?.instantiateViewController(identifier: "login") as? LoginViewController else {return}
         self.present(editView, animated: true)
-//        loadModel()
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(exchangeCellOnDifferentTable(_:)),
-//                                               name: .postWillExchangeIndexOnDifferentCategory,
-//                                               object: nil)
+        
+    }
+    
+    func loginSuccessAlert() {
+        let alert = UIAlertController(title: "로그인 성공", message: "환영합니다!", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "넵ㅎ", style: .default)
+        alert.addAction(ok)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    @objc func loginSuccess() {
+        loginSuccessAlert()
+        loadModel()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(exchangeCellOnDifferentTable(_:)),
+                                               name: .postWillExchangeIndexOnDifferentCategory,
+                                               object: nil)
     }
     
     private func alertErrorJsoneDecode() {
