@@ -163,7 +163,6 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let moveToDone = UIAction(title: "move to done", image: UIImage(systemName: "paperplane")) { _ in
-                guard self.categoryManager?.categoryId != 3 else {return}
                 guard let id = self.categoryManager?.categoryId else {return}
                 guard let card = self.categoryManager?.card(at: indexPath.row) else {return}
                 let object: DragAndDropObject = (willRemove: CardInfo(indexPath: indexPath, categoryId: id, card: card), willInsert: nil)
@@ -205,9 +204,14 @@ extension CardViewController: UITableViewDelegate {
                     }
                 }
             }
-            let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
-            
-            return menu
+           
+            if self.categoryManager?.categoryId != 3 {
+                let menu = UIMenu(title: "", children: [moveToDone, edit, delete])
+                return menu
+            } else {
+                let menu = UIMenu(title: "", children: [edit, delete])
+                return menu
+            }
         }
         return configuration
     }
