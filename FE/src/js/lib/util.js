@@ -107,10 +107,10 @@ export function fetchData(
 
 export function fetchGetData(
   url,
-  token
+  method
 ) {
   return fetch(url, {
-    method: "GET",
+    method: method,
     mode: "cors",
     headers: {
       "Content-Type": "application/json",

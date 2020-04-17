@@ -67,7 +67,6 @@ export class EditCard extends Component {
   }
 
   onInputFocus() {
-    console.log(this.textarea);
     super.addInputFocusEvents(this.textarea, this.selectorInputFocus);
   }
 
@@ -80,7 +79,7 @@ export class EditCard extends Component {
     const { cardId, columnId } = this.getCardInfo();
     const editUrl = `http://15.165.163.174/api/card/${cardId}`;
 
-    fetchData(editUrl, "PUT", JSON.stringify(body)).then((cardData) =>
+    fetchData(editUrl, "PUT", body).then((cardData) =>
       this.updateCardData(columnId, cardData)
     );
   }
