@@ -141,18 +141,27 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="b4E-X1-KFP">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Menu" id="WoA-48-2iK">
-                            <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <connections>
-                                <segue destination="7RZ-sv-t65" kind="popoverPresentation" popoverAnchorBarButtonItem="WoA-48-2iK" id="DJ4-BG-SDq">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem enabled="NO" title="Menu" id="WoA-48-2iK">
+                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <connections>
+                                    <segue destination="7RZ-sv-t65" kind="popoverPresentation" popoverAnchorBarButtonItem="WoA-48-2iK" id="DJ4-BG-SDq">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" title="새로고침" image="arrow.clockwise" catalog="system" id="3oY-SN-RmN">
+                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <connections>
+                                    <action selector="reloadButtonPushed:" destination="BYZ-38-t0r" id="Ky5-fm-Bmp"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="1fU-nE-4We" id="bUh-sK-rQn"/>
                         <outlet property="menuButton" destination="WoA-48-2iK" id="Rue-Ca-5rD"/>
+                        <outlet property="reloadButton" destination="3oY-SN-RmN" id="0UB-cY-pB9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -529,6 +538,7 @@
         <segue reference="Xth-NZ-tkX"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="arrow.up.circle.fill" catalog="system" width="128" height="121"/>
         <image name="codesquad2" width="139.66667175292969" height="110.33333587646484"/>
         <image name="plus" catalog="system" width="128" height="113"/>

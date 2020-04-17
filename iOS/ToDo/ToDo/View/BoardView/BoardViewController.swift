@@ -12,7 +12,13 @@ class BoardViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var reloadButton: UIBarButtonItem!
     
+    @IBAction func reloadButtonPushed(_ sender: UIBarButtonItem) {
+        DispatchQueue.main.async {
+            self.loadModel()
+        }
+    }
     private var model: [Category] = [Category]()
     
     override func viewDidLoad() {
@@ -27,15 +33,6 @@ class BoardViewController: UIViewController {
         object: nil)
         guard let editView = self.storyboard?.instantiateViewController(identifier: "login") as? LoginViewController else {return}
         self.present(editView, animated: true)
-        
-    }
-    
-    func loginSuccessAlert() {
-        let alert = UIAlertController(title: "로그인 성공", message: "환영합니다!", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "넵ㅎ", style: .default)
-        alert.addAction(ok)
-        
-        self.present(alert, animated: true)
         
     }
     
@@ -81,6 +78,7 @@ class BoardViewController: UIViewController {
                 }
                 self.activityIndicator.isHidden = true
                 self.menuButton.isEnabled = true
+                self.reloadButton.isEnabled = true
             }
         }
     }
