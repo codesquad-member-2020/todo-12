@@ -18,6 +18,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
         final String token = request.getHeader(AUTHORIZATION);
         logger.info("token >> {}", token);
         if (!tokenService.isValidToken(token)) {
