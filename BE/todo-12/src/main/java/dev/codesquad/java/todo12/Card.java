@@ -21,10 +21,10 @@ public class Card {
     private String author;
     private String modifiedTime;
 
-    public Card(String title, String content) {
+    public Card(String title, String content, String author) {
         this.title = title;
         this.content = content;
-        this.author = null;
+        this.author = author;
         this.modifiedTime = seoulTime();
     }
 

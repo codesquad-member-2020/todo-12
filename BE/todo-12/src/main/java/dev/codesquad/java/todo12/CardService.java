@@ -35,7 +35,7 @@ public class CardService {
     @Transactional
     public Card createCard(Long categoryId, HashMap<String, String> cardInfo) {
         Category category = getCategory(categoryId);
-        Card card = new Card(cardInfo.get("title"), cardInfo.get("content"));
+        Card card = new Card(cardInfo.get("title"), cardInfo.get("content"), getUserId());
         category.addCard(card);
         categoryRepository.save(category);
         category = getCategory(categoryId);
