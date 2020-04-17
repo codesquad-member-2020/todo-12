@@ -1,5 +1,5 @@
 import { Component } from "./component.js";
-import { fetchGetData } from "../lib/util.js";
+import { fetchData } from "../lib/util.js";
 
 
 export class CardDeletion extends Component {
@@ -25,8 +25,7 @@ export class CardDeletion extends Component {
 
   deleteData(id) {
     const url = `http://15.165.163.174:8080/card/${id}`;
-
-    fetchGetData(url, "DELETE").then(() =>
+    fetchData(url, "DELETE").then(() =>
       this.model.deleteCard(id)
     );
 
