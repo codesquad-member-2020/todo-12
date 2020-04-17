@@ -21,4 +21,5 @@ public class StaticApiUtils {
     public static final String TOKEN_IDENTIFIER_NAME = "group";
     public static final String TOKEN_IDENTIFIER_VALUE = "codesquad-todo12";
     public static final String AUTHORIZATION = "Authorization";
+    public static final String NULL_TOKEN_USER = "visitor";
 }

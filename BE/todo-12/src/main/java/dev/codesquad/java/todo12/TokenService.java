@@ -53,8 +53,11 @@ public class TokenService {
     public String getUserId() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String token = request.getHeader(AUTHORIZATION);
-        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-        return claims.getBody().getSubject();
+        if (token != null) {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return claims.getBody().getSubject();
+        }
+        return NULL_TOKEN_USER;
     }
 
     private User validatedUser(HashMap<String, String> userInfo) {
