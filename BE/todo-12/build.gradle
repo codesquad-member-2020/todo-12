@@ -37,6 +37,11 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	compile 'io.springfox:springfox-swagger2:2.6.1'
 	compile 'io.springfox:springfox-swagger-ui:2.6.1'
+
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.5'
+	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
+
 }
 
 test {

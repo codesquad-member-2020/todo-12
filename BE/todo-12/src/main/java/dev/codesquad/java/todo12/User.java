@@ -21,4 +21,18 @@ public class User {
         this.userId = userId;
         this.password = password;
     }
+
+    public User() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
