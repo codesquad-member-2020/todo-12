@@ -11,14 +11,16 @@ import Foundation
 class NetworkConnection {
     
     static let endPoint: String = "http://15.165.163.174/api/"
-    static var token: String!
+    
     
     enum HTTPHeaderField {
         static let TYPE = "Content-Type"
+        static let Authorization = "Authorization"
     }
     
     enum HTTPHeaderValue {
         static let JSON = "application/json"
+        static var token: String?
     }
     
     enum HTTPMethod: String {
@@ -35,6 +37,9 @@ class NetworkConnection {
         
         request.httpMethod = httpMethod.rawValue
         request.addValue(HTTPHeaderValue.JSON, forHTTPHeaderField: HTTPHeaderField.TYPE)
+        if let token = HTTPHeaderValue.token {
+            request.addValue(token, forHTTPHeaderField: HTTPHeaderField.Authorization)
+        }
         if let body = httpBody {
             request.httpBody = body
         }
@@ -144,7 +149,7 @@ class NetworkConnection {
             guard let token = String(data: $0, encoding: .utf8) else {
                 return
             }
-            self.token = token
+            self.HTTPHeaderValue.token = token
             successHandler()
         }
     }
