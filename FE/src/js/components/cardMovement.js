@@ -1,8 +1,6 @@
 import { _$, __, _c, _a$, fetchData } from "../lib/util.js";
 import { Component } from "./component.js";
 
-//카드 이동시 애니매에션 추가하기
-
 export class CardMovement extends Component {
   constructor({ model }) {
     super();

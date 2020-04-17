@@ -12,7 +12,6 @@ export class CardCreation extends Component {
     this.borderFocus = "border-focus";
     this.column = ".todo__column";
     this.model = model;
-    // this.inputFocus =
   }
 
   addClickHandler({ target }) {
@@ -67,6 +66,7 @@ export class CardCreation extends Component {
   onAddCardBtn(currentColumn) {
     const columnId = this.model.getColumnId(currentColumn);
     const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
+
     const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
 
     const inputValue = cardCreationInput.value;

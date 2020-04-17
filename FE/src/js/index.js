@@ -32,27 +32,22 @@ function init() {
   controller.fetchInitialData();
 }
 
-export function a(tokenHeader) {
-  return tokenHeader;
-}
-
 function login() {
   const loginUrl = `http://13.124.5.39:8080/login`;
   const body = { userId: "todo12", password: "todo12" };
 
-  const b = JSON.stringify(body);
+  const strBody = JSON.stringify(body);
   fetch(loginUrl, {
     method: "POST",
     mode: "cors",
-    body: b,
+    body: strBody,
     headers: {
       "Content-Type": "application/json",
     },
   })
     .then((res) => res.json())
     .then((token) => {
-      const tokenHeader = `Authorization: ${token.jwt}`;
-      localStorage.setItem("token", token.jwt);
+      sessionStorage.setItem("token", token.jwt);
       console.log(token.jwt);
     });
   init();
