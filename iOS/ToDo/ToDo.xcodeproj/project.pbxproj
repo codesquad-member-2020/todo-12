@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50623062448882000B7F40F /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50623052448882000B7F40F /* History.swift */; };
 		A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D3A9424462A85003CBA21 /* CardManager.swift */; };
 		A51D3A9724462B0F003CBA21 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D3A9624462B0F003CBA21 /* CategoryManager.swift */; };
+		A532B11D2449386A0001116B /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A532B11C2449386A0001116B /* HistoryManager.swift */; };
+		A532B11F244950930001116B /* NSMutableAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A532B11E244950930001116B /* NSMutableAttributedStringExtension.swift */; };
 		A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D08243DF39000A22F9C /* EditCardViewController.swift */; };
 		A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */; };
 		A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */; };
@@ -26,6 +29,7 @@
 		A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288B243B64A2008A75EF /* CardViewController.swift */; };
 		A5D92890243C4AD7008A75EF /* CardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D9288F243C4AD7008A75EF /* CardDataSource.swift */; };
 		A5D92892243C4B56008A75EF /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D92891243C4B56008A75EF /* CardCell.swift */; };
+		A5DD05272448C69C00AC5B3A /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD05262448C69C00AC5B3A /* HistoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50623052448882000B7F40F /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		A51D3A9424462A85003CBA21 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		A51D3A9624462B0F003CBA21 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
+		A532B11C2449386A0001116B /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		A532B11E244950930001116B /* NSMutableAttributedStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedStringExtension.swift; sourceTree = "<group>"; };
 		A53B1D08243DF39000A22F9C /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
 		A53B1D0A243DF8A500A22F9C /* ContentsTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsTextViewDelegate.swift; sourceTree = "<group>"; };
 		A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
@@ -62,6 +69,7 @@
 		A5D9288B243B64A2008A75EF /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		A5D9288F243C4AD7008A75EF /* CardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDataSource.swift; sourceTree = "<group>"; };
 		A5D92891243C4B56008A75EF /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		A5DD05262448C69C00AC5B3A /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,15 +90,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A53B1D0C243EE49600A22F9C /* Model */ = {
+		A532B120244950BC0001116B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A59A6ED6244777520024645D /* DateExtension.swift */,
+				A532B11E244950930001116B /* NSMutableAttributedStringExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A532B121244950D10001116B /* History */ = {
+			isa = PBXGroup;
+			children = (
+				A50623052448882000B7F40F /* History.swift */,
+				A532B11C2449386A0001116B /* HistoryManager.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		A532B122244950F10001116B /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				A53B1D0D243EE4EB00A22F9C /* NetworkConnection.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		A532B123244950F90001116B /* Category */ = {
+			isa = PBXGroup;
+			children = (
 				A53B1D13243EFA2900A22F9C /* Category.swift */,
+				A51D3A9624462B0F003CBA21 /* CategoryManager.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		A532B124244951080001116B /* Card */ = {
+			isa = PBXGroup;
+			children = (
 				A53B1D15243EFABE00A22F9C /* Card.swift */,
 				A51D3A9424462A85003CBA21 /* CardManager.swift */,
-				A51D3A9624462B0F003CBA21 /* CategoryManager.swift */,
-				A59A6ED6244777520024645D /* DateExtension.swift */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		A53B1D0C243EE49600A22F9C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A532B124244951080001116B /* Card */,
+				A532B123244950F90001116B /* Category */,
+				A532B120244950BC0001116B /* Extension */,
+				A532B121244950D10001116B /* History */,
+				A532B122244950F10001116B /* Network */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -147,11 +198,46 @@
 		A5D92886243B4027008A75EF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A5E451FA243F349D0067B917 /* StoryBoard */,
+				A5DD05242448C65000AC5B3A /* BoardView */,
 				A5E451F5243F34470067B917 /* CardView */,
-				A5D92861243AF8DC008A75EF /* BoardViewController.swift */,
+				A5DD05232448C62B00AC5B3A /* EditView */,
+				A5DD05222448C62000AC5B3A /* HistoryView */,
+				A5E451FA243F349D0067B917 /* StoryBoard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A5DD05222448C62000AC5B3A /* HistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				A5DD05252448C68F00AC5B3A /* Cell */,
+				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
+			);
+			path = HistoryView;
+			sourceTree = "<group>";
+		};
+		A5DD05232448C62B00AC5B3A /* EditView */ = {
+			isa = PBXGroup;
+			children = (
+				A53B1D08243DF39000A22F9C /* EditCardViewController.swift */,
+			);
+			path = EditView;
+			sourceTree = "<group>";
+		};
+		A5DD05242448C65000AC5B3A /* BoardView */ = {
+			isa = PBXGroup;
+			children = (
+				A5D92861243AF8DC008A75EF /* BoardViewController.swift */,
+			);
+			path = BoardView;
+			sourceTree = "<group>";
+		};
+		A5DD05252448C68F00AC5B3A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A5DD05262448C69C00AC5B3A /* HistoryCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		A5E451F5243F34470067B917 /* CardView */ = {
@@ -160,8 +246,6 @@
 				A5E451F9243F34910067B917 /* Cell */,
 				A5E451F8243F34880067B917 /* DataSource */,
 				A5D9288B243B64A2008A75EF /* CardViewController.swift */,
-				A5D92883243B3FC6008A75EF /* HistoryTableViewController.swift */,
-				A53B1D08243DF39000A22F9C /* EditCardViewController.swift */,
 			);
 			path = CardView;
 			sourceTree = "<group>";
@@ -298,11 +382,15 @@
 				A51D3A9524462A85003CBA21 /* CardManager.swift in Sources */,
 				A53B1D0E243EE4EB00A22F9C /* NetworkConnection.swift in Sources */,
 				A5D9285E243AF8DC008A75EF /* AppDelegate.swift in Sources */,
+				A532B11D2449386A0001116B /* HistoryManager.swift in Sources */,
+				A5DD05272448C69C00AC5B3A /* HistoryCell.swift in Sources */,
 				A5D92892243C4B56008A75EF /* CardCell.swift in Sources */,
 				A5D9288C243B64A2008A75EF /* CardViewController.swift in Sources */,
 				A5D92860243AF8DC008A75EF /* SceneDelegate.swift in Sources */,
 				A53B1D0B243DF8A500A22F9C /* ContentsTextViewDelegate.swift in Sources */,
+				A50623062448882000B7F40F /* History.swift in Sources */,
 				A53B1D16243EFABE00A22F9C /* Card.swift in Sources */,
+				A532B11F244950930001116B /* NSMutableAttributedStringExtension.swift in Sources */,
 				A53B1D14243EFA2900A22F9C /* Category.swift in Sources */,
 				A53B1D09243DF39000A22F9C /* EditCardViewController.swift in Sources */,
 				A5D92890243C4AD7008A75EF /* CardDataSource.swift in Sources */,
