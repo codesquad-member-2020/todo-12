@@ -1,5 +1,5 @@
 import { templateHeader } from "./template/templateHeader.js";
-import { _$, fetchData } from "./lib/util.js";
+import { _$ } from "./lib/util.js";
 import { Controller } from "./card/controller.js";
 import { View } from "./card/view.js";
 import { CardCreation } from "./components/cardCreation.js";
@@ -8,7 +8,6 @@ import { CardDeletion } from "./components/cardDeletion.js";
 import { EditCard } from "./components/editCard.js";
 import { History } from "./components/history.js";
 import { Model } from "./card/model.js";
-// import { mock } from "./mock.js";
 
 // import css from "../style/style.css";
 
