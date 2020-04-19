@@ -11,7 +11,7 @@ import { Model } from "./column/model.js";
 import { creationInfo, deletionInfo, movementInfo, editInfo, historyInfo } from "./constants/components.js"
 import { controllerInfo, modelInfo, viewInfo } from "./constants/column.js"
 
-// import css from "../style/style.css";
+import css from "../style/style.css";
 
 function init() {
   const header = templateHeader();
