@@ -5,7 +5,7 @@ export class Component {
   init() { }
   addClickHandler(event) { }
   addDblclickHandler(event) { }
-  addInputHandler(evet) { }
+  addInputHandler(event) { }
 
   activateBtn(target, input) {
     if (!input.value) return (target.disabled = "disabled");
