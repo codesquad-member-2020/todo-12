@@ -1,33 +1,39 @@
 import { Component } from "./component.js";
-import { fetchData } from "../lib/util.js";
+import { fetchResponse } from "../lib/util.js";
 
 
 export class CardDeletion extends Component {
-  constructor({ model }) {
+  constructor({ model, deletionInfo }) {
     super();
     this.model = model;
-    this.closetBtn = "card-delete-btn";
-    this.card = ".column__card";
-    this.selectionMessage = "선택하신 카드를 삭제하시겠습니까?"
+    this.selector = deletionInfo.selector
+    this.option = deletionInfo.option
+    this.deletionUrl = deletionInfo.fetchUrl
+    this.deletionMessage = deletionInfo.deletionMessage
   }
 
   addClickHandler({ target }) {
-    if (target.dataset.type !== this.closetBtn) return;
-    if (confirm(this.selectionMessage))
-      return this.getCardInfo(target);
+    if (target.dataset.type !== this.selector.closetBtn) return;
+
+    if (this.option.confirm) return this.confirmDeletion(target);
+    return this.getCardId(target);
   }
 
-  getCardInfo(target) {
-    const currentCard = target.closest(this.card);
+  confirmDeletion(target) {
+    if (confirm(this.deletionMessage)) return this.getCardId(target);
+  }
+
+  getCardId(target) {
+    const currentCard = target.closest(this.selector.card);
     const currentCardId = this.model.getCardList(currentCard).id;
     this.deleteData(currentCardId);
+    return currentCardId;
   }
 
-  deleteData(id) {
-    const url = `http://15.165.163.174:8080/card/${id}`;
-    fetchData(url, "DELETE").then(() =>
-      this.model.deleteCard(id)
+  deleteData(cardId) {
+    const deletionUrl = this.deletionUrl.replace('{cardId}', cardId);
+    fetchResponse(deletionUrl, "DELETE").then(() =>
+      this.model.deleteCard(cardId)
     );
-
   }
 }

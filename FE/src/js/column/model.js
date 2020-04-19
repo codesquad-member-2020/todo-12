@@ -1,24 +1,24 @@
-import { _$, __, _c, __$, _a$, fetchGetData } from "../lib/util.js";
+import { _$, __, _c, _a$ } from "../lib/util.js";
 
 export class Model {
-  constructor({ view }) {
+  constructor({ view, modelInfo }) {
     this.view = view;
     this.columnList = new Map();
     this.cardList = new Map();
     this.cardLength = {};
-    this.card = ".column__card";
+    this.selector = modelInfo.selector;
   }
 
   setColumnList(id) {
-    const column = this.view.columnRender(id);
+    const columnElement = this.view.columnRender(id);
 
-    this.columnList.set(column, {
+    this.columnList.set(columnElement, {
       id: id,
       name: null,
     });
 
     this.columnList.set(id, {
-      column: column,
+      column: columnElement,
       name: null,
     });
   }
@@ -52,12 +52,12 @@ export class Model {
 
     if (!option) this.view.cardRender(cardContent, column);
 
-    const AllCards = _a$(this.card);
-    const card = [...AllCards].find((card) => card.dataset.cardId === cardId);
+    const AllCards = _a$(this.selector.card);
+    const cardElement = [...AllCards].find((card) => card.dataset.cardId === cardId);
 
-    if (option === "update") this.view.updateCard(cardContent.content, card);
+    if (option === "update") this.view.updateCard(cardContent.content, cardElement);
 
-    this.cardList.set(card, {
+    this.cardList.set(cardElement, {
       id: cardId,
       cardData: cardContent,
       columnId: columnId,
@@ -65,7 +65,7 @@ export class Model {
     });
 
     this.cardList.set(cardId, {
-      card: card,
+      card: cardElement,
       cardData: cardContent,
       columnId: columnId,
       column: column,

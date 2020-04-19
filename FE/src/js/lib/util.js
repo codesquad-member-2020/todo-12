@@ -80,13 +80,11 @@ export function filterNumber(str) {
   return parseInt(str.trim().replace(/[^0-9]/g, ""));
 }
 
-
 export function fetchData(
   url,
   method,
-  body
-) {
-  return fetch(url, {
+  body,
+  requestOption = {
     method: method,
     mode: "cors",
     body: JSON.stringify(body),
@@ -94,7 +92,9 @@ export function fetchData(
       "Content-Type": "application/json",
       Authorization: sessionStorage.getItem('token')
     }
-  })
+  }
+) {
+  return fetch(url, requestOption)
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);
@@ -105,18 +105,45 @@ export function fetchData(
     .catch((err) => console.error(err));
 }
 
-export function fetchGetData(
+export function fetchResponse(
   url,
-  method
-) {
-  return fetch(url, {
+  method,
+  body,
+  requestOption = {
     method: method,
     mode: "cors",
+    body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
-      Authorization: sessionStorage.getItem('token'),
+      Authorization: sessionStorage.getItem('token')
     }
-  })
+  }
+) {
+  return fetch(url, requestOption)
+    .then((res) => {
+      if (res.ok) {
+        return res;
+      } else {
+        console.error(res.statusText);
+      }
+    })
+    .catch((err) => console.error(err));
+}
+
+export function fetchToken(
+  url,
+  method,
+  body,
+  requestOption = {
+    method: method,
+    mode: "cors",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }
+) {
+  return fetch(url, requestOption)
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);
