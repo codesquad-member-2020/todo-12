@@ -1,35 +1,31 @@
-import { _$, __, _c, _a$, fetchData } from "../lib/util.js";
+import { _$, __, _c, fetchData } from "../lib/util.js";
 import { Component } from "./component.js";
 
 export class CardCreation extends Component {
-  constructor({ model }) {
+  constructor({ model, creationInfo }) {
     super();
-    this.btnShowingAddForm = "btn-showing-creation";
-    this.cardCreationInput = "card-creation-input";
-    this.cancelCardBtn = "cancel-card-btn";
-    this.addCardBtn = "add-card-btn";
-    this.addCardForm = ".add__todo";
-    this.borderFocus = "border-focus";
-    this.column = ".todo__column";
+    this.selector = creationInfo.selector;
+    this.option = creationInfo.option;
+    this.creationUrl = creationInfo.fetchUrl;
     this.model = model;
   }
 
   addClickHandler({ target }) {
-    const currentColumn = target.closest(this.column);
+    const currentColumn = target.closest(this.selector.column);
 
     const eventTarget = target.dataset.type;
     switch (eventTarget) {
-      case this.btnShowingAddForm:
+      case this.selector.btnShowingAddForm:
         this.onBtnShowingAddForm(currentColumn);
         break;
-      case this.cardCreationInput:
-        // if(!this.inputFocus) return;
+      case this.selector.cardCreationInput:
+        if (!this.option.borderFocus) return;
         this.onInputFocus(currentColumn);
         break;
-      case this.cancelCardBtn:
+      case this.selector.cancelCardBtn:
         this.onCancelCardBtn(currentColumn);
         break;
-      case this.addCardBtn:
+      case this.selector.addCardBtn:
         this.onAddCardBtn(currentColumn);
       default:
         return;
@@ -37,27 +33,27 @@ export class CardCreation extends Component {
   }
 
   onBtnShowingAddForm(currentColumn) {
-    const currentAddForm = _$(this.addCardForm, currentColumn);
+    const currentAddForm = _$(this.selector.addCardForm, currentColumn);
 
     __(currentAddForm).toggle();
   }
 
   addInputHandler({ target }) {
-    if (target.dataset.type !== this.cardCreationInput) return;
-    const currentColumn = target.closest(this.column);
+    if (target.dataset.type !== this.selector.cardCreationInput) return;
+    const currentColumn = target.closest(this.selector.column);
 
-    const addCardBtn = _$("." + this.addCardBtn, currentColumn);
-    super.activateBtn(addCardBtn, target);
+    const addCardBtn = _$("." + this.selector.addCardBtn, currentColumn);
+    if (this.option.disabled) super.activateBtn(addCardBtn, target);
   }
 
   onInputFocus(currentColumn) {
-    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
-    super.addInputFocusEvents(cardCreationInput, this.borderFocus);
+    const cardCreationInput = _$("." + this.selector.cardCreationInput, currentColumn);
+    super.addBorderFocusEvents(cardCreationInput, this.selector.borderFocus);
   }
 
   onCancelCardBtn(currentColumn) {
-    const closeBtn = _$("." + this.btnShowingAddForm, currentColumn);
-    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
+    const closeBtn = _$("." + this.selector.btnShowingAddForm, currentColumn);
+    const cardCreationInput = _$("." + this.selector.cardCreationInput, currentColumn);
 
     closeBtn.click();
     cardCreationInput.value = "";
@@ -65,24 +61,24 @@ export class CardCreation extends Component {
 
   onAddCardBtn(currentColumn) {
     const columnId = this.model.getColumnId(currentColumn);
-    const creationUrl = `http://15.165.163.174:8080/card/${columnId}`;
+    const creationUrl = this.creationUrl.replace("{columnId}", columnId);
 
-    const cardCreationInput = _$("." + this.cardCreationInput, currentColumn);
+    const cardCreationInput = _$("." + this.selector.cardCreationInput, currentColumn);
 
     const inputValue = cardCreationInput.value;
     const jsonBody = { content: inputValue };
 
     fetchData(creationUrl, "POST", jsonBody).then((cardData) =>
-      this.addCardData(columnId, cardData, currentColumn)
+      this.setCardData(columnId, cardData, currentColumn)
     );
     cardCreationInput.value = "";
   }
 
-  addCardData(columnId, cardData, currentColumn) {
+  setCardData(columnId, cardData, currentColumn) {
     this.model.setCardList(columnId, cardData);
     this.model.increaseCardLength(columnId);
 
-    const currentAddBtn = _$("." + this.addCardBtn, currentColumn);
-    currentAddBtn.disabled = "disabled";
+    const currentAddBtn = _$("." + this.selector.addCardBtn, currentColumn);
+    if (this.option.disabled) currentAddBtn.disabled = "disabled";
   }
 }

@@ -2,34 +2,29 @@ import { _$, __, _c, fetchData } from "../lib/util.js";
 import { Component } from "./component.js";
 import { templateEditModal } from "../template/templateEditModal.js";
 
-export class EditCard extends Component {
-  constructor({ model }) {
+export class CardEdit extends Component {
+  constructor({ model, editInfo }) {
     super();
     this.model = model;
-    this.closeBtn = "edit-close-btn";
-    this.wrap = "#wrap";
-    this.selectorCard = ".column__card";
-    this.selectorModal = "#popup__todo"; //이름 수정하기
-    this.selectorTextarea = "popup__input"; //이름 수정하기
-    this.selectorSaveBtn = "edit-save-btn";
-    this.selectorInputFocus = "border-focus";
-    this.inputFocus = true;
+    this.selector = editInfo.selector;
+    this.option = editInfo.option;
+    this.editUrl = editInfo.fetchUrl;
   }
 
   init() {
     this.render();
-    this.modal = _$(this.selectorModal);
-    this.textarea = _$("." + this.selectorTextarea);
-    this.saveBtn = _$("." + this.selectorSaveBtn);
+    this.modal = _$(this.selector.modal);
+    this.textarea = _$("." + this.selector.textarea);
+    this.saveBtn = _$("." + this.selector.saveBtn);
   }
   render() {
     const editHtml = templateEditModal();
-    const editArea = _$(this.wrap);
+    const editArea = _$(this.selector.wrap);
     editArea.insertAdjacentHTML("beforeend", editHtml);
   }
 
   addDblclickHandler({ target }) {
-    this.card = target.closest(this.selectorCard);
+    this.card = target.closest(this.selector.card);
     if (!this.card) return;
 
     __(this.modal).show();
@@ -52,13 +47,13 @@ export class EditCard extends Component {
     const eventTarget = target.dataset.type;
 
     switch (eventTarget) {
-      case this.closeBtn:
+      case this.selector.closeBtn:
         this.onCloseBtn();
         break;
-      case this.selectorSaveBtn:
+      case this.selector.saveBtn:
         this.onSaveBtn();
         break;
-      case this.selectorTextarea:
+      case this.selector.textarea:
         this.onInputFocus();
         break;
       default:
@@ -67,17 +62,17 @@ export class EditCard extends Component {
   }
 
   onInputFocus() {
-    super.addInputFocusEvents(this.textarea, this.selectorInputFocus);
+    if (this.option.borderFocus) super.addBorderFocusEvents(this.textarea, this.selector.borderFocus);
   }
 
   onCloseBtn() {
-    __(this.modal).hide();
+    return __(this.modal).hide();
   }
 
   onSaveBtn() {
     const body = { content: this.inputValue };
     const { cardId, columnId } = this.getCardInfo();
-    const editUrl = `http://15.165.163.174/api/card/${cardId}`;
+    const editUrl = this.editUrl.replace('{cardId}', cardId);
 
     fetchData(editUrl, "PUT", body).then((cardData) =>
       this.updateCardData(columnId, cardData)
@@ -90,9 +85,9 @@ export class EditCard extends Component {
   }
 
   addInputHandler({ target }) {
-    if (target.dataset.type !== this.selectorTextarea) return;
+    if (target.dataset.type !== this.selector.textarea) return;
 
-    super.activateBtn(this.saveBtn, this.textarea);
+    if (this.option.disabled) super.activateBtn(this.saveBtn, this.textarea);
     this.inputValue = target.value;
   }
 }

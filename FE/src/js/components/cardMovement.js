@@ -2,24 +2,28 @@ import { _$, __, _c, _a$, fetchData } from "../lib/util.js";
 import { Component } from "./component.js";
 
 export class CardMovement extends Component {
-  constructor({ model }) {
+  constructor({ model, movementInfo }) {
     super();
-    this.dragArea = ".column__cards";
-    this.card = ".column__card";
-    this.dragging = "dragging";
-    this.column = ".todo__column";
+    this.selector = movementInfo.selector;
+    this.option = movementInfo.option;
+    this.movementUrl = movementInfo.fetchUrl;
     this.model = model;
+    this.previousColumnId = null;
+    this.previousCardIndex = null;
+    this.currentColumnId = null;
+    this.currentCardIndex = null;
+    this.cardId = null;
   }
   init() {
-    const cards = _a$(this.card);
-    const dragArea = _a$(this.dragArea);
-
-    this.onEvent(cards, dragArea);
+    const dragArea = _a$(this.selector.dragArea);
+    const cards = _a$(this.selector.card);
+    this.onEvent(dragArea, cards);
   }
 
-  onEvent(cards, dragArea) {
+  onEvent(dragArea, cards) {
+
     cards.forEach((draggable) => {
-      __(draggable).on("dragstart", () => _c(draggable).add(this.dragging));
+      __(draggable).on("dragstart", () => _c(draggable).add(this.selector.dragging));
 
       __(draggable).on("dragend", () => this.onDragEnd(draggable));
     });
@@ -30,70 +34,62 @@ export class CardMovement extends Component {
   }
 
   onDragEnd(draggable) {
-    _c(draggable).remove(this.dragging);
+    _c(draggable).remove(this.selector.dragging);
 
-    const {
-      previousColumnId,
-      previousCardIndex,
-      cardId,
-    } = this.getPreviousCardInfo(draggable);
-
-    const { currentColumnId, currentCardIndex } = this.getCurrentCardInfo(
-      draggable
-    );
+    this.getPreviousCardInfo(draggable);
+    this.getCurrentCardInfo(draggable);
 
     const sameLocation =
-      previousColumnId === currentColumnId &&
-      previousCardIndex === currentCardIndex;
+      this.previousColumnId === this.currentColumnId &&
+      this.previousCardIndex === this.currentCardIndex;
 
     if (sameLocation) return;
-    this.fetchDataMovement(
-      cardId,
-      currentColumnId,
-      currentCardIndex,
-      previousColumnId
-    );
+    const movementUrl = this.getMovementUrl();
+    this.fetchDataMovement(movementUrl);
   }
 
   getPreviousCardInfo(draggable) {
     const cardList = this.model.getCardList(draggable);
-    const previousColumnId = cardList.columnId;
-    const previousCardIndex = cardList.cardData.categoryKey;
-    const cardId = cardList.id;
-
-    return { previousColumnId, previousCardIndex, cardId };
+    this.previousColumnId = cardList.columnId;
+    this.previousCardIndex = cardList.cardData.categoryKey;
+    this.cardId = cardList.id;
   }
 
   getCurrentCardInfo(draggable) {
-    const currentColumn = draggable.closest(this.column);
-    const currentColumnId = currentColumn.dataset.columnId;
+    const currentColumn = draggable.closest(this.selector.column);
+    this.currentColumnId = currentColumn.dataset.columnId;
 
-    const currentDragArea = _$(this.dragArea, currentColumn);
-    const currentCardIndex = this.getChildIndex(draggable, currentDragArea);
-
-    return { currentColumnId, currentCardIndex };
+    const currentDragArea = _$(this.selector.dragArea, currentColumn);
+    this.currentCardIndex = this.getChildIndex(draggable, currentDragArea);
   }
 
   onDragover(event, cards) {
     event.preventDefault();
 
     const afterElement = this.getDragAfterElement(cards, event.clientY);
-    const draggable = _$("." + this.dragging);
+    const draggable = _$("." + this.selector.dragging);
 
-    if (afterElement === null) {
+    if (!afterElement) {
       cards.appendChild(draggable);
     } else {
       cards.insertBefore(draggable, afterElement);
     }
   }
 
-  fetchDataMovement(cardId, columnId, cardIndex, previousColumnId) {
-    const movementUrl = `http://15.165.163.174/api/card/${cardId}/move/${columnId}/${cardIndex}`;
+  getMovementUrl() {
+    const movementUrl = this.movementUrl
+      .replace("{cardId}", this.cardId)
+      .replace("{columnId}", this.currentColumnId)
+      .replace("{cardIndex}", this.currentCardIndex)
 
+    return movementUrl;
+  }
+
+  fetchDataMovement(movementUrl) {
     fetchData(movementUrl, "PUT").then((cardData) => {
-      this.model.setCardList(columnId, cardData, "move");
-      this.model.increaseCardLength(columnId);
-      this.model.decreaseCardLength(previousColumnId);
+      this.model.setCardList(this.currentColumnId, cardData, "move");
+      this.model.increaseCardLength(this.currentColumnId);
+      this.model.decreaseCardLength(this.previousColumnId);
     });
   }
 
@@ -104,7 +100,7 @@ export class CardMovement extends Component {
 
   getDragAfterElement(dragArea, y) {
     const currentDragArea = _a$(
-      `${this.card}:not(.${this.dragging})`,
+      `${this.selector.card}:not(.${this.selector.dragging})`,
       dragArea
     );
 

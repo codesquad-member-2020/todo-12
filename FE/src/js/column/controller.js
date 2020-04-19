@@ -1,16 +1,16 @@
-import { __, fetchGetData } from "../lib/util.js";
+import { __, fetchData } from "../lib/util.js";
 
 export class Controller {
-  constructor({ model, view, components }) {
-    this.initialUrl = "http://15.165.163.174:8080";
+  constructor({ model, view, components, controllerInfo }) {
+    this.initialUrl = controllerInfo.initialUrl;
     this.model = model;
     this.view = view;
     this.components = [...components];
-    this.cardFocus = true;
+    this.option = controllerInfo.option;
   }
 
   fetchInitialData() {
-    fetchGetData(this.initialUrl).then((initialData) => this.init(initialData));
+    fetchData(this.initialUrl, "GET").then((initialData) => this.init(initialData));
   }
 
   init(initialData) {
@@ -33,15 +33,15 @@ export class Controller {
   addEventHandler() {
     __(document).on("click", (event) => this.onClick(event));
 
-    __(document).on("dblclick", (event) => this.onDblclick(event));
+    if (this.option.dblclickEvent) __(document).on("dblclick", (event) => this.onDblclick(event));
 
-    __(document).on("input", (event) => this.onInput(event));
+    if (this.option.inputEvent) __(document).on("input", (event) => this.onInput(event));
   }
 
   onClick(event) {
     this.components.forEach((component) => component.addClickHandler(event));
 
-    if (this.cardFocus) this.view.onFocus(event);
+    if (this.option.cardFocus) this.view.onFocus(event);
   }
 
   onDblclick(event) {

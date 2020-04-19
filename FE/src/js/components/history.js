@@ -1,4 +1,4 @@
-import { _$, __, _c, fetchGetData } from "../lib/util.js";
+import { _$, __, _c, fetchData } from "../lib/util.js";
 import { timeForToday } from "../lib/timeForToday.js";
 import { Component } from "./component.js";
 import {
@@ -8,37 +8,34 @@ import {
 } from "../template/templateHistory.js";
 
 export class History extends Component {
-  constructor({ model }) {
+  constructor({ model, historyInfo }) {
     super();
     this.model = model;
-    this.wrap = "#wrap";
-    this.historyBtn = "history-btn";
-    this.selectorHistory = "#activity-menu";
-    this.historyCloseBtn = "history-close-btn";
-    this.slideIn = "slide-in";
-    this.slideOut = "slide-out";
-    this.historyArea = ".activity-menu__list";
+    this.selector = historyInfo.selector;
+    this.option = historyInfo.option;
+    this.historyUrl = historyInfo.fetchUrl;
   }
+
   init() {
     this.historyMenuRender();
   }
 
   historyMenuRender() {
     const historyHtml = templateHistoryMenu();
-    const historyArea = _$(this.wrap);
+    const historyArea = _$(this.selector.wrap);
     historyArea.insertAdjacentHTML("beforeend", historyHtml);
-    this.history = _$(this.selectorHistory);
+    this.history = _$(this.selector.history);
   }
 
   addClickHandler({ target }) {
     const eventTarget = target.dataset.type;
 
     switch (eventTarget) {
-      case this.historyBtn:
+      case this.selector.historyBtn:
         this.onHistoryBtn();
         break;
 
-      case this.historyCloseBtn:
+      case this.selector.historyCloseBtn:
         this.onCloseHistory();
         break;
 
@@ -47,22 +44,22 @@ export class History extends Component {
     }
   }
   onHistoryBtn() {
-    _c(this.history).add(this.slideIn);
+    _c(this.history).add(this.selector.slideIn);
     this.history.style.right = "0";
     __(this.history).show();
 
     this.fetchHistory();
-    this.removeAnimation(this.slideIn);
+    this.removeAnimation(this.selector.slideIn);
   }
 
   onCloseHistory() {
     const historyWidth = this.history.offsetWidth;
 
-    _c(this.history).add(this.slideOut);
+    _c(this.history).add(this.selector.slideOut);
 
     this.history.style.right = `-${historyWidth}px`;
 
-    this.removeAnimation(this.slideOut);
+    this.removeAnimation(this.selector.slideOut);
   }
 
   removeAnimation(selector) {
@@ -72,9 +69,7 @@ export class History extends Component {
   }
 
   fetchHistory() {
-    const historyUrl = `http://15.165.163.174/api//history`;
-
-    fetchGetData(historyUrl).then((historyData) => {
+    fetchData(this.historyUrl, "GET").then((historyData) => {
       this.model.setHistory(historyData);
       this.historyRender(historyData);
     });
@@ -102,6 +97,6 @@ export class History extends Component {
       ""
     );
 
-    _$(this.historyArea).innerHTML = historyHtmlList;
+    _$(this.selector.historyArea).innerHTML = historyHtmlList;
   }
 }

@@ -6,23 +6,17 @@ import { templateCard } from "../template/templateCard.js";
 import { _$, __, _c, _c$, __$, _a$ } from "../lib/util.js";
 
 export class View {
-  constructor() {
-    this.columnArea = _$("#todo");
-    this.cardArea = ".column__cards";
-    this.card = ".column__card";
-    this.column = ".todo__column";
-    this.inputFocus = "border-focus";
-    this.cardContent = ".card__content";
+  constructor(viewInfo) {
+    this.selector = viewInfo.selector;
+    this.columnArea = _$(this.selector.columnArea);
 
-    // this.cardSelectionFocus = "true"; // 인자로 넘기기
-    // this.previousFocus = null;
   }
 
   columnRender(columnId) {
     const columnsHtml = templateColumn(columnId);
     this.columnArea.insertAdjacentHTML("beforeend", columnsHtml);
 
-    const AllColumns = _a$(this.column);
+    const AllColumns = _a$(this.selector.column);
 
     const currentColumn = [...AllColumns].find(
       (column) => column.dataset.columnId === columnId
@@ -39,19 +33,19 @@ export class View {
   }
 
   columnNameRender(name, column) {
-    const title = _a$(".column__title", column);
+    const title = _a$(this.selector.columnTitle, column);
 
     title.forEach((nameArea) => (nameArea.innerText = name));
   }
 
   cardRender(cardContent, column) {
-    const cardArea = _$(this.cardArea, column);
+    const cardArea = _$(this.selector.cardArea, column);
     const cardHtml = templateCard(cardContent);
     cardArea.insertAdjacentHTML("afterbegin", cardHtml);
   }
 
   updateCard(cardContent, card) {
-    const cardContentAret = _$(this.cardContent, card);
+    const cardContentAret = _$(this.selector.cardContent, card);
     cardContentAret.textContent = cardContent;
   }
 
@@ -60,21 +54,21 @@ export class View {
   }
 
   numberOfCardRender(numberOfCard, column) {
-    const countArea = _$(".column__card-count", column);
+    const countArea = _$(this.selector.columnCount, column);
     return (countArea.innerText = numberOfCard);
   }
 
   onFocus({ target }) {
     if (this.focusCard) this.onFocusOut(this.focusCard);
 
-    const currentCard = target.closest(this.card);
+    const currentCard = target.closest(this.selector.card);
     if (!currentCard) return;
 
-    _c(currentCard).add(this.inputFocus);
+    _c(currentCard).add(this.selector.borderFocus);
     this.focusCard = currentCard;
   }
 
   onFocusOut(card) {
-    _c(card).remove(this.inputFocus);
+    _c(card).remove(this.selector.borderFocus);
   }
 }
