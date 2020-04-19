@@ -5,13 +5,13 @@ import { View } from "./column/view.js";
 import { CardCreation } from "./components/cardCreation.js";
 import { CardMovement } from "./components/cardMovement.js";
 import { CardDeletion } from "./components/cardDeletion.js";
-import { CardEdit } from "./components/editCard.js";
+import { CardEdit } from "./components/cardEdit.js";
 import { History } from "./components/history.js";
 import { Model } from "./column/model.js";
 import { creationInfo, deletionInfo, movementInfo, editInfo, historyInfo } from "./constants/components.js"
 import { controllerInfo, modelInfo, viewInfo } from "./constants/column.js"
 
-// import css from "../style/style.css";
+import css from "../style/style.css";
 
 function init() {
   const header = templateHeader();
